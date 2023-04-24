@@ -1,4 +1,5 @@
 from config import app, api
+from models import User
 from flask import make_response
 from flask_restful import Resource
 
