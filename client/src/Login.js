@@ -3,29 +3,45 @@ import {useState} from 'react';
 
 function Login() {
 
-    const [login, setLogin] = useState( {} )
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
     
-    const updateLogin = ({target: {name, value}}) => {
-        setLogin( login => ({ ...login, [name]: value}))
-    }
-
-    const attemptLogin = e => {
-        e.preventDefault()
-        const body = JSON.stringify(login)
-        console.log('working???', body)
+    function handleSubmit(e) {
+        e.preventDefault();
+        fetch('/login', {
+            method: "POST",
+            headers: { "Content-Type": 'application/json'},
+            body: JSON.stringify({username, password}),
+        }).then((r) => {
+            if(r.ok) {
+                r.json().then((user) => setUsername(user));
+            }
+        });
     }
 
     return(
         <>
             <h1>Login Page</h1>
-            <form onSubmit={attemptLogin}>
+            <form onSubmit={handleSubmit}>
                 <div>
-                    username:<input onChange={updateLogin} name='username'/>
+                <label htmlFor='username'>Username:</label>
+                <input
+                    type='text'
+                    id='username'
+                    autoComplete='off'
+                    onChange={(e)=> setUsername(e.target.value)}
+                />
                 </div>
                 <div>
-                    password:<input onChange={updateLogin} name='password'/>
+                <label htmlFor="password">Password:</label>
+                <input
+                    type='password'
+                    id='password'
+                    autoComplete='off'
+                    onChange={(e)=> setPassword(e.target.value)}
+                />
                 </div>
-                <input type='submit' />
+                <button type='submit'>Login</button>
             </form>
         </>
 
