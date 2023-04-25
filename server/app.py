@@ -15,8 +15,7 @@ class Login(Resource):
             return user.to_dict(), 200
         return {'error': '401 Unauthroized'}, 401
 
-
-    
+ 
 class Logout(Resource):
     def delete(self):
         session['user_id'] = None

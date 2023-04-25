@@ -3,6 +3,7 @@ import {Route, Switch} from 'react-router-dom';
 import Login from './Login';
 import NavButton from './NavButton';
 import NavBar from './NavBar';
+import Home from './Home';
 
 
 
@@ -11,10 +12,8 @@ function App() {
 
   useEffect(() => {
     fetch('/check_session').then((r) => {
-      console.log(r);
       if(r.ok) {
         r.json().then((user) => setUser(user));
-        console.log(user)
       }
     });
   }, []);
@@ -24,6 +23,9 @@ function App() {
      <NavBar user={user} setUser={setUser} />
      <main>
         <Switch>
+          <Route exact path='/home'>
+            <Home />
+          </Route>
           <Route exact path="/">
             <h1>SurgiCheck</h1>
             <Login setUser={setUser} />

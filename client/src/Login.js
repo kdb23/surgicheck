@@ -1,10 +1,12 @@
 import React, {useState} from 'react';
+import {useHistory} from 'react-router-dom';
 
 
 function Login({setUser}) {
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const history = useHistory();
     
     function handleSubmit(e) {
         e.preventDefault();
@@ -14,11 +16,14 @@ function Login({setUser}) {
             body: JSON.stringify({username, password}),
         }).then((r) => {
             if(r.ok) {
-                r.json().then((user) => setUser(user));
+                r.json().then((user) => {
+                    setUser(user);
+                    history.push('/home')
+                });
             }
         });
+        
     }
-
 
     return(
         <div>
