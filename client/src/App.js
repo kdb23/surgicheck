@@ -4,7 +4,8 @@ import Login from './Login';
 import NavButton from './NavButton';
 import NavBar from './NavBar';
 import Home from './Home';
-
+import AdminInfo from './AdminInfo';
+import Patient from './Patient';
 
 
 function App() {
@@ -27,9 +28,16 @@ function App() {
             <Home />
           </Route>
           <Route exact path="/">
-            <h1>SurgiCheck</h1>
             <Login setUser={setUser} />
           </Route>
+          <Switch>
+          <Route exact path="/admin_info">
+            <AdminInfo />
+          </Route>
+          <Route exact path="/patient">
+            <Patient />
+          </Route>
+        </Switch>
           <Route path='*'>
             <h1>404 Not Found</h1>
             <NavButton />

@@ -30,7 +30,7 @@ function Login({setUser}) {
     return(
         <div>
             <form onSubmit={handleSubmit}>
-            <h1>Login Page</h1>
+            <h1>Login to Access Patient Information</h1>
                 <div>
                 <label htmlFor='username'>Username:</label>
                 <input

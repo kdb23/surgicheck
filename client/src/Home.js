@@ -1,11 +1,15 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
+
 
 function Home() {
 
     return(
-        <div>
+        <>
             <h1>WELCOME TO SURGICHECK !</h1>
-        </div>
+            <Link to="/admin_info">Admin Info</Link>
+            <Link to='/patient'>Patient List</Link>
+        </>
     )
 }
 
