@@ -1,6 +1,7 @@
 import React from 'react';
 import {useState} from 'react';
 
+
 function Login() {
 
     const [username, setUsername] = useState('');
@@ -15,6 +16,14 @@ function Login() {
         }).then((r) => {
             if(r.ok) {
                 r.json().then((user) => setUsername(user));
+            }
+        });
+    }
+
+    function handleLogout() {
+        fetch('/logout', {method: "DELETE"}).then((r)=>{
+            if(r.ok) {
+                setUsername(null);
             }
         });
     }
@@ -42,6 +51,7 @@ function Login() {
                 />
                 </div>
                 <button type='submit'>Login</button>
+                <button onChange={handleLogout}> Logout </button>
             </form>
         </>
 
