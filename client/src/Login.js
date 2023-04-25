@@ -20,6 +20,8 @@ function Login({setUser}) {
                     setUser(user);
                     history.push('/home')
                 });
+            } else {
+                alert('Unable to login. Please Check Your Username and Password.')
             }
         });
         
