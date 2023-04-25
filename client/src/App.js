@@ -6,6 +6,8 @@ import NavBar from './NavBar';
 import Home from './Home';
 import AdminInfo from './AdminInfo';
 import Patient from './Patient';
+import NewPatient from './NewPatient';
+import PatientEdit from './PatientEdit';
 
 
 function App() {
@@ -36,6 +38,12 @@ function App() {
           </Route>
           <Route exact path="/patient">
             <Patient />
+          </Route>
+          <Route exact path="/new_patient">
+            <NewPatient />
+          </Route>
+          <Route exact path="/patient_placeholder_page">
+            <PatientEdit />
           </Route>
         </Switch>
           <Route path='*'>
