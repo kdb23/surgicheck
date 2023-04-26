@@ -76,7 +76,6 @@ class Checklist(db.Model, SerializerMixin):
     history = db.Column(db.String)
     anesthesia_consent = db.Column(db.String)
     surgical_consent = db.Column(db.String)
-    covid_test = db.Column(db.String)
     imaging = db.Column(db.String)
     education = db.Column(db.String)
     updated_at = db.Column(db.DateTime, server_default=db.func.now())

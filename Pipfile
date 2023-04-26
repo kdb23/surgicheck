@@ -13,6 +13,7 @@ sqlalchemy = "*"
 flask-bcrypt = "*"
 sqlalchemy-serializer = "*"
 serializer = "*"
+faker = "*"
 
 [dev-packages]
 

@@ -4,6 +4,7 @@ from config import app
 from models import db, Procedure, Patient, Checklist
 import random
 
+fake = Faker()
 
 def make_procedures():
     Procedure.query.delete()
@@ -97,7 +98,6 @@ def make_procedures():
         time='0800',
         location='SAG'
     )
-
 
     lapcholy = Procedure(
         id= 10,
@@ -213,3 +213,53 @@ def make_procedures():
     db.session.commit()
 
 
+def make_patients():
+    Patient.query.delete()
+
+    patients = []
+
+    primary = ["Powers", "Birkedal", "Branch", "O'Gara"]
+
+    for i in range(100):
+        patient = Patient(
+            name = fake.name(),
+            dob= fake.date_between(start_date='98y', end_date='-18y'),
+            mrn = fake.credit_card_number(),
+            address = fake.address(),
+            phone = fake.phone_number(),
+            primary = random.choice(primary)
+        )
+        patients.append(patient)
+    db.session.all_all(patients)
+    db.session.commit()
+
+def make_checklists():
+    Checklist.query.delete()
+
+    surgeries = Procedure.query.with_entities(Procedure.id).all()
+    patients = Patient.query.with_entitities(Patient.id).all()
+
+    checklists = []
+
+    options = ['completed', 'incomplete']
+
+    for i in range(15):
+        checklist = Checklist(
+            procedure_id = rc(surgeries)[0],
+            patient_id = rc(patients)[0],
+            history = random.choice(options),
+            anesthesia_consent = random.choice(options),
+            surgical_consent = random.choice(options),
+            imaging = random.choice(options),
+            education = random.choice(options)
+        )
+        checklists.append(checklist)
+    db.session.add_all(checklists)
+    db.session.commit()
+
+
+if __name__ == '__main__':
+    with app.app_context():
+        make_procedures
+        make_patients
+        make_checklists
