@@ -1,4 +1,4 @@
-from random import choice as rc, randint
+from random import choice as rc
 from faker import Faker
 from config import app
 from models import db, Procedure, Patient, Checklist
@@ -223,21 +223,21 @@ def make_patients():
     for i in range(100):
         patient = Patient(
             name = fake.name(),
-            dob= fake.date_between(start_date='98y', end_date='-18y'),
+            dob= fake.date_between(start_date='-98y', end_date='-18y'),
             mrn = fake.credit_card_number(),
             address = fake.address(),
             phone = fake.phone_number(),
             primary = random.choice(primary)
         )
         patients.append(patient)
-    db.session.all_all(patients)
+    db.session.add_all(patients)
     db.session.commit()
 
 def make_checklists():
     Checklist.query.delete()
 
     surgeries = Procedure.query.with_entities(Procedure.id).all()
-    patients = Patient.query.with_entitities(Patient.id).all()
+    patients = Patient.query.with_entities(Patient.id).all()
 
     checklists = []
 
@@ -260,6 +260,6 @@ def make_checklists():
 
 if __name__ == '__main__':
     with app.app_context():
-        make_procedures
-        make_patients
-        make_checklists
+        make_procedures()
+        make_patients()
+        make_checklists()
