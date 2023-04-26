@@ -5,8 +5,8 @@ function AdminInfo() {
     return(
 
         <div>
-            <Link to='/home'>Home</Link>
             <h1>Admin Login Info Page</h1>
+            <Link to='/home'>Home</Link>
         </div>
     )
 }
