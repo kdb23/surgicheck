@@ -1,6 +1,6 @@
 from config import app, api
-from models import User
-from flask import make_response, session, request
+from models import User, Procedure, Patient, Checklist
+from flask import make_response, session, request, jsonify
 from flask_restful import Resource
 
 
@@ -31,6 +31,20 @@ class CheckSession(Resource):
 api.add_resource(Login, '/login')
 api.add_resource(Logout, '/logout')
 api.add_resource(CheckSession, '/check_session')
+
+
+class Patients(Resource):
+    def get(self):
+        patients = [p.to_dict(only=('id', 'name', 'dob', 'mrn', 'image', 'address', 'phone', 'primary', 'procedures.name', 'procedures.surgeon', 'procedures.service_line', 'procedures.duration', 'procedures.location')) for p in Patient.query.all()]
+        return make_response(patients, 200)
+
+api.add_resource(Patients, '/patients')
+
+class PatientById(Resource):
+    def get(self):
+        return 'hi'
+
+api.add_resource(PatientById, '/patients/<int:id>')
 
 if __name__ == '__main__':
     app.run(port=5555)

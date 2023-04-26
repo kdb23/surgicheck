@@ -15,7 +15,6 @@ def make_procedures():
         surgeon='Castroviejo',
         service_line='Vascular',
         duration= 60,
-        time='0700',
         location='Main',
     )
 
@@ -25,7 +24,6 @@ def make_procedures():
         surgeon='Castroviejo',
         service_line='Vascular',
         duration=240,
-        time='0900',
         location='Main'
     )
 
@@ -35,7 +33,6 @@ def make_procedures():
         surgeon='Harken',
         service_line='Thoracic',
         duration=200,
-        time='0900',
         location='Main'
     )
 
@@ -45,7 +42,6 @@ def make_procedures():
         surgeon='Harken',
         service_line='Thoracic',
         duration=180,
-        time='1300',
         location='Main'
     )
 
@@ -55,7 +51,6 @@ def make_procedures():
         surgeon='Mouchantat',
         service_line='Plastics',
         duration=180,
-        time='1230',
         location='Main'
     )
     
@@ -65,7 +60,6 @@ def make_procedures():
         surgeon='Mouchantat',
         service_line='Plastics',
         duration=45,
-        time='0800',
         location='SAG'
     )
 
@@ -75,7 +69,6 @@ def make_procedures():
         surgeon='Masterson',
         service_line='GYN',
         duration=90,
-        time='1130',
         location='Main'
     )
 
@@ -85,7 +78,6 @@ def make_procedures():
         surgeon='Esau',
         service_line='ENT',
         duration=75,
-        time='0700',
         location='Main'
     )
 
@@ -95,7 +87,6 @@ def make_procedures():
         surgeon='Hwang',
         service_line='General',
         duration=45,
-        time='0800',
         location='SAG'
     )
 
@@ -105,7 +96,6 @@ def make_procedures():
         surgeon='Hwang',
         service_line='General',
         duration=60,
-        time='1030',
         location='SAG'
     )
 
@@ -115,7 +105,6 @@ def make_procedures():
         surgeon='Esau',
         service_line='ENT',
         duration=720,
-        time='0700',
         location='Main'
     )
 
@@ -125,7 +114,6 @@ def make_procedures():
         surgeon='Gail',
         service_line='Urology',
         duration=60,
-        time='1000',
         location='SAG'
     )
 
@@ -135,7 +123,6 @@ def make_procedures():
         surgeon='Gail',
         service_line='Urology',
         duration=30,
-        time='0800',
         location='SAG'
     )
 
@@ -145,7 +132,6 @@ def make_procedures():
         surgeon='White',
         service_line='Orthopedics',
         duration=90,
-        time='0800',
         location='SAG'
     )
 
@@ -155,7 +141,6 @@ def make_procedures():
         surgeon='White',
         service_line='Orthopedics',
         duration=30,
-        time='1230',
         location='Main'
     )
 
@@ -165,7 +150,6 @@ def make_procedures():
         surgeon='Hsu',
         service_line='Neuro',
         duration=90,
-        time='0700',
         location='Main'
     )
 
@@ -175,7 +159,6 @@ def make_procedures():
         surgeon='Wilson',
         service_line='Neuro',
         duration=120,
-        time='1200',
         location='Main'
     )
 
@@ -185,7 +168,6 @@ def make_procedures():
         surgeon='Hsu',
         service_line='Neuro',
         duration=60,
-        time='1030',
         location='Main'
     )
 
@@ -195,7 +177,6 @@ def make_procedures():
         surgeon='Wilson',
         service_line='Neuro',
         duration=60,
-        time='0700',
         location='Main'
     )
 
@@ -205,7 +186,6 @@ def make_procedures():
         surgeon='Castroviejo',
         service_line='Vascular',
         duration=120,
-        time='1500',
         location='Main'
     )
 
@@ -220,7 +200,7 @@ def make_patients():
 
     primary = ["Powers", "Birkedal", "Branch", "O'Gara"]
 
-    for i in range(100):
+    for i in range(25):
         patient = Patient(
             name = fake.name(),
             dob= fake.date_between(start_date='-98y', end_date='-18y'),
@@ -236,24 +216,27 @@ def make_patients():
 def make_checklists():
     Checklist.query.delete()
 
-    surgeries = Procedure.query.with_entities(Procedure.id).all()
-    patients = Patient.query.with_entities(Patient.id).all()
+    surgeries = Procedure.query.all()
+    patients = Patient.query.all()
 
     checklists = []
 
     options = ['completed', 'incomplete']
 
-    for i in range(15):
-        checklist = Checklist(
-            procedure_id = rc(surgeries)[0],
-            patient_id = rc(patients)[0],
-            history = random.choice(options),
-            anesthesia_consent = random.choice(options),
-            surgical_consent = random.choice(options),
-            imaging = random.choice(options),
-            education = random.choice(options)
-        )
-        checklists.append(checklist)
+    for patient in patients:
+        random.shuffle(surgeries)
+        for procedure in surgeries[:1]:
+            if not Checklist.query.filter_by(patient_id = patient.id, procedure_id = procedure.id).first():
+                checklist = Checklist(
+                    procedure_id = procedure.id,
+                    patient_id = patient.id,
+                    history = random.choice(options),
+                    anesthesia_consent = random.choice(options),
+                    surgical_consent = random.choice(options),
+                    imaging = random.choice(options),
+                    education = random.choice(options)
+                )
+                checklists.append(checklist)
     db.session.add_all(checklists)
     db.session.commit()
 

@@ -1,6 +1,7 @@
 from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy.ext.associationproxy import association_proxy
+from sqlalchemy.orm import validates
 
 from config import db, bcrypt
 
@@ -30,34 +31,41 @@ class User(db.Model, SerializerMixin):
 class Procedure(db.Model, SerializerMixin):
     __tablename__ = 'procedures'
 
-    serialize_rules = ('-updated_at', '-created_at')
+    serialize_rules = ('-updated_at', '-created_at', '-checklists')
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String)
-    surgeon = db.Column(db.String)
-    service_line = db.Column(db.String)
+    name = db.Column(db.String, nullable = False)
+    surgeon = db.Column(db.String, nullable = False)
+    service_line = db.Column(db.String, nullable = False)
     duration = db.Column(db.Integer)
-    time = db.Column(db.String)
-    location = db.Column(db.String)
+    location = db.Column(db.String, nullable = False)
     updated_at = db.Column(db.DateTime, server_default=db.func.now())
     created_at = db.Column(db.DateTime, onupdate=db.func.now())
     
     checklists = db.relationship('Checklist', backref = 'procedure')
     patients = association_proxy('checklists', 'patient')
 
+    @validates('time')
+    def validate_time(self, key, value):
+        if value < '0700':
+            raise ValueError("Procedure cannot be scheduled before 0700")
+        elif value > '1800':
+            raise ValueError("Procedure cannot be scheduled after 1800")
+        return value
+
 class Patient(db.Model, SerializerMixin):
     __tablename__ = 'patients'
 
-    serialize_rules = ('-updated_at', '-created_at')
+    serialize_rules = ('-updated_at', '-created_at', '-checklists.patient', 'procedures')
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String)
-    dob = db.Column(db.String)
-    mrn = db.Column(db.String)
+    name = db.Column(db.String, nullable = False)
+    dob = db.Column(db.String, nullable = False)
+    mrn = db.Column(db.String, nullable = False)
     image = db.Column(db.String)
-    address = db.Column(db.String)
-    phone = db.Column(db.Integer)
-    primary = db.Column(db.String)
+    address = db.Column(db.String, nullable = False)
+    phone = db.Column(db.Integer, nullable = False)
+    primary = db.Column(db.String, nullable = False)
     updated_at = db.Column(db.DateTime, server_default=db.func.now())
     created_at = db.Column(db.DateTime, onupdate=db.func.now())
 
@@ -68,7 +76,7 @@ class Patient(db.Model, SerializerMixin):
 class Checklist(db.Model, SerializerMixin):
     __tablename__ = 'checklists'
 
-    serialize_rules = ('-updated_at', '-created_at')
+    serialize_rules = ('-updated_at', '-created_at', '-patient', '-procedure')
 
     id = db.Column(db.Integer, primary_key=True)
     procedure_id = db.Column(db.Integer, db.ForeignKey('procedures.id'))
