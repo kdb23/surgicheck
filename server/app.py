@@ -1,6 +1,6 @@
 from config import app, api
 from models import db, User, Procedure, Patient, Checklist
-from flask import make_response, session, request, jsonify
+from flask import make_response, session, request
 from flask_restful import Resource
 
 

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useContext} from 'react';
 import {Route, Switch} from 'react-router-dom';
 import Login from './Login';
 import NavButton from './NavButton';
@@ -8,10 +8,11 @@ import AdminInfo from './AdminInfo';
 import Patient from './Patient';
 import NewPatient from './NewPatient';
 import PatientEdit from './PatientEdit';
+import {UserContext} from './context/user'
 
 
 function App() {
-  const [user, setUser] = useState(null);
+  const {setUser} = useContext(UserContext);
 
   useEffect(() => {
     fetch('/check_session').then((r) => {
@@ -19,18 +20,18 @@ function App() {
         r.json().then((user) => setUser(user));
       }
     });
-  }, []);
+  },);
 
   return (
     <>
-     <NavBar user={user} setUser={setUser} />
+     <NavBar />
      <main>
         <Switch>
           <Route exact path='/home'>
             <Home />
           </Route>
           <Route exact path="/">
-            <Login setUser={setUser} />
+            <Login />
           </Route>
           <Switch>
           <Route exact path="/admin_info">
