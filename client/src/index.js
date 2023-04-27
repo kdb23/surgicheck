@@ -4,6 +4,7 @@ import './index.css';
 import App from './App';
 import {BrowserRouter} from 'react-router-dom';
 import {UserProvider} from './context/user';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 const Rooter = () => <UserProvider><BrowserRouter><App /></BrowserRouter></UserProvider>

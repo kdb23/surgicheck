@@ -6,12 +6,12 @@ function Patient({name, dob, mrn, address, phone, primary}) {
         <> 
         <Link to='/home'>Home</Link>
             <div>
-                <p>{name}</p>
-                <p>{dob}</p>
-                <p>{mrn}</p>
-                <p>{address}</p>
-                <p>{phone}</p>
-                <p>{primary}</p>
+                <p>NAME:{name}</p>
+                <p>DOB:{dob}</p>
+                <p>MRN:{mrn}</p>
+                <p>ADDRESS:{address}</p>
+                <p>PHONE:{phone}</p>
+                <p>PCP: Dr.{primary}</p>
             </div>
         </>
     )
