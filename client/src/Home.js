@@ -13,7 +13,7 @@ function Home() {
             <Link to="/admin_info">Admin Info</Link>
             </div>
             <div>
-            <Link to='/patient'>Patient List
+            <Link to='/patients'>Patient List
             </Link>
             </div>
             <div>

@@ -19,24 +19,6 @@ function App() {
   const [patient, setPatient] = useState([]);
   const [procedure, setProcedure] = useState([])
 
-  const addPatientState = (newPatientObj) => {
-    setPatient([newPatientObj, ...patient])
-  }
-
-  const addProcedureState = (newProcedureObj) => {
-    setProcedure([newProcedureObj, ...procedure])
-  }
-
-  const handlePatientPatch = (updatePatient) => {
-    setPatient(patient.map(patient => {
-      if (patient.id === updatePatient.id) {
-        return {...updatePatient};
-      } else {
-        return patient 
-      }
-    }))
-  }
-
   useEffect(() => {
     fetch('/check_session').then((r) => {
       if(r.ok) {
@@ -45,13 +27,37 @@ function App() {
         console.log(r);
       }
     });
-  }, []);
+  }, [setUser]);
 
     useEffect(() => {
         fetch('/patients')
             .then((r) => r.json())
             .then(setPatient)
     }, [])
+
+    const addPatientState = (newPatientObj) => {
+      setPatient([newPatientObj, ...patient])
+    }
+  
+    const addProcedureState = (newProcedureObj) => {
+      setProcedure([newProcedureObj, ...procedure])
+    }  
+
+    const handlePatientDelete = (id) => {
+      setPatient(patient.filter(person => {
+        return person.id !== id
+      }))
+    }
+
+    const handlePatientPatch = (updatedPatient) => {
+      setPatient(patient.map(person => {
+        if (person.id === updatedPatient.id) {
+          return {...updatedPatient};
+        } else {
+          return person
+        }
+      }))
+    }
 
   return (
     <>
@@ -68,14 +74,14 @@ function App() {
             <AdminInfo />
             <NewProcedure addProcedure={addProcedureState} />
           </Route>
-          <Route exact path="/patient">
-            <PatientContainer patient={patient} />
+          <Route exact path="/patients">
+            <PatientContainer patient={patient} handlePatientPatch={handlePatientPatch} handlePatientDelete={handlePatientDelete} />
           </Route>
           <Route exact path="/new_patient">
             <NewPatient addPatient={addPatientState}/>
           </Route>
           <Route exact path="/patient_placeholder_page">
-            <PatientEdit handlePatientPatch={handlePatientPatch} />
+            <PatientEdit />
           </Route>
           <Route path='*'>
             <h1>404 Not Found</h1>
