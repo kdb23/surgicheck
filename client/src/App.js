@@ -5,7 +5,6 @@ import NavButton from './NavButton';
 import NavBar from './NavBar';
 import Home from './Home';
 import AdminInfo from './AdminInfo';
-//import Patient from './Patient';
 import NewProcedure from './NewProcedure';
 import NewPatient from './NewPatient';
 import PatientEdit from './PatientEdit';
@@ -26,6 +25,16 @@ function App() {
 
   const addProcedureState = (newProcedureObj) => {
     setProcedure([newProcedureObj, ...procedure])
+  }
+
+  const handlePatientPatch = (updatePatient) => {
+    setPatient(patient.map(patient => {
+      if (patient.id === updatePatient.id) {
+        return {...updatePatient};
+      } else {
+        return patient 
+      }
+    }))
   }
 
   useEffect(() => {
@@ -66,7 +75,7 @@ function App() {
             <NewPatient addPatient={addPatientState}/>
           </Route>
           <Route exact path="/patient_placeholder_page">
-            <PatientEdit />
+            <PatientEdit handlePatientPatch={handlePatientPatch} />
           </Route>
           <Route path='*'>
             <h1>404 Not Found</h1>

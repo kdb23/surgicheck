@@ -1,5 +1,6 @@
 import React from 'react';
 import Patient from './Patient';
+import PatientEdit from './PatientEdit';
 
 
 function PatientContainer({patient}) {
