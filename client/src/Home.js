@@ -2,7 +2,9 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 
 
+
 function Home() {
+    
 
     return(
         <>
@@ -11,7 +13,8 @@ function Home() {
             <Link to="/admin_info">Admin Info</Link>
             </div>
             <div>
-            <Link to='/patient'>Patient List</Link>
+            <Link to='/patient'>Patient List
+            </Link>
             </div>
             <div>
             <Link to='/new_patient'>Add New Patient</Link>

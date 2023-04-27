@@ -1,12 +1,19 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import {Link} from 'react-router-dom'
 
-function Patient() {
+function Patient({name, dob, mrn, address, phone, primary}) {
     return(
-        <div>
-            <h1>Patient & Procedure List Page</h1>
-            <Link to='/home'>Home</Link>
-        </div>
+        <> 
+        <Link to='/home'>Home</Link>
+            <div>
+                <p>{name}</p>
+                <p>{dob}</p>
+                <p>{mrn}</p>
+                <p>{address}</p>
+                <p>{phone}</p>
+                <p>{primary}</p>
+            </div>
+        </>
     )
 }
 

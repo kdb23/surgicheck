@@ -1,26 +1,36 @@
-import React, {useEffect, useContext} from 'react';
+import React, {useEffect, useContext, useState} from 'react';
 import {Route, Switch} from 'react-router-dom';
 import Login from './Login';
 import NavButton from './NavButton';
 import NavBar from './NavBar';
 import Home from './Home';
 import AdminInfo from './AdminInfo';
-import Patient from './Patient';
+//import Patient from './Patient';
 import NewPatient from './NewPatient';
 import PatientEdit from './PatientEdit';
 import {UserContext} from './context/user'
+import PatientContainer from './PatientContainer';
 
 
 function App() {
   const {setUser} = useContext(UserContext);
+  const [patient, setPatient] = useState([]);
 
   useEffect(() => {
     fetch('/check_session').then((r) => {
       if(r.ok) {
         r.json().then((user) => setUser(user));
+      } else {
+        console.log(r);
       }
     });
-  },);
+  }, []);
+
+    useEffect(() => {
+        fetch('/patients')
+            .then((r) => r.json())
+            .then(setPatient)
+    }, [])
 
   return (
     <>
@@ -33,12 +43,12 @@ function App() {
           <Route exact path="/">
             <Login />
           </Route>
-          <Switch>
+          
           <Route exact path="/admin_info">
             <AdminInfo />
           </Route>
           <Route exact path="/patient">
-            <Patient />
+            <PatientContainer patient={patient} />
           </Route>
           <Route exact path="/new_patient">
             <NewPatient />
@@ -46,7 +56,7 @@ function App() {
           <Route exact path="/patient_placeholder_page">
             <PatientEdit />
           </Route>
-        </Switch>
+      
           <Route path='*'>
             <h1>404 Not Found</h1>
             <NavButton />
@@ -58,3 +68,16 @@ function App() {
 }
 
 export default App;
+
+
+//   useEffect(() => {
+//  fetch('/check_session')
+//  .then((r) => {
+//    if(r.ok) {
+//      return r.json();
+//    } else {
+//      throw new Error('Network response was not ok');
+//    }
+//  })
+//  .then((user) => setUser(user))
+//  .catch((error => console.log('Error:', error.message)));

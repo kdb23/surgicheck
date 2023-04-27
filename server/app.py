@@ -28,9 +28,9 @@ class CheckSession(Resource):
         return {}, 204
 
 
-api.add_resource(Login, '/login')
-api.add_resource(Logout, '/logout')
-api.add_resource(CheckSession, '/check_session')
+api.add_resource(Login, '/login', endpoint = 'login')
+api.add_resource(Logout, '/logout', endpoint = 'logout')
+api.add_resource(CheckSession, '/check_session', endpoint = 'check_session')
 
 
 class Patients(Resource):
