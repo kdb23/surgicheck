@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Link} from 'react-router-dom';
+import {Link, useHistory} from 'react-router-dom';
 import {Container, Form, Button} from 'react-bootstrap'
 
 function NewPatient({addPatient}) {
@@ -17,6 +17,8 @@ function NewPatient({addPatient}) {
     const handleAddress = e => setAddAddress(e.target.value)
     const handlePhone = e => setAddPhone(e.target.value)
     const handlePrimary = e => setAddPrimary(e.target.value)
+
+    const history = useHistory();
 
     const patientObj = {
         name : addName,
@@ -41,6 +43,9 @@ function NewPatient({addPatient}) {
                 } else {
                     alert("Missing Information - Unable to Add Patient")
                 }
+            })
+            .then(() => {
+                history.push('/home/patients');
             })
     }
 
@@ -109,7 +114,7 @@ function NewPatient({addPatient}) {
                 </Form.Group>
                 <Button variant='secondary'>Submit</Button>
             </Form>
-        </div>
+            </div>
         </Container>
     )
 }

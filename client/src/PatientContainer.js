@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom';
 
 
 
-function PatientContainer({patient, handlePatientPatch}) {
+function PatientContainer({patient}) {
     const person = patient.map((pObj) => {
     
         return <Patient 
@@ -13,7 +13,6 @@ function PatientContainer({patient, handlePatientPatch}) {
             name = {pObj.name}
             dob = {pObj.dob}
             mrn = {pObj.mrn}
-            handlePatientPatch = {handlePatientPatch}
         />
     })
     return(
