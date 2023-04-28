@@ -1,14 +1,19 @@
 import React, {useState} from 'react';
-import {Link} from 'react-router-dom'
-import {Form, Container} from 'react-bootstrap'
 
-function Patient({id, name, dob, mrn, address, phone, primary, handlePatientPatch, handlePatientDelete}) {
+import {Form, Container, Button} from 'react-bootstrap'
+
+function Patient({id, name, dob, mrn, address, phone, primary, handlePatientPatch, handlePatientDelete, surgeries, checklists}) {
     const [patientName, setPatientName] = useState('')
     const [patientDOB, setPatientDOB] = useState('')
     const [patientMRN, setPatientMRN] = useState('')
     const [patientAddress, setPatientAddress] = useState('')
     const [patientPhone, setPatientPhone] = useState('')
     const [patientPrimary, setPatientPrimary] = useState('')
+    const [isVisible, setIsVisible] = useState(false)
+
+    const handleClose = () => {
+        setIsVisible(!isVisible);
+    }
 
     const handleDelete = () => {
         if (window.confirm("Are you Sure you want to delete this Patient ?")) {
@@ -40,83 +45,94 @@ function Patient({id, name, dob, mrn, address, phone, primary, handlePatientPatc
         };
 
     return(
-        <> 
-        <Link to='/home'>Home</Link>
-            <div>
+        <div class='card text-center'>
+                <div class='card-body'>
+                    <p class='card-text'></p>
                 <p>NAME:{name}</p>
                 <p>DOB:{dob}</p>
                 <p>MRN:{mrn}</p>
                 <p>ADDRESS:{address}</p>
-                <p>PHONE:{phone}</p>
+                <p>PHONE:{phone}</p> 
                 <p>PCP: Dr.{primary}</p>
-                <button>Edit Patient</button>
-                <button onClick={handleDelete}>Delete</button>
-            </div>
-        <div>
-             <Container>
-            <h1>Edit Existing Patient Form : Modal vs Popup </h1>
-        <div>
-            <Form>
                 <div>
-                <input
+                    {surgeries}
+                </div>
+                <div>
+                    {checklists}
+                </div>
+                </div>
+                <Button variant='primary' onClick={handleClose}>Edit Patient</Button>
+                {isVisible && ( 
+             <Container>
+            <h1>Edit Patient Form </h1>
+            <Form>
+                <Form.Group>
+                    <Form.Label>Patient Name:</Form.Label>
+                <Form.Control
                     type="text"
                     id='name'
                     name= "name"
                     placeholder = "Patient Name"
                     onChange={(e) => setPatientName(e.target.value)}
                 />
-                </div>
-                <div>
-                <input 
+                </Form.Group>
+                <Form.Group>
+                <Form.Label>Patient DOB:</Form.Label>
+                <Form.Control
                     type= "text"
                     id='dob'
                     name ="dob"
-                    placeholder= "Patient DOB: YEAR/M/D"
+                    placeholder= "Y/M/D"
                     onChange={(e) => setPatientDOB(e.target.value)}
                 />
-                </div>
-                <div>
-                <input 
+                </Form.Group>
+                <Form.Group>
+                <Form.Label>Patient MRN:</Form.Label>
+                <Form.Control
                     type= "text"
                     id="mrn"
                     name ="mrn"
                     placeholder= "Patient MRN"
                     onChange={(e) => setPatientMRN(e.target.value)}
                 />
-                </div>
-                <div>
-                <input 
+                </Form.Group>
+                <Form.Group>
+                <Form.Label>Patient Address:</Form.Label>
+                <Form.Control
                     type= "text"
                     id='address'
                     name ="address"
                     placeholder= "Address"
                     onChange={(e) => setPatientAddress(e.target.value)}
                 />
-                </div>
-                <div>
-                <input 
+                </Form.Group>
+                <Form.Group>
+                <Form.Label>Patient Phone Number:</Form.Label>
+                <Form.Control 
                     type= "text"
                     id='phone'
                     name ="phone"
                     placeholder= "Phone"
                     onChange={(e) => setPatientPhone(e.target.value)}
                 />
-                </div>
-                <div>
-                <input 
+                </Form.Group>
+                <Form.Group>
+                <Form.Label>Patient PCP:</Form.Label>
+                <Form.Control
                     type= "num"
                     id="primary"
                     name ="primary"
                     placeholder= "Patient PCP"
                     onChange={(e) => setPatientPrimary(e.target.value)}
                 />
-                </div>
-                <button onClick={handlePatch}>Edit Patient Information</button>
+                </Form.Group>
+                <Button variant='primary' onClick={handlePatch}>Edit Patient Information</Button>
+                <Button variant='primary' onClick={handleDelete}>Delete</Button>  
             </Form>
-        </div>
         </Container>
+                )}
+
         </div>
-        </>
     )
 }
 
