@@ -3,7 +3,7 @@ import {Form, Container, Button} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 
 
-function Patient({id, name, dob, mrn, address, phone, primary, handlePatientPatch, handlePatientDelete, surgeries, checklists}) {
+function Patient({id, name, dob, mrn, handlePatientPatch, handlePatientDelete}) {
     const [patientName, setPatientName] = useState('')
     const [patientDOB, setPatientDOB] = useState('')
     const [patientMRN, setPatientMRN] = useState('')
@@ -55,15 +55,6 @@ function Patient({id, name, dob, mrn, address, phone, primary, handlePatientPatc
                 </Link>
                 <p>DOB:{dob}</p>
                 <p>MRN:{mrn}</p>
-                <p>ADDRESS:{address}</p>
-                <p>PHONE:{phone}</p> 
-                <p>PCP: Dr.{primary}</p>
-                <div>
-                    {surgeries}
-                </div>
-                <div>
-                    {checklists}
-                </div>
                 </div>
                 <Button variant='primary' onClick={handleClose}>Edit Patient</Button>
                 {isVisible && ( 
