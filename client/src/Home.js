@@ -63,13 +63,13 @@ function Home() {
                 <NewProcedure addProcedure={addProcedureState} />
             </Route>
             <Route exact path="/home/patients">
-                <PatientContainer patient={patient} handlePatientPatch={handlePatientPatch} handlePatientDelete={handlePatientDelete} />
+                <PatientContainer patient={patient} handlePatientPatch={handlePatientPatch} />
             </Route>
             <Route exact path="/home/new_patient">
                 <NewPatient addPatient={addPatientState}/>
             </Route>
             <Route exact path="/home/patient/:id">
-                <PatientEdit />
+                <PatientEdit handlePatientDelete={handlePatientDelete} />
             </Route>
         </Switch>
         </>

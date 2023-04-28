@@ -3,7 +3,7 @@ import {Form, Container, Button} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 
 
-function Patient({id, name, dob, mrn, handlePatientPatch, handlePatientDelete}) {
+function Patient({id, name, dob, mrn, handlePatientPatch}) {
     const [patientName, setPatientName] = useState('')
     const [patientDOB, setPatientDOB] = useState('')
     const [patientMRN, setPatientMRN] = useState('')
@@ -17,14 +17,7 @@ function Patient({id, name, dob, mrn, handlePatientPatch, handlePatientDelete}) 
         setIsVisible(!isVisible);
     }
 
-    const handleDelete = () => {
-        if (window.confirm("Are you Sure you want to delete this Patient ?")) {
-            handlePatientDelete(id)
-            fetch(`/patient/${id}`, {
-                method: "DELETE"
-            })
-        }
-    }
+
 
     const handlePatch = (e) => {
         e.preventDefault()
@@ -121,8 +114,7 @@ function Patient({id, name, dob, mrn, handlePatientPatch, handlePatientDelete}) 
                     onChange={(e) => setPatientPrimary(e.target.value)}
                 />
                 </Form.Group>
-                <Button variant='primary' onClick={handlePatch}>Edit Patient Information</Button>
-                <Button variant='primary' onClick={handleDelete}>Delete</Button>  
+                <Button variant='primary' onClick={handlePatch}>Edit Patient Information</Button> 
             </Form>
         </Container>
                 )}

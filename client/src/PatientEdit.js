@@ -3,7 +3,7 @@ import {Link, useParams, useHistory } from 'react-router-dom';
 import {Button} from 'react-bootstrap'
 
 
-function PatientEdit(){
+function PatientEdit({handlePatientDelete}){
 
     const {id} = useParams();
 
@@ -13,6 +13,15 @@ function PatientEdit(){
 
     const handleBack = () => {
         history.goBack();
+    }
+
+    const handleDelete = () => {
+        if (window.confirm("Are you Sure you want to delete this Patient ?")) {
+            handlePatientDelete(id)
+            fetch(`/patients/${id}`, {
+                method: "DELETE"
+            })
+        }
     }
 
     useEffect(() => {
@@ -35,7 +44,8 @@ function PatientEdit(){
                 <p>ADDRESS:{patient.address}</p>
                 <p>PHONE:{patient.phone}</p> 
                 <p>PCP: Dr.{patient.primary}</p>
-            </div>
+        <Button variant='primary' onClick={handleDelete}>Delete</Button> 
+        </div>
         )}
         </>
     )
