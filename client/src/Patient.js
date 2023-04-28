@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-
 import {Form, Container, Button} from 'react-bootstrap'
 
 function Patient({id, name, dob, mrn, address, phone, primary, handlePatientPatch, handlePatientDelete, surgeries, checklists}) {
@@ -131,7 +130,6 @@ function Patient({id, name, dob, mrn, address, phone, primary, handlePatientPatc
             </Form>
         </Container>
                 )}
-
         </div>
     )
 }

@@ -50,20 +50,28 @@ function Home() {
         <>
         <NavBar />
         <Switch>
+            <Route exact path ="/home">
+                <div>
+                    <h1>Welcome to SurgiCheck !</h1>
+                    <p>Search Bar for Patients</p>
+                    <p>Search Bar for Procedures</p>
+                    <p>Search Bar for Surgeon</p>
+                </div>
+            </Route>
             <Route exact path="/home/admin">
-            <AdminInfo />
-            <NewProcedure addProcedure={addProcedureState} />
-          </Route>
-          <Route exact path="/home/patients">
-            <PatientContainer patient={patient} handlePatientPatch={handlePatientPatch} handlePatientDelete={handlePatientDelete} />
-          </Route>
-          <Route exact path="/home/new_patient">
-            <NewPatient addPatient={addPatientState}/>
-          </Route>
-          <Route exact path="/patient_placeholder_page">
-            <PatientEdit />
-          </Route>
-          </Switch>
+                <AdminInfo />
+                <NewProcedure addProcedure={addProcedureState} />
+            </Route>
+            <Route exact path="/home/patients">
+                <PatientContainer patient={patient} handlePatientPatch={handlePatientPatch} handlePatientDelete={handlePatientDelete} />
+            </Route>
+            <Route exact path="/home/new_patient">
+                <NewPatient addPatient={addPatientState}/>
+            </Route>
+            <Route exact path="/home/patient_placeholder_page">
+                <PatientEdit />
+            </Route>
+        </Switch>
         </>
     )
 }
