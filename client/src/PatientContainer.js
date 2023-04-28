@@ -1,6 +1,7 @@
 import React from 'react';
 import Patient from './Patient';
-import {Link} from 'react-router-dom'
+import {Link} from 'react-router-dom';
+import PatientEdit from './PatientEdit'
 
 
 function PatientContainer({patient, handlePatientPatch, handlePatientDelete}) {

@@ -15,7 +15,7 @@ function NavBar() {
             <Link to='/home/new_patient'>Add New Patient</Link>
             </div>
             <div>
-            <Link to='/home/patient_placeholder_page'>Individual Patient Info</Link>     
+            <Link to='/home/patient/:id'>Individual Patient Info</Link>     
             </div>
         </header>
         </nav>

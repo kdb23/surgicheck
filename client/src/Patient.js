@@ -1,5 +1,7 @@
 import React, {useState} from 'react';
-import {Form, Container, Button} from 'react-bootstrap'
+import {Form, Container, Button} from 'react-bootstrap';
+import {Link} from 'react-router-dom';
+
 
 function Patient({id, name, dob, mrn, address, phone, primary, handlePatientPatch, handlePatientDelete, surgeries, checklists}) {
     const [patientName, setPatientName] = useState('')
@@ -9,6 +11,7 @@ function Patient({id, name, dob, mrn, address, phone, primary, handlePatientPatc
     const [patientPhone, setPatientPhone] = useState('')
     const [patientPrimary, setPatientPrimary] = useState('')
     const [isVisible, setIsVisible] = useState(false)
+
 
     const handleClose = () => {
         setIsVisible(!isVisible);
@@ -47,7 +50,9 @@ function Patient({id, name, dob, mrn, address, phone, primary, handlePatientPatc
         <div class='card text-center'>
                 <div class='card-body'>
                     <p class='card-text'></p>
+                <Link to ={`/home/patient/${id}`}>
                 <p>NAME:{name}</p>
+                </Link>
                 <p>DOB:{dob}</p>
                 <p>MRN:{mrn}</p>
                 <p>ADDRESS:{address}</p>
