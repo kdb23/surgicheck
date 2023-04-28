@@ -112,7 +112,7 @@ function NewPatient({addPatient}) {
                     onChange={handlePrimary}
                 />
                 </Form.Group>
-                <Button variant='secondary'>Submit</Button>
+                <Button variant='secondary' onClick={handleSubmit}>Submit</Button>
             </Form>
             </div>
         </Container>

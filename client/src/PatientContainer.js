@@ -4,8 +4,8 @@ import {Link} from 'react-router-dom';
 
 
 
-function PatientContainer({patient}) {
-    const person = patient.map((pObj) => {
+function PatientContainer({patients}) {
+    const person = patients.map((pObj) => {
     
         return <Patient 
             key = {pObj.id}

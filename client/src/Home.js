@@ -10,32 +10,31 @@ import NavBar from './NavBar';
 
 function Home() {
 
-    const [patient, setPatient] = useState([]);
-    const [procedure, setProcedure] = useState([])
-
+    const [patients, setPatients] = useState([]);
+    const [procedures, setProcedures] = useState([]);
 
     useEffect(() => {
         fetch('/patients')
             .then((r) => r.json())
-            .then(setPatient)
+            .then(setPatients)
     }, [])
 
     const addPatientState = (newPatientObj) => {
-      setPatient([newPatientObj, ...patient])
+      setPatients([newPatientObj, ...patients])
     }
   
     const addProcedureState = (newProcedureObj) => {
-      setProcedure([newProcedureObj, ...procedure])
+      setProcedures([newProcedureObj, ...procedures])
     }  
 
     const handlePatientDelete = (id) => {
-      setPatient(patient.filter(person => {
+      setPatients(patients.filter(person => {
         return person.id !== id
       }))
     }
 
     const handlePatientPatch = (updatedPatient) => {
-      setPatient(patient.map(person => {
+      setPatients(patients.map(person => {
         if (person.id === updatedPatient.id) {
           return {...updatedPatient};
         } else {
@@ -43,8 +42,6 @@ function Home() {
         }
       }))
     }
-
-    
 
     return(
         <>
@@ -63,7 +60,7 @@ function Home() {
                 <NewProcedure addProcedure={addProcedureState} />
             </Route>
             <Route exact path="/home/patients">
-                <PatientContainer patient={patient} />
+                <PatientContainer patients={patients} />
             </Route>
             <Route exact path="/home/new_patient">
                 <NewPatient addPatient={addPatientState}/>

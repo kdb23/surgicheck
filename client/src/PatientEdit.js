@@ -1,13 +1,12 @@
-import React, {useEffect, useState} from 'react';
-import {Link, useParams, useHistory } from 'react-router-dom';
+import React, {useState, useEffect} from 'react';
+import {Link, useHistory, useParams } from 'react-router-dom';
 import {Button, Form, Container} from 'react-bootstrap';
 
 
 function PatientEdit({handlePatientDelete, handlePatientPatch}){
 
-    const {id} = useParams();
     const history = useHistory();
-    const [patient, setPatient] = useState(null)
+    const [patientInfo, setPatientInfo] = useState([])
     const [patientName, setPatientName] = useState('')
     const [patientDOB, setPatientDOB] = useState('')
     const [patientMRN, setPatientMRN] = useState('')
@@ -15,6 +14,14 @@ function PatientEdit({handlePatientDelete, handlePatientPatch}){
     const [patientPhone, setPatientPhone] = useState('')
     const [patientPrimary, setPatientPrimary] = useState('')
     const [isVisible, setIsVisible] = useState(false)
+
+    const {id} = useParams();
+
+    useEffect(() => {
+        fetch(`/patients/${id}`)
+            .then((r) => r.json())
+            .then(setPatientInfo)
+    }, [id])
 
     const handleBack = () => {
         history.goBack();
@@ -24,13 +31,6 @@ function PatientEdit({handlePatientDelete, handlePatientPatch}){
         setIsVisible(!isVisible);
     }
 
-    useEffect(() => {
-        fetch(`/patients/${id}`)
-            .then(r => r.json())
-            .then(data => setPatient(data))
-            .catch(error => console.error(error));
-    }, [id]);
-
     const handleDelete = () => {
         if (window.confirm("Are you Sure you want to delete this Patient ?")) {
             handlePatientDelete(id)
@@ -38,9 +38,14 @@ function PatientEdit({handlePatientDelete, handlePatientPatch}){
                 method: "DELETE"
             })
             .then(() => {
+                setPatientInfo((prevPatientInfo) =>
+                    prevPatientInfo.filter((patient) => patient.id !== id)
+                );
                 history.push('/home/patients');
             })
-            .catch(error => console.log(error))
+            .catch((error) => {
+                console.error("Error Deleting Patient", error);
+            })
         }
     }
 
@@ -61,22 +66,26 @@ function PatientEdit({handlePatientDelete, handlePatientPatch}){
             body: JSON.stringify(newObj)
         })
             .then(r => r.json())
-            .then(handlePatientPatch)
-        };
+            .then(data => {
+                setPatientInfo(data);
+                handlePatientPatch(data);
+        });
+
+    }
 
     return(
         <>
         <Button variant="secondary"><Link to='/home'>Home</Link></Button>
         <Button variant='secondary' onClick={handleBack}>Back</Button>
         <h1>Patient{id}</h1>
-        {patient && (
+        {patientInfo && (
             <div>
-                <p> Name: {patient.name}</p>
-                <p>DOB:{patient.dob}</p>
-                <p>MRN:{patient.mrn}</p>
-                <p>ADDRESS:{patient.address}</p>
-                <p>PHONE:{patient.phone}</p> 
-                <p>PCP: Dr.{patient.primary}</p>
+                <p> Name: {patientInfo.name}</p>
+                <p>DOB:{patientInfo.dob}</p>
+                <p>MRN:{patientInfo.mrn}</p>
+                <p>ADDRESS:{patientInfo.address}</p>
+                <p>PHONE:{patientInfo.phone}</p> 
+                <p>PCP: Dr.{patientInfo.primary}</p>
         <Button variant='primary' onClick={handleDelete}>Delete</Button>
         <Button variant='primary' onClick={handleClose}>Edit Patient</Button>
         <Container>
