@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {Link} from 'react-router-dom';
-import {Container, Form} from 'react-bootstrap'
+import {Container, Form, Button} from 'react-bootstrap'
 
 function NewPatient({addPatient}) {
 
@@ -48,60 +48,66 @@ function NewPatient({addPatient}) {
     return(
         <Container>
         <div>
+        <Link to='/home'>Home</Link>
             <h1>Add A New Patient</h1>
-            <Link to='/home'>Home</Link>
         </div>
         <div>
             <Form onSubmit={handleSubmit}>
-                <div>
-                <input
+                <Form.Group>
+                <Form.Label>Patient Name:</Form.Label>
+                <Form.Control
                     type="text"
                     name= "name"
                     placeholder = "Patient Name"
                     onChange={handleName}
                 />
-                </div>
-                <div>
-                <input 
+                </Form.Group>
+                <Form.Group>
+                <Form.Label>Patient DOB:</Form.Label>
+                <Form.Control
                     type= "text"
                     name ="dob"
-                    placeholder= "Patient DOB: YEAR/M/D"
+                    placeholder= "Y/M/D"
                     onChange={handleDOB}
                 />
-                </div>
-                <div>
-                <input 
+                </Form.Group>
+                <Form.Group>
+                <Form.Label>Patient MRN:</Form.Label>
+                <Form.Control
                     type= "text"
                     name ="mrn"
                     placeholder= "Patient MRN"
                     onChange={handleMRN}
                 />
-                </div>
-                <div>
-                <input 
+                </Form.Group>
+                <Form.Group>
+                <Form.Label>Patient Address:</Form.Label>
+                <Form.Control
                     type= "text"
                     name ="address"
-                    placeholder= "Address"
+                    placeholder= "Patient Address"
                     onChange={handleAddress}
                 />
-                </div>
-                <div>
-                <input 
+                </Form.Group>
+                <Form.Group>
+                <Form.Label>Patient Phone Number:</Form.Label>
+                <Form.Control 
                     type= "text"
                     name ="phone"
-                    placeholder= "Phone"
+                    placeholder= "Patient Phone Number"
                     onChange={handlePhone}
                 />
-                </div>
-                <div>
-                <input 
+                </Form.Group>
+                <Form.Group>
+                <Form.Label>Patient PCP:</Form.Label>
+                <Form.Control
                     type= "num"
                     name ="primary"
-                    placeholder= "Patient PCP"
+                    placeholder= "Patient Primary Care"
                     onChange={handlePrimary}
                 />
-                </div>
-                <button>Submit</button>
+                </Form.Group>
+                <Button variant='secondary'>Submit</Button>
             </Form>
         </div>
         </Container>

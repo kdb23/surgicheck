@@ -1,28 +1,24 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import {Link} from "react-router-dom";
-import {UserContext} from './context/user';
+
 
 function NavBar() {
-    const {user, setUser} = useContext(UserContext);
-    function handleLogout() {
-        fetch('/logout', {method: "DELETE"}).then((r)=>{
-            if(r.ok) {
-                setUser(null);
-            }
-        });
-    }
+
     return (
+        <nav>
         <header>
+            <Link to="/home/admin">Admin Info</Link>
             <div>
-                {user ? (
-                    <button onClick={handleLogout}>Logout</button>
-                ) : (
-                    <>
-                        <Link to='/'>Logout</Link>
-                    </>
-                )}
+            <Link to='/home/patients'>Patient List</Link>
+            </div>
+            <div>
+            <Link to='/home/new_patient'>Add New Patient</Link>
+            </div>
+            <div>
+            <Link to='/patient_placeholder_page'>Individual Patient Info</Link>     
             </div>
         </header>
+        </nav>
     );
 
 }

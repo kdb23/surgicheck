@@ -45,7 +45,6 @@ function NewProcedure({addProcedure}) {
         <Container>
         <div>
             <h1>Add A New Procedure</h1>
-            <Link to='/home'>Home</Link>
         </div>
         <div>
             <Form onSubmit={handleSubmit}>
@@ -58,13 +57,12 @@ function NewProcedure({addProcedure}) {
                 />
                 </div>
                 <div>
-                <input 
-                    type= "text"
-                    name ="surgeon"
-                    placeholder= "Surgeon"
-                    //dropdown//
+                <Form.Select>
+                    <option>Select a Surgeon</option>
+                    <option value='option1'>Surgeon 1</option>
+                    <option value='option2'>Surgeon 2</option>
                     onChange={handleSurgeon}
-                />
+                </Form.Select>
                 </div>
                 <div>
                 <input 
