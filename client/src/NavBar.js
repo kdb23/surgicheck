@@ -7,6 +7,9 @@ function NavBar() {
     return (
         <nav>
         <header>
+            <div>
+                <Link to='/home'>Home</Link>
+            </div>
             <Link to="/home/admin">Admin Info</Link>
             <div>
             <Link to='/home/patients'>Patient List</Link>

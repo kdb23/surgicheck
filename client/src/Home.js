@@ -26,13 +26,6 @@ function Home() {
     const addProcedureState = (newProcedureObj) => {
       setProcedures([newProcedureObj, ...procedures])
     }  
-
-    const handlePatientDelete = (id) => {
-      setPatients(patients.filter(person => {
-        return person.id !== id
-      }))
-    }
-
     const handlePatientPatch = (updatedPatient) => {
       setPatients(patients.map(person => {
         if (person.id === updatedPatient.id) {
@@ -40,6 +33,12 @@ function Home() {
         } else {
           return person
         }
+      }))
+    }
+
+    const handlePatientDelete = (id) => {
+      setPatients(patients.filter(patient => {
+        return patient.id !== id
       }))
     }
 
@@ -66,7 +65,7 @@ function Home() {
                 <NewPatient addPatient={addPatientState}/>
             </Route>
             <Route exact path="/home/patient/:id">
-                <PatientEdit handlePatientDelete={handlePatientDelete} handlePatientPatch={handlePatientPatch} />
+                <PatientEdit handlePatientPatch={handlePatientPatch} handlePatientDelete={handlePatientDelete} />
             </Route>
         </Switch>
         </>

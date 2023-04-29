@@ -3,7 +3,7 @@ import {Link, useHistory, useParams } from 'react-router-dom';
 import {Button, Form, Container} from 'react-bootstrap';
 
 
-function PatientEdit({handlePatientDelete, handlePatientPatch}){
+function PatientEdit({handlePatientPatch, handlePatientDelete}){
 
     const history = useHistory();
     const [patientInfo, setPatientInfo] = useState([])
@@ -31,20 +31,6 @@ function PatientEdit({handlePatientDelete, handlePatientPatch}){
         setIsVisible(!isVisible);
     }
 
-    const handleDelete = () => {
-        if (window.confirm("Are you Sure you want to delete this Patient ?")) {
-            handlePatientDelete(id)
-            fetch(`/patients/${id}`, {
-                method: "DELETE"
-            })
-            .then(
-                history.push('/home/patients')
-            )
-            .catch((error) => {
-                console.error("Error Deleting Patient", error);
-            })
-        }
-    }
 
     const handlePatch = (e) => {
         e.preventDefault()
@@ -69,7 +55,21 @@ function PatientEdit({handlePatientDelete, handlePatientPatch}){
         });
 
     }
-    
+
+    const handleDelete = async (id)  => {
+        try {
+            const response = await fetch(`/patients/${id}`, {
+                method: "DELETE"
+            });
+            if (response.status === 204) {
+                handlePatientDelete(id)
+            } else {
+                return ('error, unable to delete')
+            } 
+            }  catch (error){
+                console.error(error)
+            } 
+        }
 
     return(
         <>
@@ -84,7 +84,7 @@ function PatientEdit({handlePatientDelete, handlePatientPatch}){
                 <p>ADDRESS:{patientInfo.address}</p>
                 <p>PHONE:{patientInfo.phone}</p> 
                 <p>PCP: Dr.{patientInfo.primary}</p>
-        <Button variant='primary' onClick={handleDelete}>Delete</Button>
+        <Button variant='primary' onClick={() => handleDelete(patientInfo.id)}>Delete</Button>
         <Button variant='primary' onClick={handleClose}>Edit Patient</Button>
         <Container>
         {isVisible && (
