@@ -20,7 +20,7 @@ function Home() {
     }, [])
 
     const addPatientState = (newPatientObj) => {
-      setPatients([newPatientObj, ...patients])
+      setPatients([...patients, newPatientObj])
     }
   
     const addProcedureState = (newProcedureObj) => {

@@ -37,12 +37,9 @@ function PatientEdit({handlePatientDelete, handlePatientPatch}){
             fetch(`/patients/${id}`, {
                 method: "DELETE"
             })
-            .then(() => {
-                setPatientInfo((prevPatientInfo) =>
-                    prevPatientInfo.filter((patient) => patient.id !== id)
-                );
-                history.push('/home/patients');
-            })
+            .then(
+                history.push('/home/patients')
+            )
             .catch((error) => {
                 console.error("Error Deleting Patient", error);
             })
@@ -72,6 +69,7 @@ function PatientEdit({handlePatientDelete, handlePatientPatch}){
         });
 
     }
+    
 
     return(
         <>

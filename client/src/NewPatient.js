@@ -34,19 +34,19 @@ function NewPatient({addPatient}) {
         fetch('/patients', {
             method: "POST",
             headers: {"Content-Type": "application/json"},
-            body: JSON.stringify(patientObj),
+            body: JSON.stringify(patientObj)
         })
-            .then((r) => {
-                if(r.ok) {
-                    alert("Patient Has Been Added")
-                    addPatient(patientObj)
-                } else {
-                    alert("Missing Information - Unable to Add Patient")
-                }
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Unable to add patient');
+            }
+            return response.json();
             })
-            .then(() => {
-                history.push('/home/patients');
-            })
+        .then(newPatient => {
+            addPatient(newPatient);
+            alert('Patient has been added');
+            history.push('/home/patients');
+        })
     }
 
 
