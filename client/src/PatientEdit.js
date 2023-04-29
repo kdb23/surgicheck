@@ -83,7 +83,6 @@ function PatientEdit({handlePatientPatch, handlePatientDelete}){
         <>
         <Button variant="secondary"><Link to='/home'>Home</Link></Button>
         <Button variant='secondary' onClick={handleBack}>Back</Button>
-        <h1>Patient{id}</h1>
         {patientInfo && (
             <div>
                 <p> Name: {patientInfo.name}</p>
