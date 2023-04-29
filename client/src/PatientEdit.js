@@ -8,6 +8,7 @@ function PatientEdit({handlePatientPatch, handlePatientDelete}){
     const history = useHistory();
     const [patientInfo, setPatientInfo] = useState([])
     const [proceduresList, setProceduresList] = useState([])
+    const [checklistInfo, setChecklistInfo] = useState([])
     const [patientName, setPatientName] = useState('')
     const [patientDOB, setPatientDOB] = useState('')
     const [patientMRN, setPatientMRN] = useState('')
@@ -28,6 +29,12 @@ function PatientEdit({handlePatientPatch, handlePatientDelete}){
         fetch(`/patients/${id}/procedures`)
             .then((r) => r.json())
             .then(setProceduresList)
+    }, [id])
+
+    useEffect(() => {
+        fetch(`/patients/${id}/checklists`)
+            .then((r) => r.json())
+            .then(setChecklistInfo)
     }, [id])
 
     const handleBack = () => {
@@ -102,6 +109,28 @@ function PatientEdit({handlePatientPatch, handlePatientDelete}){
                 })}
             </ul>
         </div>
+        )}
+        {checklistInfo && (
+            <div>
+                <h2>Checklist</h2>
+                <ul>
+                    {checklistInfo.map((checklist) => {
+                        return <li key = {checklist.id}>
+                            <li>
+                            Patient History: {checklist.history}
+                            </li> <li>
+                            Anesthesia Consent: {checklist.anesthesia_consent}
+                            </li> <li>
+                            Surgical Consent: {checklist.surgical_consent}
+                            </li> <li>
+                            Imaging: {checklist.imaging}
+                            </li> <li>
+                            Education: {checklist.education}
+                            </li>
+                            </li>
+                    })}
+                </ul>
+            </div>
         )}
         <Container>
         {isVisible && (

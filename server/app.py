@@ -238,7 +238,7 @@ api.add_resource(ChecklistsById, '/checklists/<int:id>')
 
 class PatientChecklists(Resource):
     def get(self, id):
-        patient = Patient.query.filter(id = id).first()
+        patient = Patient.query.filter_by(id = id).first()
         if not patient:
             return make_response({'error': '404 Patient Not Found'}, 404)
         checklists = patient.checklists
