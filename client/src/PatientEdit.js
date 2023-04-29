@@ -7,6 +7,7 @@ function PatientEdit({handlePatientPatch, handlePatientDelete}){
 
     const history = useHistory();
     const [patientInfo, setPatientInfo] = useState([])
+    const [proceduresList, setProceduresList] = useState([])
     const [patientName, setPatientName] = useState('')
     const [patientDOB, setPatientDOB] = useState('')
     const [patientMRN, setPatientMRN] = useState('')
@@ -23,6 +24,12 @@ function PatientEdit({handlePatientPatch, handlePatientDelete}){
             .then(setPatientInfo)
     }, [id])
 
+    useEffect(() => {
+        fetch(`/patients/${id}/procedures`)
+            .then((r) => r.json())
+            .then(setProceduresList)
+    }, [id])
+
     const handleBack = () => {
         history.goBack();
     }
@@ -30,7 +37,6 @@ function PatientEdit({handlePatientPatch, handlePatientDelete}){
     const handleClose = () => {
         setIsVisible(!isVisible);
     }
-
 
     const handlePatch = (e) => {
         e.preventDefault()
@@ -88,6 +94,16 @@ function PatientEdit({handlePatientPatch, handlePatientDelete}){
                 <p>PCP: Dr.{patientInfo.primary}</p>
         <Button variant='primary' onClick={() => handleDelete(patientInfo.id)}>Delete</Button>
         <Button variant='primary' onClick={handleClose}>Edit Patient</Button>
+        {proceduresList.length > 0 && (
+        <div>
+            <h2>Procedures</h2>
+            <ul>
+                {proceduresList.map((procedure) => {
+                    return <li key = {procedure.id}>{procedure.name}</li>
+                })}
+            </ul>
+        </div>
+        )}
         <Container>
         {isVisible && (
             <Form>

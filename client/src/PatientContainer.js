@@ -19,7 +19,7 @@ function PatientContainer({patients}) {
         <div>
             <Link to='/home'>Home</Link>
              <h1>Patient Page</h1>
-            <div class ='row row-cols-3'>
+            <div class ='row row-cols-1'>
                 {person}
            </div>
         </div>

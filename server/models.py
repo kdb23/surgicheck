@@ -56,7 +56,7 @@ class Procedure(db.Model, SerializerMixin):
 class Patient(db.Model, SerializerMixin):
     __tablename__ = 'patients'
 
-    serialize_rules = ('-updated_at', '-created_at', '-checklists.patient', 'procedures')
+    serialize_rules = ('-updated_at', '-created_at', '-procedure', '-checklists.patient')
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable = False)
@@ -76,7 +76,7 @@ class Patient(db.Model, SerializerMixin):
 class Checklist(db.Model, SerializerMixin):
     __tablename__ = 'checklists'
 
-    serialize_rules = ('-updated_at', '-created_at', '-patient', '-procedure')
+    serialize_rules = ('-updated_at', '-created_at', '-patient.checklists', '-procedure.checklists')
 
     id = db.Column(db.Integer, primary_key=True)
     procedure_id = db.Column(db.Integer, db.ForeignKey('procedures.id'))

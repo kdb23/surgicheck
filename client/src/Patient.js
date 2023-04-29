@@ -9,10 +9,8 @@ function Patient({id, name, dob, mrn}) {
                 <div class='card-body'>
                     <p class='card-text'></p>
                 <Link to ={`/home/patient/${id}`}>
-                <p>NAME:{name}</p>
-                </Link>
-                <p>DOB:{dob}</p>
-                <p>MRN:{mrn}</p>
+                Name:{name}
+                </Link> DOB:{dob}, MRN:{mrn}
                 </div>
          </div>
     )
