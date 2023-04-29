@@ -57,12 +57,14 @@ function PatientEdit({handlePatientPatch, handlePatientDelete}){
     }
 
     const handleDelete = async (id)  => {
+        if (window.confirm("Are you sure you want to delete this Patient ?"))
         try {
             const response = await fetch(`/patients/${id}`, {
                 method: "DELETE"
             });
             if (response.status === 204) {
                 handlePatientDelete(id)
+                history.goBack()
             } else {
                 return ('error, unable to delete')
             } 
