@@ -10,17 +10,18 @@ function NavigationBar() {
         <Link to='/home' className='navbar-brand'>
           Home
         </Link>
-        <Nav className='me-auto'>
-          <Link to='/home/admin' className='nav-link'>
-            Admin Info
-          </Link>
+        <Nav className='justify-content-between'>
+
           <Link to='/home/patients' className='nav-link'>
             Patient List
+          </Link>
+          <Link to='/home/admin' className='nav-link'>
+            Admin Info
           </Link>
           <Link to='/home/new_patient' className='nav-link'>
             Add New Patient
           </Link>
-          <Logout />
+          <Link to='/logout' className='nav-link'><Logout /></Link>
         </Nav>
       </Container>
     </Navbar>
