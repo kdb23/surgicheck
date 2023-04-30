@@ -28,6 +28,7 @@ function Home() {
     const addProcedureState = (newProcedureObj) => {
       setProcedures([newProcedureObj, ...procedures])
     }  
+
     const handlePatientPatch = (updatedPatient) => {
       setPatients(patients.map(person => {
         if (person.id === updatedPatient.id) {
@@ -45,6 +46,7 @@ function Home() {
     }
 
     const handlePatientSearch = newString => setSearchTerm(newString.toLowerCase())
+
     
 
 
@@ -64,7 +66,7 @@ function Home() {
                 <NewProcedure addProcedure={addProcedureState} />
             </Route>
             <Route exact path="/home/patients">
-                <PatientContainer patients={patients} handlePatientSearch={handlePatientSearch}/>
+                <PatientContainer patients={patients} handlePatientSearch={handlePatientSearch} />
             </Route>
             <Route exact path="/home/new_patient">
                 <NewPatient addPatient={addPatientState}/>

@@ -10,11 +10,11 @@ function PatientContainer({patients, handlePatientSearch}) {
     const handleSearch = e => {
         const newSearchTerm = e.target.value.toLowerCase();
         setSearchTerm(newSearchTerm);
-        handlePatientSearch(newSearchTerm);
     };
 
+
     const filteredPatients = patients.filter(patientObj => {
-        return patientObj.name.toLowerCase().includes(searchTerm);
+        return patientObj.name.toLowerCase().includes(searchTerm) || patientObj.mrn.includes(searchTerm);
     });
 
     const person = filteredPatients.map((pObj) => {
@@ -35,7 +35,7 @@ function PatientContainer({patients, handlePatientSearch}) {
                 <Form.Control
                     type='text'
                     id='search'
-                    placeholder='Type Patient Name'
+                    placeholder='Type Patient Name or MRN'
                     onChange={handleSearch}
                 />
                     {person}
