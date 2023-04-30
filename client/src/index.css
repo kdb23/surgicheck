@@ -12,7 +12,17 @@ code {
     monospace;
 }
 
-
 .color-nav {
   background-color: lightblue;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.col {
+  flex: 0 0 calc(33.33% - 10px);
+  margin-bottom: 20px;
 }

@@ -1,7 +1,6 @@
 import React from 'react';
 import Patient from './Patient';
-
-
+import {Container} from 'react-bootstrap';
 
 function PatientContainer({patients}) {
     const person = patients.map((pObj) => {
@@ -15,12 +14,10 @@ function PatientContainer({patients}) {
         />
     })
     return(
-        <div>
+        <Container>
              <h1>Patient Page</h1>
-            <div class ='row row-cols-1'>
                 {person}
-           </div>
-        </div>
+        </Container>
 
     )
 }

@@ -1,18 +1,18 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
+import {Row, Col} from 'react-bootstrap'
 
 
 function Patient({id, name, dob, mrn}) {
 
     return(
-        <div class='card text-center'>
-                <div class='card-body'>
-                    <p class='card-text'></p>
-                <Link to ={`/home/patient/${id}`}>
-                Name:{name}
-                </Link> DOB:{dob}, MRN:{mrn}
-                </div>
-         </div>
+        <Row className='my-2 border'>
+            <Col>
+            <Link to ={`/home/patient/${id}`}>Name:{name}</Link>
+            </Col> 
+            <Col>DOB:{dob}</Col>
+            <Col>MRN:{mrn}</Col>
+        </Row>
     )
 }
 
