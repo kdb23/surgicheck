@@ -15,11 +15,11 @@ function NavigationBar() {
           <Link to='/home/patients' className='nav-link'>
             Patient List
           </Link>
-          <Link to='/home/admin' className='nav-link'>
-            Admin Info
-          </Link>
           <Link to='/home/new_patient' className='nav-link'>
             Add New Patient
+          </Link>
+          <Link to='/home/admin' className='nav-link'>
+            Admin Info
           </Link>
           <Link to='/logout' className='nav-link'><Logout /></Link>
         </Nav>

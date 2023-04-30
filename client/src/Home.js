@@ -13,6 +13,7 @@ function Home() {
 
     const [patients, setPatients] = useState([]);
     const [procedures, setProcedures] = useState([]);
+     const [searchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
         fetch('/patients')
@@ -43,6 +44,10 @@ function Home() {
       }))
     }
 
+    const handlePatientSearch = newString => setSearchTerm(newString.toLowerCase())
+    
+
+
     return(
         <>
         <NavigationBar />
@@ -51,7 +56,6 @@ function Home() {
               <div className='d-flex align-items-center justify-content-center' style={{height : '100vh'}}>
                 <div className='text-center'>
                     <h1><Badge bg='light' text='dark'>Welcome to SurgiCheck !</Badge></h1>
-                    <p>Search Bar for Patients | Search Bar for Procedures | Search Bar for Checklists</p>
                 </div>
               </div>
             </Route>
@@ -60,7 +64,7 @@ function Home() {
                 <NewProcedure addProcedure={addProcedureState} />
             </Route>
             <Route exact path="/home/patients">
-                <PatientContainer patients={patients} />
+                <PatientContainer patients={patients} handlePatientSearch={handlePatientSearch}/>
             </Route>
             <Route exact path="/home/new_patient">
                 <NewPatient addPatient={addPatientState}/>
