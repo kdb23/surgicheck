@@ -6,6 +6,7 @@ import NewPatient from './NewPatient';
 import PatientEdit from './PatientEdit';
 import PatientContainer from './PatientContainer';
 import NavigationBar from './NavigationBar';
+import {Badge} from 'react-bootstrap'
 
 
 function Home() {
@@ -47,12 +48,12 @@ function Home() {
         <NavigationBar />
         <Switch>
             <Route exact path ="/home">
-                <div>
-                    <h1>Welcome to SurgiCheck !</h1>
-                    <p>Search Bar for Patients</p>
-                    <p>Search Bar for Procedures</p>
-                    <p>Search Bar for Surgeon</p>
+              <div className='d-flex align-items-center justify-content-center' style={{height : '100vh'}}>
+                <div className='text-center'>
+                    <h1><Badge bg='light' text='dark'>Welcome to SurgiCheck </Badge></h1>
+                    <p>Search Bar for Patients | Search Bar for Procedures | Search Bar for Checklists</p>
                 </div>
+              </div>
             </Route>
             <Route exact path="/home/admin">
                 <AdminInfo />
