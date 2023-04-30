@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import Patient from './Patient';
-
+import {Col, Container, Form, Row} from 'react-bootstrap'
 
 
 function PatientContainer({patients, handlePatientSearch}) {
@@ -29,20 +29,19 @@ function PatientContainer({patients, handlePatientSearch}) {
         />
     })
     return(
-        <div className='text-center'>
-             <div className='searchbar'>
-                      <label htmlFor='Search Patients'></label>
-                      <input
-                        type='text'
-                        id='search'
-                        placeholder='Type Patient Name'
-                        onChange={handleSearch}
-                      />
-                </div>
-            <div class ='row row-cols-1'>
-                {person}
-           </div>
-        </div>
+      
+        <Container className="mt-5">
+            <Row>
+                <Form.Control
+                    type='text'
+                    id='search'
+                    placeholder='Type Patient Name'
+                    onChange={handleSearch}
+                />
+                    {person}
+           </Row>
+        </Container>
+        
 
     )
 }
