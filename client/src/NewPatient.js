@@ -64,12 +64,11 @@ function NewPatient({addPatient}) {
     return(
         <Container>
         <div>
-            <h1>Add A New Patient</h1>
-        </div>
-        <div>
+            <h2 className='text-center'>Add New Patient</h2>
+            <p className='text-center'>All fields with * must be filled before patient can be added</p>
             <Form onSubmit={handleSubmit}>
                 <Form.Group>
-                <Form.Label>Patient Name:</Form.Label>
+                <Form.Label>Patient Name *:</Form.Label>
                 <Form.Control
                     type="text"
                     name= "name"
@@ -78,7 +77,7 @@ function NewPatient({addPatient}) {
                 />
                 </Form.Group>
                 <Form.Group>
-                <Form.Label>Patient DOB:</Form.Label>
+                <Form.Label>Patient DOB*:</Form.Label>
                 <Form.Control
                     type= "text"
                     name ="dob"
@@ -87,7 +86,7 @@ function NewPatient({addPatient}) {
                 />
                 </Form.Group>
                 <Form.Group>
-                <Form.Label>Patient MRN:</Form.Label>
+                <Form.Label>Patient MRN*:</Form.Label>
                 <Form.Control
                     type= "text"
                     name ="mrn"
