@@ -2,6 +2,7 @@ from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy.orm import validates
+from sqlalchemy import event
 
 from config import db, bcrypt
 
@@ -63,9 +64,9 @@ class Patient(db.Model, SerializerMixin):
     dob = db.Column(db.String, nullable = False)
     mrn = db.Column(db.String, nullable = False)
     image = db.Column(db.String)
-    address = db.Column(db.String, nullable = False)
-    phone = db.Column(db.Integer, nullable = False)
-    primary = db.Column(db.String, nullable = False)
+    address = db.Column(db.String)
+    phone = db.Column(db.Integer)
+    primary = db.Column(db.String)
     updated_at = db.Column(db.DateTime, server_default=db.func.now())
     created_at = db.Column(db.DateTime, onupdate=db.func.now())
 

@@ -115,17 +115,17 @@ function PatientEdit({handlePatientPatch, handlePatientDelete}){
                 <ul>
                     {checklistInfo.map((checklist) => {
                         return <li key = {checklist.id}>
-                            <li>
+                            <div>
                             Patient History: {checklist.history}
-                            </li> <li>
+                            </div> <div>
                             Anesthesia Consent: {checklist.anesthesia_consent}
-                            </li> <li>
+                            </div> <div>
                             Surgical Consent: {checklist.surgical_consent}
-                            </li> <li>
+                            </div> <div>
                             Imaging: {checklist.imaging}
-                            </li> <li>
+                            </div> <div>
                             Education: {checklist.education}
-                            </li>
+                            </div>
                             </li>
                     })}
                 </ul>

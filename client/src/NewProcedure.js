@@ -48,7 +48,7 @@ function NewProcedure({addProcedure}) {
     return(
 
         <>
-        <Button onClick={handleClose}>Add Procedure</Button>
+        <Button onClick={handleClose}>Add A New Surgeon</Button>
 
         <Container>
         {isVisible && (
@@ -62,20 +62,12 @@ function NewProcedure({addProcedure}) {
                 />
                 </Form.Group>
                 <Form.Group>
-                <Form.Select>
-                    <option>Select a Surgeon</option>
-                    <option value='option1'>Castroviejio</option>
-                    <option value='option2'>Harken</option>
-                    <option value='option3'>Mouchantat</option>
-                    <option value='option4'>Esau</option>
-                    <option value='option5'>Hwang</option>
-                    <option value='option6'>Gail</option>
-                    <option value='option7'>White</option>
-                    <option value='option8'>Hsu</option>
-                    <option value='option9'>Wilson</option>
-                    <option value='option10'>Masterson</option>
+                <Form.Control 
+                    type= "text"
+                    name ="name"
+                    placeholder= "Surgeon Name"
                     onChange={handleSurgeon}
-                </Form.Select>
+                />
                 </Form.Group>
                 <Form.Group>
                 <Form.Select>
