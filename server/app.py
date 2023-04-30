@@ -63,6 +63,9 @@ class Patients(Resource):
             )
         except:
             return make_response({'error': ' 400 Unable to process request'}, 400)
+        
+        new_checklist = Checklist(patient = new_patient)
+        db.session.add(new_checklist)
         db.session.add(new_patient)
         db.session.commit()
         return make_response(new_patient.to_dict(), 201)
