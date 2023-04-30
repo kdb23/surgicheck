@@ -5,7 +5,7 @@ import NewProcedure from './NewProcedure';
 import NewPatient from './NewPatient';
 import PatientEdit from './PatientEdit';
 import PatientContainer from './PatientContainer';
-import NavBar from './NavBar';
+import NavigationBar from './NavigationBar';
 
 
 function Home() {
@@ -44,7 +44,7 @@ function Home() {
 
     return(
         <>
-        <NavBar />
+        <NavigationBar />
         <Switch>
             <Route exact path ="/home">
                 <div>
