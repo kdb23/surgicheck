@@ -88,9 +88,12 @@ function PatientEdit({handlePatientPatch, handlePatientDelete}){
 
     return(
         <>
+        <div className='d-flex justify-content-end'>
         <Button variant='secondary' onClick={handleBack}>Back</Button>
+        </div>
         {patientInfo && (
             <div>
+                <h1 className='text-center'>{patientInfo.name}</h1>
                 <p> Name: {patientInfo.name}</p>
                 <p>DOB:{patientInfo.dob}</p>
                 <p>MRN:{patientInfo.mrn}</p>
