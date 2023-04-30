@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {useHistory, useParams } from 'react-router-dom';
-import {Button, Form, Container} from 'react-bootstrap';
+import {Button, Form, Container, Row, Col} from 'react-bootstrap';
 
 
 function PatientEdit({handlePatientPatch, handlePatientDelete}){
@@ -88,12 +88,15 @@ function PatientEdit({handlePatientPatch, handlePatientDelete}){
 
     return(
         <>
+        <Container>
+            <Row>
+            <h1 className='text-center'>{patientInfo.name}</h1>
         <div className='d-flex justify-content-end'>
         <Button variant='secondary' onClick={handleBack}>Back</Button>
         </div>
+        <Col>
         {patientInfo && (
             <div>
-                <h1 className='text-center'>{patientInfo.name}</h1>
                 <p> Name: {patientInfo.name}</p>
                 <p>DOB:{patientInfo.dob}</p>
                 <p>MRN:{patientInfo.mrn}</p>
@@ -102,6 +105,10 @@ function PatientEdit({handlePatientPatch, handlePatientDelete}){
                 <p>PCP: Dr.{patientInfo.primary}</p>
         <Button variant='primary' onClick={() => handleDelete(patientInfo.id)}>Delete</Button>
         <Button variant='primary' onClick={handleClose}>Edit Patient</Button>
+        </div>
+        )}
+        </Col>
+        <Col>
         {proceduresList.length > 0 && (
         <div>
             <h2>Procedures</h2>
@@ -112,6 +119,8 @@ function PatientEdit({handlePatientPatch, handlePatientDelete}){
             </ul>
         </div>
         )}
+        </Col>
+        <Col>
         {checklistInfo && (
             <div>
                 <h2>Checklist</h2>
@@ -134,6 +143,7 @@ function PatientEdit({handlePatientPatch, handlePatientDelete}){
                 </ul>
             </div>
         )}
+        </Col>
         <Container>
         {isVisible && (
             <Form>
@@ -201,8 +211,8 @@ function PatientEdit({handlePatientPatch, handlePatientDelete}){
             </Form>
         )}
         </Container>
-        </div>
-        )}
+            </Row>
+        </Container>
         </>
     )
 }
