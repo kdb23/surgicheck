@@ -1,10 +1,11 @@
 import React from 'react';
 import { Container, Nav, Navbar } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import Logout from './Logout'
 
 function NavigationBar() {
   return (
-    <Navbar bg='dark' variant='dark'>
+    <Navbar className='color-nav' variant='light'>
       <Container>
         <Link to='/home' className='navbar-brand'>
           Home
@@ -19,6 +20,7 @@ function NavigationBar() {
           <Link to='/home/new_patient' className='nav-link'>
             Add New Patient
           </Link>
+          <Logout />
         </Nav>
       </Container>
     </Navbar>

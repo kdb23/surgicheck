@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {Link, useHistory, useParams } from 'react-router-dom';
+import {useHistory, useParams } from 'react-router-dom';
 import {Button, Form, Container} from 'react-bootstrap';
 
 
@@ -88,7 +88,6 @@ function PatientEdit({handlePatientPatch, handlePatientDelete}){
 
     return(
         <>
-        <Button variant="secondary"><Link to='/home'>Home</Link></Button>
         <Button variant='secondary' onClick={handleBack}>Back</Button>
         {patientInfo && (
             <div>

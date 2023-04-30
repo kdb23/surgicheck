@@ -1,6 +1,5 @@
 import React from 'react';
 import Patient from './Patient';
-import {Link} from 'react-router-dom';
 
 
 
@@ -17,7 +16,6 @@ function PatientContainer({patients}) {
     })
     return(
         <div>
-            <Link to='/home'>Home</Link>
              <h1>Patient Page</h1>
             <div class ='row row-cols-1'>
                 {person}

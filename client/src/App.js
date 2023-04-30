@@ -2,7 +2,6 @@ import React, {useEffect, useContext} from 'react';
 import {Route, Switch} from 'react-router-dom';
 import Login from './Login';
 import NavButton from './NavButton';
-import Logout from './Logout'
 import Home from './Home';
 import {UserContext} from './context/user'
 
@@ -22,7 +21,7 @@ function App() {
 
   return (
     <>
-     <Logout />
+
      <main>
         <Switch>
         <Route exact path="/" component={Login } />

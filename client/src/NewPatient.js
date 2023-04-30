@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Link, useHistory} from 'react-router-dom';
+import {useHistory} from 'react-router-dom';
 import {Container, Form, Button} from 'react-bootstrap'
 
 function NewPatient({addPatient}) {
@@ -53,7 +53,6 @@ function NewPatient({addPatient}) {
     return(
         <Container>
         <div>
-        <Link to='/home'>Home</Link>
             <h1>Add A New Patient</h1>
         </div>
         <div>
