@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
-import {Container, Form} from 'react-bootstrap'
+import {Container, Form, Button} from 'react-bootstrap'
+
 
 function NewProcedure({addProcedure}) {
 
@@ -8,12 +9,17 @@ function NewProcedure({addProcedure}) {
     const [addService, setAddService] = useState('')
     const [addDuration, setAddDuration] = useState('')
     const [addLocation, setAddLocation] = useState('')
+    const [isVisible, setIsVisible] = useState(false)
 
     const handleName = e => setAddName(e.target.value)
     const handleSurgeon = e => setAddSurgeon(e.target.value)
     const handleService = e => setAddService(e.target.value)
     const handleDuration = e => setAddDuration(e.target.value)
     const handleLocation = e => setAddLocation(e.target.value)
+
+    const handleClose = () => {
+        setIsVisible(!isVisible);
+    }
 
     const procedureObj = {
         name: addName,
@@ -41,58 +47,75 @@ function NewProcedure({addProcedure}) {
 
     return(
 
+        <>
+        <Button onClick={handleClose}>Add Procedure</Button>
+
         <Container>
-        <div>
-            <h1>Add A New Procedure</h1>
-        </div>
-        <div>
+        {isVisible && (
             <Form onSubmit={handleSubmit}>
-                <div>
-                <input
+                <Form.Group>
+                <Form.Control
                     type="text"
                     name= "name"
                     placeholder = "Procedure Name"
                     onChange={handleName}
                 />
-                </div>
-                <div>
+                </Form.Group>
+                <Form.Group>
                 <Form.Select>
                     <option>Select a Surgeon</option>
-                    <option value='option1'>Surgeon 1</option>
-                    <option value='option2'>Surgeon 2</option>
+                    <option value='option1'>Castroviejio</option>
+                    <option value='option2'>Harken</option>
+                    <option value='option3'>Mouchantat</option>
+                    <option value='option4'>Esau</option>
+                    <option value='option5'>Hwang</option>
+                    <option value='option6'>Gail</option>
+                    <option value='option7'>White</option>
+                    <option value='option8'>Hsu</option>
+                    <option value='option9'>Wilson</option>
+                    <option value='option10'>Masterson</option>
                     onChange={handleSurgeon}
                 </Form.Select>
-                </div>
-                <div>
-                <input 
-                    type= "text"
-                    name ="service_line"
-                    placeholder= "Service Line"
-                    //dropdown//
+                </Form.Group>
+                <Form.Group>
+                <Form.Select>
+                    <option>Select a Service Lilne</option>
+                    <option value='option1'>Vascular</option>
+                    <option value='option2'>Thoracic</option>
+                    <option value='option3'>Plastics</option>
+                    <option value='option4'>GYN</option>
+                    <option value='option5'>ENT</option>
+                    <option value='option6'>General</option>
+                    <option value='option7'>Urology</option>
+                    <option value='option8'>Orthopedics</option>
+                    <option value='option9'>Neuro</option>
                     onChange={handleService}
-                />
-                </div>
-                <div>
-                <input 
+                </Form.Select>
+                </Form.Group>
+                <Form.Group>
+                <Form.Control 
                     type= "num"
                     name ="duration"
                     placeholder= "Procedure Duration"
                     onChange={handleDuration}
                 />
-                </div>
-                <div>
-                <input 
-                    type= "text"
-                    name ="location"
-                    placeholder= "Location (Main or SAG)"
-                    //dropdown //
+                </Form.Group>
+                <Form.Group>
+                <Form.Select>
+                    <option>Select Location</option>
+                    <option value='option1'>Main</option>
+                    <option value='option2'>SAG</option>
                     onChange={handleLocation}
-                />
-                </div>
-                <button>Submit</button>
+                </Form.Select>
+                </Form.Group>
+                <Button>Submit</Button>
             </Form>
-        </div>
+        )}
         </Container>
+
+
+    </>
+        
     )
 }
 

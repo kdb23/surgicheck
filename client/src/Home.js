@@ -50,7 +50,7 @@ function Home() {
             <Route exact path ="/home">
               <div className='d-flex align-items-center justify-content-center' style={{height : '100vh'}}>
                 <div className='text-center'>
-                    <h1><Badge bg='light' text='dark'>Welcome to SurgiCheck </Badge></h1>
+                    <h1><Badge bg='light' text='dark'>Welcome to SurgiCheck !</Badge></h1>
                     <p>Search Bar for Patients | Search Bar for Procedures | Search Bar for Checklists</p>
                 </div>
               </div>
