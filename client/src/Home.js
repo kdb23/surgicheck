@@ -7,6 +7,7 @@ import PatientEdit from './PatientEdit';
 import PatientContainer from './PatientContainer';
 import NavigationBar from './NavigationBar';
 import {Badge} from 'react-bootstrap'
+import NewSurgeon from './NewSurgeon';
 
 
 function Home() {
@@ -65,7 +66,7 @@ function Home() {
             </Route>
             <Route exact path="/home/admin">
                 <AdminInfo />
-                <NewProcedure addProcedure={addProcedureState} />
+                <NewSurgeon addProcedure={addProcedureState} />
             </Route>
             <Route exact path="/home/patients">
                 <PatientContainer patients={patients} handlePatientSearch={handlePatientSearch} />
@@ -75,6 +76,7 @@ function Home() {
             </Route>
             <Route exact path="/home/patient/:id">
                 <PatientEdit handlePatientPatch={handlePatientPatch} handlePatientDelete={handlePatientDelete} />
+                <NewProcedure addProcedure={addProcedureState} />
             </Route>
         </Switch>
         </>

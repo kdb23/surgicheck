@@ -1,8 +1,11 @@
 import React, {useState} from 'react'
-import {Container, Form, Button} from 'react-bootstrap'
+import {Container, Form, Button} from 'react-bootstrap';
+import { useParams } from 'react-router-dom';
 
 
-function NewSurgeon({addProcedure}) {
+function NewProcedure({addProcedure}) {
+
+    const {id} = useParams();
 
     const [addName, setAddName] = useState('')
     const [addSurgeon, setAddSurgeon] = useState('')
@@ -30,14 +33,14 @@ function NewSurgeon({addProcedure}) {
     }
     const handleSubmit = (e) => {
         e.preventDefault()
-        fetch('/surgeons', {
+        fetch(`/patients/${id}/procedures`, {
             method: "POST",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify(procedureObj),
         })
             .then((r) => {
                 if(r.ok) {
-                    alert("Surgeon and Procedure addition successful")
+                    alert("Procedure addition successful")
                     addProcedure(procedureObj)
                 } else {
                     alert("Missing Information - Unable to Add New Procedure")
@@ -48,7 +51,7 @@ function NewSurgeon({addProcedure}) {
     return(
 
         <>
-        <Button onClick={handleClose}>Add A New Surgeon</Button>
+        <Button onClick={handleClose}>Add A Procedure</Button>
 
         <Container>
         {isVisible && (
@@ -100,7 +103,7 @@ function NewSurgeon({addProcedure}) {
                     onChange={handleLocation}
                 </Form.Select>
                 </Form.Group>
-                <Button>Submit</Button>
+                <Button onClick={handleSubmit}>Submit</Button>
             </Form>
         )}
         </Container>
@@ -111,4 +114,4 @@ function NewSurgeon({addProcedure}) {
     )
 }
 
-export default NewSurgeon
+export default NewProcedure

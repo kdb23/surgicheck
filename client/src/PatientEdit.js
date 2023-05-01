@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {useHistory, useParams } from 'react-router-dom';
 import {Button, Form, Container, Row, Col} from 'react-bootstrap';
 import Table from 'react-bootstrap/Table'
+import NewProcedure from './NewProcedure';
 
 
 function PatientEdit({handlePatientPatch, handlePatientDelete}){
@@ -160,7 +161,7 @@ function PatientEdit({handlePatientPatch, handlePatientDelete}){
             </ul>
         </div>
         )}
-        <Button>Add A Procedure</Button>
+        <NewProcedure />
         </Col>
         <Col>
         <h2>Checklist</h2>
