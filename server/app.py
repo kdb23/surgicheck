@@ -32,6 +32,12 @@ api.add_resource(Login, '/login', endpoint = 'login')
 api.add_resource(Logout, '/logout', endpoint = 'logout')
 api.add_resource(CheckSession, '/check_session', endpoint = 'check_session')
 
+class Home(Resource):
+    def get(self):
+        return 'SurgiCheck Project'
+    
+api.add_resource(Home, '/')
+
 
 class Patients(Resource):
     def get(self):
@@ -186,6 +192,24 @@ class PatientProcedures(Resource):
             procedure_list.append(p_dict)
         return make_response(jsonify(procedure_list), 200)
     
+    def post(self, id):
+        data = request.get_json()
+        patient = Patient.query.filter_by(id = id).first()
+        if not patient:
+            return make_response({'error': '404 Patient Not Found'}, 404)
+        procedure = Procedure(
+            name = data['name'],
+            surgeon = data['surgeon'],
+            service_line = data['service_line'],
+            duration = data['duration'],
+            location = data['location'],
+        )
+        checklist = Checklist(patient = patient, procedure = procedure)
+        db.session.add(procedure)
+        db.session.add(checklist)
+        db.session.commit()
+        return make_response(procedure.to_dict(), 201)
+    
 api.add_resource(PatientProcedures, '/patients/<int:id>/procedures')
 
 class Checklists(Resource):
@@ -258,6 +282,18 @@ class PatientChecklists(Resource):
             }
             check_list.append(c_dict)
         return make_response(jsonify(check_list), 200)
+    
+    def patch(self, id):
+        data = request.get_json()
+        checklist = Checklist.query.filter_by(id = id).first()
+        try:
+            for new_info in data:
+                setattr(checklist, new_info, data[new_info])
+        except:
+            return make_response({'error': 'Unable to Process Request'}, 400)
+        db.session.add(checklist)
+        db.session.commit()
+        return make_response(checklist.to_dict(), 202)
     
 api.add_resource(PatientChecklists, '/patients/<int:id>/checklists')
 

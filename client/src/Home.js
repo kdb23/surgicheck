@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {Route, Switch} from 'react-router-dom';
 import AdminInfo from './AdminInfo';
-import NewProcedure from './NewProcedure';
+import NewProcedure from './NewSurgeon';
 import NewPatient from './NewPatient';
 import PatientEdit from './PatientEdit';
 import PatientContainer from './PatientContainer';
@@ -13,7 +13,8 @@ function Home() {
 
     const [patients, setPatients] = useState([]);
     const [procedures, setProcedures] = useState([]);
-     const [searchTerm, setSearchTerm] = useState('');
+    const [searchTerm, setSearchTerm] = useState('');
+  
 
     useEffect(() => {
         fetch('/patients')
@@ -38,6 +39,7 @@ function Home() {
         }
       }))
     }
+
 
     const handlePatientDelete = (id) => {
       setPatients(patients.filter(patient => {

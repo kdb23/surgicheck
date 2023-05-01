@@ -221,8 +221,6 @@ def make_checklists():
 
     checklists = []
 
-    options = ['completed', 'incomplete']
-
     for patient in patients:
         random.shuffle(surgeries)
         for procedure in surgeries[:1]:
@@ -230,11 +228,11 @@ def make_checklists():
                 checklist = Checklist(
                     procedure_id = procedure.id,
                     patient_id = patient.id,
-                    history = random.choice(options),
-                    anesthesia_consent = random.choice(options),
-                    surgical_consent = random.choice(options),
-                    imaging = random.choice(options),
-                    education = random.choice(options)
+                    history = False,
+                    anesthesia_consent = False,
+                    surgical_consent = False,
+                    imaging = False,
+                    education = False
                 )
                 checklists.append(checklist)
     db.session.add_all(checklists)

@@ -17,6 +17,11 @@ function PatientEdit({handlePatientPatch, handlePatientDelete}){
     const [patientPhone, setPatientPhone] = useState('')
     const [patientPrimary, setPatientPrimary] = useState('')
     const [isVisible, setIsVisible] = useState(false)
+    const [listHistory, setListHistory] = useState('')
+    const [listAnesthesia, setListAnesthesia] = useState('')
+    const [listSurgical, setListSurgical] = useState('')
+    const [listImage, setListImage] = useState('')
+    const [listEducation, setListEducation] = useState('')
 
     const {id} = useParams();
 
@@ -70,6 +75,41 @@ function PatientEdit({handlePatientPatch, handlePatientDelete}){
 
     }
 
+    const handleChecklistPatch = (updatedChecklist) => {
+        setChecklistInfo(checklistInfo.map(checklist => {
+          if (checklist.id === updatedChecklist.id) {
+            return {...updatedChecklist};
+          } else {
+            return checklist
+          }
+        }))
+      }
+
+    const handleListPatch = (e) => {
+        e.preventDefault()
+        let updatedChecklist = {
+            history : listHistory,
+            anesthesia_consent : listAnesthesia,
+            surgical_consent : listSurgical,
+            imaging : listImage,
+            education : listEducation
+        };
+        fetch(`/patients/${id}/checklists`, {
+            method: "PATCH",
+            headers: {"Content-Type" : "application/json"},
+            body: JSON.stringify(updatedChecklist)
+        })
+            .then(r => r.json())
+            .then(data => {
+                setChecklistInfo(data);
+                handleChecklistPatch(data);
+        })
+        .catch((error) => {
+            console.error('Error updating checklist:', error);
+        })
+    }
+
+
     const handleDelete = async (id)  => {
         if (window.confirm("Are you sure you want to delete this Patient ?"))
         try {
@@ -120,42 +160,75 @@ function PatientEdit({handlePatientPatch, handlePatientDelete}){
             </ul>
         </div>
         )}
+        <Button>Add A Procedure</Button>
         </Col>
         <Col>
         <h2>Checklist</h2>
         {checklistInfo && (
             <div>
                 <ul>
-                    {checklistInfo.map((checklist) => {
+                    {Array.isArray(checklistInfo) && checklistInfo.map((checklist) => {
                         return <div key = {checklist.id}>
                             <Table stripped bordered hover size="sm">
+                                <tbody>
                                 <tr>
                                     <td>Patient History:</td>
-                                    <td>{checklist.history}</td>
-                                    <Form.Check></Form.Check>
+                                    <td>{checklist.history ? "Complete" : "Incomplete"}</td>
+                                    <td>
+                                    <Form.Check
+                                        type='checkbox'
+                                        checked={listHistory}
+                                        onChange={(e) => setListHistory(e.target.checked)}
+                                    />
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>Anesthesia Consent:</td>
-                                    <td>{checklist.anesthesia_consent}</td>
-                                    <Form.Check></Form.Check>
+                                    <td>{checklist.anesthesia_consent ? "Complete" : "Incomplete"}</td>
+                                    <td>
+                                    <Form.Check
+                                        type='checkbox'
+                                        checked={listAnesthesia}
+                                        onChange={(e) => setListAnesthesia(e.target.checked)}
+                                    />
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>Surgical Consent:</td>
-                                    <td>{checklist.surgical_consent}</td>
-                                    <Form.Check></Form.Check>
+                                    <td>{checklist.surgical_consent ? "Complete" : "Incomplete"}</td>
+                                    <td>
+                                    <Form.Check
+                                        type="checkbox"
+                                        checked={listSurgical}
+                                        onChange={(e) => setListSurgical(e.target.checked)}
+                                    />
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>Imaging:</td>
-                                    <td>{checklist.imaging}</td>
-                                    <Form.Check></Form.Check>
+                                    <td>{checklist.imaging ? "Complete" : "Incomplete"}</td>
+                                    <td>
+                                    <Form.Check
+                                        type='checkbox'
+                                        checked={listImage}
+                                        onChange={(e) => setListImage(e.target.checked)}
+                                    />
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>Education:</td>
-                                    <td>{checklist.education}</td>
-                                    <Form.Check></Form.Check>
+                                    <td>{checklist.education ? "Complete" : "Incomplete"}</td>
+                                    <td>
+                                    <Form.Check
+                                        type='checkbox'
+                                        checked={listEducation}
+                                        onChange={(e) => setListEducation(e.target.checked)}
+                                    />
+                                    </td>
                                 </tr>
+                                </tbody>
                             </Table>
-                            <Button>Update Checklist</Button>
+                            <Button onClick={(e) => handleListPatch(e, checklist.id)}>Update Checklist</Button>
                         </div>
                     })}
                 </ul>
