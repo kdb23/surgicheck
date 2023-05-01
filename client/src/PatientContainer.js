@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import Patient from './Patient';
-import {Col, Container, Form, Row} from 'react-bootstrap'
+import {Container, Form, Row} from 'react-bootstrap'
 
 
 function PatientContainer({patients, handlePatientSearch}) {
@@ -12,13 +12,19 @@ function PatientContainer({patients, handlePatientSearch}) {
         setSearchTerm(newSearchTerm);
     };
 
-
     const filteredPatients = patients.filter(patientObj => {
         return patientObj.name.toLowerCase().includes(searchTerm) || patientObj.mrn.includes(searchTerm);
     });
 
     const person = filteredPatients.map((pObj) => {
-    
+        const surgeries = pObj.surgeries?.map((surgery) => {
+            return (
+                <div key={surgery.id}>
+                    <p>{surgery.name}</p>
+                    <p>{surgery.surgeon}</p>
+                </div>
+            )
+        })
         return <Patient 
             key = {pObj.id}
             id = {pObj.id}
@@ -26,6 +32,7 @@ function PatientContainer({patients, handlePatientSearch}) {
             dob = {pObj.dob}
             mrn = {pObj.mrn}
             handlePatientSearch = {handlePatientSearch}
+            surgeries = {surgeries}
         />
     })
     return(

@@ -38,6 +38,7 @@ class Patients(Resource):
         patients = Patient.query.all()
         patient_list = []
         for patient in patients:
+            procedures = [procedure.to_dict() for procedure in patient.procedures]
             p_dict = {
                 'id': patient.id,
                 'name' : patient.name,
@@ -46,9 +47,10 @@ class Patients(Resource):
                 'address' : patient.address,
                 'phone' : patient.phone,
                 'primary' : patient.primary,
+                'surgeries' : procedures
             }
             patient_list.append(p_dict)
-        return make_response(jsonify(patient_list), 200)
+        return make_response(patient_list, 200)
     
     def post(self):
         data = request.get_json()

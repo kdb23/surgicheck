@@ -3,7 +3,8 @@ import {Link} from 'react-router-dom';
 import {Row, Col} from 'react-bootstrap'
 
 
-function Patient({id, name, dob, mrn}) {
+function Patient({id, name, dob, mrn, surgeries }) {
+    console.log(surgeries)
 
     return(
         <Row className='my-2 border'>
@@ -12,6 +13,7 @@ function Patient({id, name, dob, mrn}) {
             </Col> 
             <Col>DOB:{dob}</Col>
             <Col>MRN:{mrn}</Col>
+            <Col>{surgeries}</Col>
         </Row>
     )
 }
