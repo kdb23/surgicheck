@@ -132,24 +132,30 @@ function PatientEdit({handlePatientPatch, handlePatientDelete}){
                                 <tr>
                                     <td>Patient History:</td>
                                     <td>{checklist.history}</td>
+                                    <Form.Check></Form.Check>
                                 </tr>
                                 <tr>
                                     <td>Anesthesia Consent:</td>
                                     <td>{checklist.anesthesia_consent}</td>
+                                    <Form.Check></Form.Check>
                                 </tr>
                                 <tr>
                                     <td>Surgical Consent:</td>
                                     <td>{checklist.surgical_consent}</td>
+                                    <Form.Check></Form.Check>
                                 </tr>
                                 <tr>
                                     <td>Imaging:</td>
                                     <td>{checklist.imaging}</td>
+                                    <Form.Check></Form.Check>
                                 </tr>
                                 <tr>
                                     <td>Education:</td>
                                     <td>{checklist.education}</td>
+                                    <Form.Check></Form.Check>
                                 </tr>
                             </Table>
+                            <Button>Update Checklist</Button>
                         </div>
                     })}
                 </ul>
