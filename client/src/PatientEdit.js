@@ -23,6 +23,7 @@ function PatientEdit({handlePatientPatch, handlePatientDelete, addProcedureState
     const [listSurgical, setListSurgical] = useState('')
     const [listImage, setListImage] = useState('')
     const [listEducation, setListEducation] = useState('')
+    const [checklistUpdated, setChecklistUpdated] = useState(false)
 
     const {id} = useParams();
 
@@ -83,7 +84,7 @@ function PatientEdit({handlePatientPatch, handlePatientDelete, addProcedureState
           } else {
             return checklist
           }
-        }))
+        }));
       }
 
     const handleListPatch = (e) => {
@@ -102,13 +103,14 @@ function PatientEdit({handlePatientPatch, handlePatientDelete, addProcedureState
         })
             .then(r => r.json())
             .then(data => {
-                setChecklistInfo(data);
                 handleChecklistPatch(data);
+                setChecklistUpdated(true)
         })
         .catch((error) => {
             console.error('Error updating checklist:', error);
-        })
-    }
+        });
+        setChecklistUpdated(true);
+    };
 
 
     const handleDelete = async (id)  => {
