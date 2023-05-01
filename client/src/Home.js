@@ -9,6 +9,7 @@ import NavigationBar from './NavigationBar';
 import {Badge} from 'react-bootstrap';
 
 
+
 function Home() {
 
     const [patients, setPatients] = useState([]);
@@ -74,7 +75,8 @@ function Home() {
                 <NewPatient addPatient={addPatientState}/>
             </Route>
             <Route exact path="/home/patient/:id">
-                <PatientEdit handlePatientPatch={handlePatientPatch} handlePatientDelete={handlePatientDelete} />
+                <PatientEdit handlePatientPatch={handlePatientPatch} handlePatientDelete={handlePatientDelete} addProcedure={addProcedureState} />
+
             </Route>
         </Switch>
         </>

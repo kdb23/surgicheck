@@ -9,6 +9,7 @@ function NewProcedure({addProcedure}) {
 
     const history = useHistory();
 
+    const [patientList, setPatientList] = useState([])
     const [addName, setAddName] = useState('')
     const [addSurgeon, setAddSurgeon] = useState('')
     const [addService, setAddService] = useState('')
@@ -33,6 +34,7 @@ function NewProcedure({addProcedure}) {
         duration: addDuration,
         location: addLocation
     }
+
     const handleSubmit = (e) => {
         e.preventDefault()
         fetch(`/patients/${id}/procedures`, {
@@ -40,15 +42,19 @@ function NewProcedure({addProcedure}) {
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify(procedureObj),
         })
-        .then((r) => {
-            if(r.ok) {
-                alert("Procedure addition successful")
-                history.push('/home/patients')
-                addProcedure(procedureObj)
-            } else {
-                alert("Missing Information - Unable to Add New Procedure")
-            }
-        })
+            .then((r) => {
+                if(r.ok) {
+                    alert("Procedure addition successful")
+                    history.push('/home/patients')
+                    addProcedure(procedureObj)
+                    fetch('/patients')
+                        .then((r) => r.json())
+                        .then((patientList) => setPatientList(patientList))
+                } else {
+                    alert("Missing Information - Unable to Add New Procedure")
+                }
+            })
+        
     }
 
     return(
@@ -99,11 +105,10 @@ function NewProcedure({addProcedure}) {
                 />
                 </Form.Group>
                 <Form.Group>
-                <Form.Select>
+                <Form.Select onChange={handleLocation}>
                     <option>Select Location</option>
                     <option value='option1'>Main</option>
                     <option value='option2'>SAG</option>
-                    onChange={handleLocation}
                 </Form.Select>
                 </Form.Group>
                 <Button onClick={handleSubmit}>Submit</Button>

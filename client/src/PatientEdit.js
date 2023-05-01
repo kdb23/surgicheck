@@ -5,7 +5,7 @@ import Table from 'react-bootstrap/Table'
 import NewProcedure from './NewProcedure';
 
 
-function PatientEdit({handlePatientPatch, handlePatientDelete}){
+function PatientEdit({handlePatientPatch, handlePatientDelete, addProcedureState}){
 
     const history = useHistory();
     const [patientInfo, setPatientInfo] = useState([])
@@ -179,7 +179,10 @@ function PatientEdit({handlePatientPatch, handlePatientDelete}){
                                     <Form.Check
                                         type='checkbox'
                                         checked={listHistory}
-                                        onChange={(e) => setListHistory(e.target.checked)}
+                                        onChange={(e) => {
+                                            setListHistory(e.target.checked);
+                                            checklist.history = e.target.checked;
+                                        }}
                                     />
                                     </td>
                                 </tr>
@@ -190,7 +193,10 @@ function PatientEdit({handlePatientPatch, handlePatientDelete}){
                                     <Form.Check
                                         type='checkbox'
                                         checked={listAnesthesia}
-                                        onChange={(e) => setListAnesthesia(e.target.checked)}
+                                        onChange={(e) => {
+                                            setListAnesthesia(e.target.checked)
+                                            checklist.anesthesia_consent = e.target.checked;
+                                        }}
                                     />
                                     </td>
                                 </tr>
@@ -201,7 +207,10 @@ function PatientEdit({handlePatientPatch, handlePatientDelete}){
                                     <Form.Check
                                         type="checkbox"
                                         checked={listSurgical}
-                                        onChange={(e) => setListSurgical(e.target.checked)}
+                                        onChange={(e) => {
+                                            setListSurgical(e.target.checked)
+                                            checklist.surgical_consent = e.target.checked;
+                                        }}
                                     />
                                     </td>
                                 </tr>
@@ -212,7 +221,10 @@ function PatientEdit({handlePatientPatch, handlePatientDelete}){
                                     <Form.Check
                                         type='checkbox'
                                         checked={listImage}
-                                        onChange={(e) => setListImage(e.target.checked)}
+                                        onChange={(e) => {
+                                            setListImage(e.target.checked)
+                                            checklist.imaging = e.target.checked;
+                                        }}
                                     />
                                     </td>
                                 </tr>
@@ -223,7 +235,10 @@ function PatientEdit({handlePatientPatch, handlePatientDelete}){
                                     <Form.Check
                                         type='checkbox'
                                         checked={listEducation}
-                                        onChange={(e) => setListEducation(e.target.checked)}
+                                        onChange={(e) => {
+                                            setListEducation(e.target.checked)
+                                            checklist.education = e.target.checked;
+                                        }}
                                     />
                                     </td>
                                 </tr>
