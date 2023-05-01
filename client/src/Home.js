@@ -1,13 +1,12 @@
 import React, {useState, useEffect} from 'react';
 import {Route, Switch} from 'react-router-dom';
 import AdminInfo from './AdminInfo';
-import NewProcedure from './NewSurgeon';
+import NewSurgeon from './NewSurgeon';
 import NewPatient from './NewPatient';
 import PatientEdit from './PatientEdit';
 import PatientContainer from './PatientContainer';
 import NavigationBar from './NavigationBar';
-import {Badge} from 'react-bootstrap'
-import NewSurgeon from './NewSurgeon';
+import {Badge} from 'react-bootstrap';
 
 
 function Home() {
@@ -76,7 +75,6 @@ function Home() {
             </Route>
             <Route exact path="/home/patient/:id">
                 <PatientEdit handlePatientPatch={handlePatientPatch} handlePatientDelete={handlePatientDelete} />
-                <NewProcedure addProcedure={addProcedureState} />
             </Route>
         </Switch>
         </>

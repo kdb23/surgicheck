@@ -1,11 +1,13 @@
 import React, {useState} from 'react'
 import {Container, Form, Button} from 'react-bootstrap';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 
 
 function NewProcedure({addProcedure}) {
 
     const {id} = useParams();
+
+    const history = useHistory();
 
     const [addName, setAddName] = useState('')
     const [addSurgeon, setAddSurgeon] = useState('')
@@ -38,14 +40,15 @@ function NewProcedure({addProcedure}) {
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify(procedureObj),
         })
-            .then((r) => {
-                if(r.ok) {
-                    alert("Procedure addition successful")
-                    addProcedure(procedureObj)
-                } else {
-                    alert("Missing Information - Unable to Add New Procedure")
-                }
-            })
+        .then((r) => {
+            if(r.ok) {
+                alert("Procedure addition successful")
+                history.push('/home/patients')
+                addProcedure(procedureObj)
+            } else {
+                alert("Missing Information - Unable to Add New Procedure")
+            }
+        })
     }
 
     return(

@@ -37,22 +37,15 @@ class Procedure(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable = False)
     surgeon = db.Column(db.String, nullable = False)
-    service_line = db.Column(db.String, nullable = False)
+    service_line = db.Column(db.String)
     duration = db.Column(db.Integer)
-    location = db.Column(db.String, nullable = False)
+    location = db.Column(db.String)
     updated_at = db.Column(db.DateTime, server_default=db.func.now())
     created_at = db.Column(db.DateTime, onupdate=db.func.now())
     
-    checklists = db.relationship('Checklist', backref = 'procedure')
+    checklists = db.relationship('Checklist', backref = 'procedure', cascade='all, delete-orphan')
     patients = association_proxy('checklists', 'patient')
 
-    @validates('time')
-    def validate_time(self, key, value):
-        if value < '0700':
-            raise ValueError("Procedure cannot be scheduled before 0700")
-        elif value > '1800':
-            raise ValueError("Procedure cannot be scheduled after 1800")
-        return value
 
 class Patient(db.Model, SerializerMixin):
     __tablename__ = 'patients'
@@ -70,7 +63,7 @@ class Patient(db.Model, SerializerMixin):
     updated_at = db.Column(db.DateTime, server_default=db.func.now())
     created_at = db.Column(db.DateTime, onupdate=db.func.now())
 
-    checklists = db.relationship('Checklist', backref = 'patient')
+    checklists = db.relationship('Checklist', backref = 'patient', cascade = 'all, delete-orphan')
     procedures = association_proxy('checklists', 'procedure')
 
 
