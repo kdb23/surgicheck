@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {useHistory, useParams } from 'react-router-dom';
 import {Button, Form, Container, Row, Col} from 'react-bootstrap';
+import Table from 'react-bootstrap/Table'
 
 
 function PatientEdit({handlePatientPatch, handlePatientDelete}){
@@ -109,9 +110,9 @@ function PatientEdit({handlePatientPatch, handlePatientDelete}){
         )}
         </Col>
         <Col>
+        <h2>Procedures</h2>
         {proceduresList.length > 0 && (
         <div>
-            <h2>Procedures</h2>
             <ul>
                 {proceduresList.map((procedure) => {
                     return <li key = {procedure.id}>{procedure.name}</li>
@@ -121,24 +122,35 @@ function PatientEdit({handlePatientPatch, handlePatientDelete}){
         )}
         </Col>
         <Col>
+        <h2>Checklist</h2>
         {checklistInfo && (
             <div>
-                <h2>Checklist</h2>
                 <ul>
                     {checklistInfo.map((checklist) => {
-                        return <li key = {checklist.id}>
-                            <div>
-                            Patient History: {checklist.history}
-                            </div> <div>
-                            Anesthesia Consent: {checklist.anesthesia_consent}
-                            </div> <div>
-                            Surgical Consent: {checklist.surgical_consent}
-                            </div> <div>
-                            Imaging: {checklist.imaging}
-                            </div> <div>
-                            Education: {checklist.education}
-                            </div>
-                            </li>
+                        return <div key = {checklist.id}>
+                            <Table stripped bordered hover size="sm">
+                                <tr>
+                                    <td>Patient History:</td>
+                                    <td>{checklist.history}</td>
+                                </tr>
+                                <tr>
+                                    <td>Anesthesia Consent:</td>
+                                    <td>{checklist.anesthesia_consent}</td>
+                                </tr>
+                                <tr>
+                                    <td>Surgical Consent:</td>
+                                    <td>{checklist.surgical_consent}</td>
+                                </tr>
+                                <tr>
+                                    <td>Imaging:</td>
+                                    <td>{checklist.imaging}</td>
+                                </tr>
+                                <tr>
+                                    <td>Education:</td>
+                                    <td>{checklist.education}</td>
+                                </tr>
+                            </Table>
+                        </div>
                     })}
                 </ul>
             </div>
