@@ -28,7 +28,7 @@ class CreateTemporaryUser(Resource):
         new_password = data.get('password')
         if not new_username or not new_password:
             return {'error' : '400 Bad Request'}, 400
-        temporary_user = User(username = new_username, password = new_password, is_temporary=True)
+        temporary_user = User(username = new_username, password = new_password)
         db.session.add(temporary_user)
         db.session.commit()
         return {'message' : 'success'}, 201
@@ -50,7 +50,7 @@ class CheckSession(Resource):
 api.add_resource(Login, '/login', endpoint = 'login')
 api.add_resource(Logout, '/logout', endpoint = 'logout')
 api.add_resource(CheckSession, '/check_session', endpoint = 'check_session')
-api.add_resource(CreateTemporaryUser, '/admin/new_user')
+api.add_resource(CreateTemporaryUser, '/home/admin')
 
 class Home(Resource):
     def get(self):
