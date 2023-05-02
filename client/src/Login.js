@@ -2,6 +2,7 @@ import React, {useState, useContext} from 'react';
 import {useHistory} from 'react-router-dom';
 import {UserContext} from './context/user';
 import {Form, Button} from 'react-bootstrap'
+import SignUp from './SignUp';
 
 
 function Login() {
@@ -10,21 +11,19 @@ function Login() {
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [email, setEmail] = useState('');
     const [isLogin, setIsLogin] = useState(true)
     const [error, setError] = useState('')
 
+
     const history = useHistory();
     
-    function handleSubmit(e) {
+    function handleLogin(e) {
         e.preventDefault();
         setError('');
         fetch("/login", {
               method: "POST",
               headers: { "Content-Type": "application/json"},
               body: JSON.stringify({
-                  action: isLogin? 'login' : 'signup',
-                  email,
                   username,
                   password,
               }),
@@ -42,24 +41,14 @@ function Login() {
     }
 
 
+
+
     return(
-        <div>
-            <h2>{isLogin ? 'Login' : 'Sign Up'}</h2>
-            <Form onSubmit={handleSubmit}>
+      
+            <div>
+            <Form onSubmit={handleLogin}>
             <h1>Login to Access Patient Information</h1>
-            {!isLogin && (
-                <div>
-                    <label htmlFor='email'>Email Address:</label>
-                    <input
-                        type='email'
-                        id='email'
-                        autoComplete='off'
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                    />
-                </div>
-                 )}
-                 <label htmlFor='username'>Username</label>
+             <label htmlFor='username'>Username</label>
                  <input
                      type='username'
                      id='username'
@@ -76,11 +65,11 @@ function Login() {
                         onChange={(e) => setPassword(e.target.value)}
                     />
                 </div>
-            <Button variant='secondary' type='submit'>{isLogin ? 'Login' : 'Sign Up'}</Button>
+            <Button variant='secondary' type='submit'>Login</Button>
             </Form>
-                {error && <p>{error}</p>}
-                    <Button onClick={() => setIsLogin(!isLogin)}>Switch to {isLogin ? 'Sign Up' : 'Login'}</Button>
-        </div>
+            <SignUp />
+            </div>
+
     );
 }
 
