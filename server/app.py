@@ -11,9 +11,25 @@ class Login(Resource):
         password = data['password']
 
         user = User.query.filter(User.username == username).first()
-        if user.authenticate(password):
+        if user and user.authenticate(password):
             return user.to_dict(), 200
         return {'error': '401 Unauthroized'}, 401
+    
+class UserResource(Resource):
+    def post(self):
+        data = request.get_json()
+        username = data['username']
+        password = data['password']
+
+        if User.query.filter_by(username = username).first():
+            return {'error' : 'Username already exists'}, 400
+        
+        user = User(username=username)
+        user.password_hash = password
+        db.session.add(user)
+        db.session.commit()
+
+        return user.to_dict(), 201
 
 class Logout(Resource):
     def delete(self):
@@ -29,6 +45,7 @@ class CheckSession(Resource):
 
 
 api.add_resource(Login, '/login', endpoint = 'login')
+api.add_resource(UserResource, '/users', endpoint ='users')
 api.add_resource(Logout, '/logout', endpoint = 'logout')
 api.add_resource(CheckSession, '/check_session', endpoint = 'check_session')
 

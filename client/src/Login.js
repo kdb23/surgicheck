@@ -1,17 +1,26 @@
 import React, {useState, useContext} from 'react';
 import {useHistory} from 'react-router-dom';
 import {UserContext} from './context/user';
+import {Form, Button} from 'react-bootstrap'
+import SignUp from './SignUp';
 
 
 function Login() {
 
     const {setUser} = useContext(UserContext);
-
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const history = useHistory();
+    const [isVisiable, setisVisiable] = useState(false);
     
-    function handleSubmit(e) {
+
+    const history = useHistory();
+
+    const handleClose = () => {
+        setisVisiable(!isVisiable);
+    }
+    
+
+    function handleLogin(e) {
         e.preventDefault();
         fetch("/login", {
             method: "POST",
@@ -30,33 +39,38 @@ function Login() {
         
     }
 
+
     return(
-        <div>
-            <form onSubmit={handleSubmit}>
-            <h1>Login to Access Patient Information</h1>
+      
+            <div>
+            <Form onSubmit={handleLogin}>
+            <h1>Login to Access</h1>
+             <label htmlFor='username'>Username</label>
+                 <input
+                     type='username'
+                     id='username'
+                     autoComplete='off'
+                     value={username}
+                     onChange={(e) => setUsername(e.target.value)}
+                 />
                 <div>
-                <label htmlFor='username'>Username:</label>
-                <input
-                    type='text'
-                    id='username'
-                    autoComplete='off'
-                    value={username}
-                    onChange={(e)=> setUsername(e.target.value)}
-                />
+                    <label htmlFor='password'>Password:</label>
+                    <input
+                        type='password'
+                        autocomplete='off'
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
                 </div>
-                <div>
-                <label htmlFor="password">Password:</label>
-                <input
-                    type='password'
-                    id='password'
-                    autoComplete='off'
-                    value={password}
-                    onChange={(e)=> setPassword(e.target.value)}
-                />
-                </div>
-                <button type='submit'>Login</button>
-            </form>
-        </div>
+            <Button variant='secondary' type='submit'>Login</Button>
+            </Form>
+            <Button variant='secondary' onClick={handleClose}>Sign Up</Button>
+            {isVisiable && (
+                <SignUp />
+            )}
+            
+            </div>
+
     );
 }
 
