@@ -12,20 +12,20 @@ function SignUp() {
 
 
     const [error, setError] = useState('')
-    const [new_user, setnew_user] = useState('')
-    const [new_password, setnew_password] = useState('')
+    const [username, setUsername] = useState('')
+    const [password, setPassword] = useState('')
 
     const history = useHistory();
 
     function handleSignup(e) {
         e.preventDefault();
         setError('')
-        fetch("/login", {
+        fetch("/users", {
             method: "POST",
             headers: { "Content-Type" : "application/json"},
             body: JSON.stringify({
-                new_user,
-                new_password  
+                username,
+                password  
             }),
         })
         .then((response) => response.json())
@@ -43,20 +43,20 @@ function SignUp() {
        
             <Form onSubmit={handleSignup}>
                 <h2> Sign Up for Access</h2>
-                <label htmlFor='new_user'>Username:</label>
+                <label htmlFor='username'>Username:</label>
                 <input
                     type='username'
                     id='username'
                     autoComplete='off'
-                    onChange={(e) => setnew_user(e.target.value)}
+                    onChange={(e) => setUsername(e.target.value)}
                 />
                 <div>
-                    <label htmlFor='new_password'>Password:</label>
+                    <label htmlFor='password'>Password:</label>
                     <input 
                         type='password'
                         id='password'
                         autoComplete='off'
-                        onChange={(e) => setnew_password(e.target.value) }
+                        onChange={(e) => setPassword(e.target.value) }
                     />
                 </div>
                 <Button type='submit' variant='secondary'>Submit</Button>

@@ -11,15 +11,11 @@ function Login() {
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [isLogin, setIsLogin] = useState(true)
-    const [error, setError] = useState('')
-
 
     const history = useHistory();
     
     function handleLogin(e) {
         e.preventDefault();
-        setError('');
         fetch("/login", {
               method: "POST",
               headers: { "Content-Type": "application/json"},
@@ -34,14 +30,8 @@ function Login() {
                     setUser(data)
                     history.push('/home');
                 } 
-            })
-            .catch((error) => {
-                setError(error.message);
             }); 
     }
-
-
-
 
     return(
       
