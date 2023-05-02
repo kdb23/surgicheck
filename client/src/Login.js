@@ -8,12 +8,16 @@ import SignUp from './SignUp';
 function Login() {
 
     const {setUser} = useContext(UserContext);
-
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [isVisiable, setisVisiable] = useState(false);
     
 
     const history = useHistory();
+
+    const handleClose = () => {
+        setisVisiable(!isVisiable);
+    }
     
 
     function handleLogin(e) {
@@ -34,28 +38,6 @@ function Login() {
         });
         
     }
-
-
-    // function handleLogin(e) {
-    //     e.preventDefault();
-    //     fetch("/login", {
-    //           method: "POST",
-    //           headers: { "Content-Type": "application/json"},
-    //           body: JSON.stringify({
-    //               username,
-    //               password,
-    //           }),
-    //         })
-    //         .then((response) => response.json())
-    //         .then((data) => {
-    //             if (data.user) {
-    //                 setUser(data)
-    //                 history.push("/home");
-    //             } else {
-    //                 alert('Unable to login. Please Check Username or Password')
-    //             }
-    //         }); 
-    // }
 
 
     return(
@@ -82,6 +64,11 @@ function Login() {
                 </div>
             <Button variant='secondary' type='submit'>Login</Button>
             </Form>
+            <Button variant='secondary' onClick={handleClose}>Sign Up</Button>
+            {isVisiable && (
+                <SignUp />
+            )}
+            
             </div>
 
     );
