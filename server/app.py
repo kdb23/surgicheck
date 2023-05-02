@@ -11,9 +11,28 @@ class Login(Resource):
         password = data['password']
 
         user = User.query.filter(User.username == username).first()
-        if user.authenticate(password):
+        if user and user.authenticate(password):
+            session['user_id'] = user.id
             return user.to_dict(), 200
         return {'error': '401 Unauthroized'}, 401
+    
+class CreateTemporaryUser(Resource):
+    def post(self):
+        data = request.get_json()
+        if not session.get('user_id'):
+            return {'error' : '401 Unauthorized'}, 401
+        user = User.query.filter(User.id == session['user_id']).first()
+        if not user.is_admin:
+            return{'error' : '403 Forbidden'}, 403
+        new_username = data.get('username')
+        new_password = data.get('password')
+        if not new_username or not new_password:
+            return {'error' : '400 Bad Request'}, 400
+        temporary_user = User(username = new_username, password = new_password, is_temporary=True)
+        db.session.add(temporary_user)
+        db.session.commit()
+        return {'message' : 'success'}, 201
+        
 
 class Logout(Resource):
     def delete(self):
@@ -31,6 +50,7 @@ class CheckSession(Resource):
 api.add_resource(Login, '/login', endpoint = 'login')
 api.add_resource(Logout, '/logout', endpoint = 'logout')
 api.add_resource(CheckSession, '/check_session', endpoint = 'check_session')
+api.add_resource(CreateTemporaryUser, '/admin/new_user')
 
 class Home(Resource):
     def get(self):
