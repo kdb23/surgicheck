@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {Route, Switch} from 'react-router-dom';
 import AdminInfo from './AdminInfo';
-import NewSurgeon from './NewSurgeon';
 import NewPatient from './NewPatient';
 import PatientEdit from './PatientEdit';
 import PatientContainer from './PatientContainer';
@@ -65,8 +64,7 @@ function Home() {
               </div>
             </Route>
             <Route exact path="/home/admin">
-                <AdminInfo />
-                <NewSurgeon addProcedure={addProcedureState} />
+                <AdminInfo addProcedure={addProcedureState}/>
             </Route>
             <Route exact path="/home/patients">
                 <PatientContainer patients={patients} handlePatientSearch={handlePatientSearch} />
@@ -76,7 +74,6 @@ function Home() {
             </Route>
             <Route exact path="/home/patient/:id">
                 <PatientEdit handlePatientPatch={handlePatientPatch} handlePatientDelete={handlePatientDelete} addProcedure={addProcedureState} />
-
             </Route>
         </Switch>
         </>

@@ -1,11 +1,11 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import {Row, Col} from 'react-bootstrap'
+import {Row, Col} from 'react-bootstrap';
 
 
-function Patient({id, name, dob, mrn, surgeries, patientList }) {
-    
-    console.log(surgeries)
+
+function Patient({id, name, dob, mrn, surgeries}) {
+
 
     return(
         <Row className='my-2 border'>
