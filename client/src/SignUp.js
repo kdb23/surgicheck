@@ -32,7 +32,9 @@ function SignUp() {
         .then((data) => {
             if(data.user) {
                 setUser(data)
-            } 
+            } else {
+                setError(data.message);
+            }
         })
         .catch((error) => {
             setError(error.message)

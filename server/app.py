@@ -11,7 +11,7 @@ class Login(Resource):
         password = data['password']
 
         user = User.query.filter(User.username == username).first()
-        if user.authenticate(password):
+        if user and user.authenticate(password):
             return user.to_dict(), 200
         return {'error': '401 Unauthroized'}, 401
     

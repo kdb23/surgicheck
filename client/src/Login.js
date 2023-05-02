@@ -11,33 +11,58 @@ function Login() {
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    
 
     const history = useHistory();
     
+
     function handleLogin(e) {
         e.preventDefault();
         fetch("/login", {
-              method: "POST",
-              headers: { "Content-Type": "application/json"},
-              body: JSON.stringify({
-                  username,
-                  password,
-              }),
-            })
-            .then((response) => response.json())
-            .then((data) => {
-                if (data.user) {
-                    setUser(data)
-                    history.push('/home');
-                } 
-            }); 
+            method: "POST",
+            headers: { "Content-Type": "application/json"},
+            body: JSON.stringify({username, password}),
+        }).then((r) => {
+            if(r.ok) {
+                r.json().then((user) => {
+                    setUser(user);
+                    history.push('/home')
+                });
+            } else {
+                alert('Unable to login. Please Check Your Username and Password.')
+            }
+        });
+        
     }
+
+
+    // function handleLogin(e) {
+    //     e.preventDefault();
+    //     fetch("/login", {
+    //           method: "POST",
+    //           headers: { "Content-Type": "application/json"},
+    //           body: JSON.stringify({
+    //               username,
+    //               password,
+    //           }),
+    //         })
+    //         .then((response) => response.json())
+    //         .then((data) => {
+    //             if (data.user) {
+    //                 setUser(data)
+    //                 history.push("/home");
+    //             } else {
+    //                 alert('Unable to login. Please Check Username or Password')
+    //             }
+    //         }); 
+    // }
+
 
     return(
       
             <div>
             <Form onSubmit={handleLogin}>
-            <h1>Login to Access Patient Information</h1>
+            <h1>Login to Access</h1>
              <label htmlFor='username'>Username</label>
                  <input
                      type='username'
@@ -57,7 +82,6 @@ function Login() {
                 </div>
             <Button variant='secondary' type='submit'>Login</Button>
             </Form>
-            <SignUp />
             </div>
 
     );
