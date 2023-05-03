@@ -29,6 +29,12 @@ class User(db.Model, SerializerMixin):
             self._password_hash, password.encode( 'utf-8')
         )
     
+    @validates('_password_hash')
+    def validate_password(self, key, value):
+        if len(value) > 8:
+            raise ValueError('Password Must be atleast 8 Characters')
+        return value
+    
 class Procedure(db.Model, SerializerMixin):
     __tablename__ = 'procedures'
 
