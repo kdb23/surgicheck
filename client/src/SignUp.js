@@ -19,6 +19,10 @@ function SignUp() {
     function handleSignup(e) {
         e.preventDefault();
         setError('')
+        if (password.length < 8) {
+            window.alert('Password must be at least 8 characters');
+            return;
+        }
         fetch("/users", {
             method: "POST",
             headers: { "Content-Type" : "application/json"},
