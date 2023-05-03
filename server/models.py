@@ -10,7 +10,7 @@ class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
 
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String, nullable=False)
+    username = db.Column(db.String, nullable=False, unique=True)
     _password_hash = db.Column(db.String, nullable=False)
 
     @hybrid_property
@@ -41,8 +41,8 @@ class Procedure(db.Model, SerializerMixin):
     serialize_rules = ('-updated_at', '-created_at', '-checklists', '-patients')
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String, nullable = False)
-    surgeon = db.Column(db.String, nullable = False)
+    name = db.Column(db.String, nullable=False)
+    surgeon = db.Column(db.String, nullable=False)
     service_line = db.Column(db.String, nullable=False)
     duration = db.Column(db.Integer)
     location = db.Column(db.String)
@@ -66,9 +66,9 @@ class Patient(db.Model, SerializerMixin):
     serialize_rules = ('-updated_at', '-created_at', '-procedures', '-checklists.patient')
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String, nullable = False)
-    dob = db.Column(db.String, nullable = False)
-    mrn = db.Column(db.String, nullable = False)
+    name = db.Column(db.String, nullable=False)
+    dob = db.Column(db.String, nullable=False)
+    mrn = db.Column(db.String, nullable=False, unique=True)
     image = db.Column(db.String)
     address = db.Column(db.String)
     phone = db.Column(db.Integer)

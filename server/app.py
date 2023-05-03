@@ -91,7 +91,7 @@ class Patients(Resource):
                 primary = data['primary']
             )
         except:
-            return make_response({'error': ' 400 Unable to process request'}, 400)
+            return make_response({'error': ' 400 Unable to process request, Missing Information'}, 400)
         db.session.add(new_patient)
         db.session.commit()
         return make_response(new_patient.to_dict(), 201)
