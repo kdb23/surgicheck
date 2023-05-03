@@ -17,34 +17,43 @@ function SignUp() {
 
     function handleSignup(e) {
         e.preventDefault();
-        setError('')
-        if (password.length < 8) {
-            window.alert('Password must be at least 8 characters');
-            return;
-        } else if (username == username) {
-            window.alert('Username is Already Taken');
-            return;
-        }
-        fetch("/users", {
-            method: "POST",
-            headers: { "Content-Type" : "application/json"},
-            body: JSON.stringify({
-                username,
-                password  
-            }),
-        })
-        .then((response) => response.json())
-        .then((data) => {
-            if(data.user) {
-                setUser(data)
-            } else {
-                setError(data.message);
-            }
-        })
-        .catch((error) => {
-            setError(error.message)
-        });
+        setError('');
+        fetch("/users/list")
+            .then(response => response.json())
+            .then(users => {
+                const usernames = users.map(user => user.username);
+                if (usernames.includes(username)){
+                    window.alert("Username is already taken");
+                    return;
+                } else if (password.length < 8) {
+                    window.alert('Password must be at least 8 characters');
+                    return;
+                }
+                fetch("/users", {
+                    method: "POST",
+                    headers: { "Content-Type" : "application/json"},
+                    body: JSON.stringify({
+                        username,
+                        password  
+                    }),
+                })
+                .then((response) => response.json())
+                .then((data) => {
+                    if(data.user) {
+                        setUser(data);
+                    } else {
+                        setError(data.message);
+                    }
+                })
+                .catch((error) => {
+                    setError(error.message);
+                });
+            })
+            .catch((error) => {
+                setError(error.message);
+            });
     }
+
 
     return (
         
@@ -69,7 +78,7 @@ function SignUp() {
                 </div>
                 <Button type='submit' variant='secondary'>Submit</Button>
             </Form>
-            {error & <p>{error}</p>}
+            {error && <p>{error}</p>}
             </div>
     
     )

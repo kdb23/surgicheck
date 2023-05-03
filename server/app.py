@@ -15,6 +15,12 @@ class Login(Resource):
             return user.to_dict(), 200
         return {'error': '401 Unauthroized'}, 401
     
+class UsersList(Resource):
+    def get(self):
+        list = User.query.all()
+        list_dict = [l.to_dict() for l in list]
+        return make_response(list_dict, 200)
+
 class UserResource(Resource):
     def post(self):
         data = request.get_json()
@@ -26,7 +32,6 @@ class UserResource(Resource):
 
         if User.query.filter_by(username = username).first():
             return {'error' : 'Username already exists'}, 400
-        
         
         user = User(username=username)
         user.password_hash = password
@@ -50,6 +55,7 @@ class CheckSession(Resource):
 
 api.add_resource(Login, '/login', endpoint = 'login')
 api.add_resource(UserResource, '/users', endpoint ='users')
+api.add_resource(UsersList, '/users/list', endpoint='users_list')
 api.add_resource(Logout, '/logout', endpoint = 'logout')
 api.add_resource(CheckSession, '/check_session', endpoint = 'check_session')
 
