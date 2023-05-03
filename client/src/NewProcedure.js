@@ -51,7 +51,9 @@ function NewProcedure({addProcedure}) {
                         .then((r) => r.json())
                         .then((patientList) => setPatientList(patientList))
                 } else {
-                    alert("Missing Information - Unable to Add New Procedure")
+                    r.json().then(data => {
+                        alert(data.error)
+                    })
                 }
             })
         

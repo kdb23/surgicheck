@@ -43,7 +43,7 @@ class Procedure(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable = False)
     surgeon = db.Column(db.String, nullable = False)
-    service_line = db.Column(db.String)
+    service_line = db.Column(db.String, nullable=False)
     duration = db.Column(db.Integer)
     location = db.Column(db.String)
     updated_at = db.Column(db.DateTime, server_default=db.func.now())
@@ -51,6 +51,13 @@ class Procedure(db.Model, SerializerMixin):
     
     checklists = db.relationship('Checklist', backref = 'procedure', cascade='all, delete-orphan')
     patients = association_proxy('checklists', 'patient')
+
+    @validates('service-line')
+    def validate_service(self, key, value):
+        service = ['Vascular', 'Thoracic', 'Plastics', 'GYN', 'ENT', 'General', 'Urology', 'Orthopedics', 'Neuro', 'Trauma']
+        if not service:
+            raise ValueError("Error: service not in the approved service line")
+        return value
 
 
 class Patient(db.Model, SerializerMixin):

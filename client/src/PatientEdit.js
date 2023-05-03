@@ -5,7 +5,7 @@ import Table from 'react-bootstrap/Table'
 import NewProcedure from './NewProcedure';
 
 
-function PatientEdit({handlePatientPatch, handlePatientDelete, addProcedureState}){
+function PatientEdit({handlePatientPatch, handlePatientDelete}){
 
     const history = useHistory();
     const [patientInfo, setPatientInfo] = useState([])

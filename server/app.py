@@ -214,17 +214,20 @@ class PatientProcedures(Resource):
         patient = Patient.query.filter_by(id = id).first()
         if not patient:
             return make_response({'error': '404 Patient Not Found'}, 404)
-        procedure = Procedure(
-            name = data['name'],
-            surgeon = data['surgeon'],
-            service_line = data['service_line'],
-            duration = data['duration'],
-            location = data['location'],
-        )
-        checklist = Checklist(patient = patient, procedure = procedure)
-        db.session.add(procedure)
-        db.session.add(checklist)
-        db.session.commit()
+        try:
+            procedure = Procedure(
+                name = data['name'],
+                surgeon = data['surgeon'],
+                service_line = data['service_line'],
+                duration = data['duration'],
+                location = data['location'],
+            )
+            checklist = Checklist(patient = patient, procedure = procedure)
+            db.session.add(procedure)
+            db.session.add(checklist)
+            db.session.commit()
+        except ValueError as error:
+            return make_response({'error' : 'Service not in the approved service line'}, 400)
         return make_response(procedure.to_dict(), 201)
     
 api.add_resource(PatientProcedures, '/patients/<int:id>/procedures')
