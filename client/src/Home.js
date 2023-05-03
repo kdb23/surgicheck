@@ -22,6 +22,12 @@ function Home() {
             .then(setPatients)
     }, [])
 
+    useEffect(() => {
+      fetch('/procedures')
+        .then((r) => r.json())
+        .then(setProcedures)
+    }, [])
+
     const addPatientState = (newPatientObj) => {
       setPatients([...patients, newPatientObj])
     }
@@ -64,7 +70,7 @@ function Home() {
               </div>
             </Route>
             <Route exact path="/home/admin">
-                <AdminInfo addProcedure={addProcedureState}/>
+                <AdminInfo addProcedure={addProcedureState} procedures={procedures} />
             </Route>
             <Route exact path="/home/patients">
                 <PatientContainer patients={patients} handlePatientSearch={handlePatientSearch} />
