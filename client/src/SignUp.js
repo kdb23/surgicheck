@@ -21,9 +21,9 @@ function SignUp() {
         if (password.length < 8) {
             window.alert('Password must be at least 8 characters');
             return;
-        } else if (username == username) {
-            window.alert('Username is Already Taken');
-            return;
+        // } else if (username == username) {
+        //     window.alert('Username is Already Taken');
+        //     return;
         }
         fetch("/users", {
             method: "POST",
