@@ -1,4 +1,3 @@
-
 import React, {useState, useContext} from 'react';
 import {useHistory} from 'react-router-dom';
 import {UserContext} from './context/user';
@@ -42,7 +41,8 @@ function SignUp() {
     }
 
     return (
-       
+        
+        <div>
             <Form onSubmit={handleSignup}>
                 <h2> Sign Up for Access</h2>
                 <label htmlFor='username'>Username:</label>
@@ -63,6 +63,8 @@ function SignUp() {
                 </div>
                 <Button type='submit' variant='secondary'>Submit</Button>
             </Form>
+            {error & <p>{error}</p>}
+            </div>
     
     )
 }

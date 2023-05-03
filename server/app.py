@@ -21,8 +21,12 @@ class UserResource(Resource):
         username = data['username']
         password = data['password']
 
+        if len(password) < 8:
+            return make_response({'error' : 'Password must be at least 8 characters long'}, 400)
+
         if User.query.filter_by(username = username).first():
             return {'error' : 'Username already exists'}, 400
+        
         
         user = User(username=username)
         user.password_hash = password
