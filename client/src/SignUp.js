@@ -1,5 +1,4 @@
 import React, {useState, useContext} from 'react';
-import {useHistory} from 'react-router-dom';
 import {UserContext} from './context/user';
 import {Form, Button} from 'react-bootstrap'
 
@@ -14,7 +13,7 @@ function SignUp() {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
 
-    const history = useHistory();
+
 
     function handleSignup(e) {
         e.preventDefault();
