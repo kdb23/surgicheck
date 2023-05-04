@@ -69,7 +69,7 @@ class Patient(db.Model, SerializerMixin):
     name = db.Column(db.String, nullable=False)
     dob = db.Column(db.String, nullable=False)
     mrn = db.Column(db.String, nullable=False, unique=True)
-    image = db.Column(db.String)
+    # image = db.Column(db.String)
     address = db.Column(db.String)
     phone = db.Column(db.Integer)
     primary = db.Column(db.String)
