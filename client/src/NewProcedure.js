@@ -86,15 +86,15 @@ function NewProcedure({addProcedure}) {
                 <Form.Group>
                 <Form.Select>
                     <option>Select a Service Lilne</option>
-                    <option value='option1'>Vascular</option>
-                    <option value='option2'>Thoracic</option>
-                    <option value='option3'>Plastics</option>
-                    <option value='option4'>GYN</option>
-                    <option value='option5'>ENT</option>
-                    <option value='option6'>General</option>
-                    <option value='option7'>Urology</option>
-                    <option value='option8'>Orthopedics</option>
-                    <option value='option9'>Neuro</option>
+                    <option value='Vascular'>Vascular</option>
+                    <option value='Thoracic'>Thoracic</option>
+                    <option value='Plastics'>Plastics</option>
+                    <option value='GYN'>GYN</option>
+                    <option value='ENT'>ENT</option>
+                    <option value='General'>General</option>
+                    <option value='Urology'>Urology</option>
+                    <option value='Orthopedic'>Orthopedics</option>
+                    <option value='Neuro'>Neuro</option>
                     onChange={handleService}
                 </Form.Select>
                 </Form.Group>
