@@ -136,20 +136,22 @@ api.add_resource(PatientById, '/patients/<int:id>')
 
 class Procedures(Resource):
     def get(self):
-        surgery = Procedure.query.all()
+        procedures = Procedure.query.all()
         surgery_list = []
-        for s in surgery:
+        for procedure in procedures:
+            patients = [patient.to_dict() for patient in procedure.patients]
             s_dict = {
-                'id': s.id,
-                'name' : s.name,
-                'surgeon' : s.surgeon,
-                'service_line' : s.service_line,
-                'duration' : s.duration,
-                'location' : s.location
+                'id': procedure.id,
+                'name' : procedure.name,
+                'surgeon' : procedure.surgeon,
+                'service_line' : procedure.service_line,
+                'duration' : procedure.duration,
+                'location' : procedure.location,
+                'patients' : patients
             }
             surgery_list.append(s_dict)
-        return make_response(jsonify(surgery_list), 200)
-    
+        return make_response(surgery_list, 200)
+
     def post (self):
         data = request.get_json()
         try:

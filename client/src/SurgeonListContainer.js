@@ -15,6 +15,8 @@ function SurgeonListContainer({procedures}) {
             return (
                 <div key={patient.id}>
                     <p>{patient.name}</p>
+                    <p>{patient.dob}</p>
+                    <p>{patient.mrn}</p>
                 </div>
             )
         })
