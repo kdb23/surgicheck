@@ -13,7 +13,7 @@ function SurgeonListContainer({procedures, handleSurgeonSearch}) {
     };
 
     const filteredSurgeons = procedures.filter(surgeryObj => {
-        return surgeryObj.surgeon.toLowerCase().includes(searchDoctor)
+        return surgeryObj.surgeon.toLowerCase().includes(searchDoctor) || surgeryObj.service_line.toLowerCase().includes(searchDoctor);
     });
 
     
@@ -43,7 +43,7 @@ function SurgeonListContainer({procedures, handleSurgeonSearch}) {
                         <Form.Control
                             type='text'
                             id='search'
-                            placeholder='Type Surgeons Name'
+                            placeholder='Type Surgeons Name OR Service Line'
                             onChange={handleSearch}
                         />
                         {surgeryList}
