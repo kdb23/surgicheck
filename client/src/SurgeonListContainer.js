@@ -1,25 +1,27 @@
 import React, {useState} from 'react'
-import {Button, Container} from 'react-bootstrap'
+import {Button, Container, Form, Row} from 'react-bootstrap'
 import SurgeonList from './SurgeonList'
 
-function SurgeonListContainer({procedures}) {
+function SurgeonListContainer({procedures, handleSurgeonSearch}) {
 
     const [isVisible, setIsVisible] = useState(false)
+    const [searchDoctor, setSearchDoctor] = useState('');
 
+    const handleSearch = (e) => {
+        const newSearchTerm = e.target.value.toLowerCase();
+        setSearchDoctor(newSearchTerm);
+    };
+
+    const filteredSurgeons = procedures.filter(surgeryObj => {
+        return surgeryObj.surgeon.toLowerCase().includes(searchDoctor)
+    });
+
+    
     const handleClose = () => {
         setIsVisible(!isVisible);
     }
 
-    const surgeryList = procedures.map((surgeryObj) => {
-        const patients = surgeryObj.patients?.map((patient) => {
-            return (
-                <div key={patient.id}>
-                    <p>{patient.name}</p>
-                    <p>{patient.dob}</p>
-                    <p>{patient.mrn}</p>
-                </div>
-            )
-        })
+    const surgeryList = filteredSurgeons.map((surgeryObj) => {
         return <SurgeonList
                 key = {surgeryObj.id}
                 name = {surgeryObj.name}
@@ -27,7 +29,7 @@ function SurgeonListContainer({procedures}) {
                 service_line = {surgeryObj.service_line}
                 duration = {surgeryObj.duration}
                 location = {surgeryObj.location}
-                patients = {patients}
+                handleSurgeonSearch = {handleSurgeonSearch}
                 />
     })
 
@@ -37,7 +39,15 @@ function SurgeonListContainer({procedures}) {
             <Button onClick={handleClose}>Surgeon List</Button>
             {isVisible && (
                 <Container className='mt-5'>
-                    {surgeryList}
+                    <Row>
+                        <Form.Control
+                            type='text'
+                            id='search'
+                            placeholder='Type Surgeons Name'
+                            onChange={handleSearch}
+                        />
+                        {surgeryList}
+                    </Row>
                 </Container>
             )}
         </div>

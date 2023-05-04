@@ -1,16 +1,13 @@
 import React from 'react'
 import {Row, Col} from 'react-bootstrap'
 
-function SurgeonList({name, surgeon, service_line, duration, location, patients}) {
+function SurgeonList({name, surgeon, service_line}) {
 
     return(
         <Row className='my-2 border'>
-            <Col>{name}</Col>
-            <Col>{surgeon}</Col>
-            <Col>{patients}</Col>
             <Col>{service_line}</Col>
-            <Col>{duration}</Col>
-            <Col>{location}</Col>
+            <Col>{surgeon}</Col>
+            <Col>{name}</Col>
         </Row>
     )
 }

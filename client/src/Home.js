@@ -14,6 +14,7 @@ function Home() {
     const [patients, setPatients] = useState([]);
     const [procedures, setProcedures] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
+    const [searchDoctor, setSearchDoctor] = useState('')
   
 
     useEffect(() => {
@@ -55,7 +56,7 @@ function Home() {
 
     const handlePatientSearch = newString => setSearchTerm(newString.toLowerCase())
 
-    
+    const handleSurgeonSearch = newString => setSearchDoctor(newString.toLowerCase())
 
 
     return(
@@ -70,7 +71,7 @@ function Home() {
               </div>
             </Route>
             <Route exact path="/home/admin">
-                <AdminInfo addProcedure={addProcedureState} procedures={procedures} />
+                <AdminInfo addProcedure={addProcedureState} procedures={procedures} handleSurgeonSearch={handleSurgeonSearch} />
             </Route>
             <Route exact path="/home/patients">
                 <PatientContainer patients={patients} handlePatientSearch={handlePatientSearch} />
