@@ -12,7 +12,7 @@ def make_procedures():
     amputation = Procedure(
         id=1,
         name='Amputation',
-        surgeon='Castroviejo',
+        surgeon='Matthew Castroviejo',
         service_line='Vascular',
         duration= 60,
         location='Main',
@@ -21,7 +21,7 @@ def make_procedures():
     fempop = Procedure(
         id=2,
         name='Femoropopliteal Bypass',
-        surgeon='Castroviejo',
+        surgeon='Matthew Castroviejo',
         service_line='Vascular',
         duration=240,
         location='Main'
@@ -30,7 +30,7 @@ def make_procedures():
     wedge = Procedure(
         id=3,
         name='VATS Wedge Resection',
-        surgeon='Harken',
+        surgeon='Daniel Harken',
         service_line='Thoracic',
         duration=200,
         location='Main'
@@ -39,7 +39,7 @@ def make_procedures():
     lobe = Procedure(
         id= 4,
         name='VATS Lobectomy',
-        surgeon='Harken',
+        surgeon='Daniel Harken',
         service_line='Thoracic',
         duration=180,
         location='Main'
@@ -48,7 +48,7 @@ def make_procedures():
     abdomin = Procedure(
         id= 5,
         name='Abdominoplasty',
-        surgeon='Mouchantat',
+        surgeon='Richard Mouchantat',
         service_line='Plastics',
         duration=180,
         location='Main'
@@ -57,7 +57,7 @@ def make_procedures():
     scar = Procedure(
         id= 6,
         name='Scar Revision',
-        surgeon='Mouchantat',
+        surgeon='Richard Mouchantat',
         service_line='Plastics',
         duration=45,
         location='SAG'
@@ -66,7 +66,7 @@ def make_procedures():
     tah = Procedure(
         id= 7,
         name='Total Abdominal Hysterectomy',
-        surgeon='Masterson',
+        surgeon='Kyle Masterson',
         service_line='GYN',
         duration=90,
         location='Main'
@@ -75,7 +75,7 @@ def make_procedures():
     fess = Procedure(
         id= 8,
         name='Functional Endoscopic Sinus Surgery',
-        surgeon='Esau',
+        surgeon='Esau Felton',
         service_line='ENT',
         duration=75,
         location='Main'
@@ -84,7 +84,7 @@ def make_procedures():
     hernia_open = Procedure(
         id= 9,
         name='Open Hernia Repair',
-        surgeon='Hwang',
+        surgeon='Richard Hwang',
         service_line='General',
         duration=45,
         location='SAG'
@@ -93,7 +93,7 @@ def make_procedures():
     lapcholy = Procedure(
         id= 10,
         name='Laparoscopic Cholecystectomy',
-        surgeon='Hwang',
+        surgeon='Richard Hwang',
         service_line='General',
         duration=60,
         location='SAG'
@@ -102,7 +102,7 @@ def make_procedures():
     neck = Procedure(
         id= 11,
         name='Radial Neck Dissection with Anterolateral Free Flap',
-        surgeon='Esau',
+        surgeon='Esau Felton',
         service_line='ENT',
         duration=720,
         location='Main'
@@ -111,7 +111,7 @@ def make_procedures():
     stent = Procedure(
         id= 12,
         name='Cystoscopy with Stent Placement',
-        surgeon='Gail',
+        surgeon='Gail Grubbs',
         service_line='Urology',
         duration=60,
         location='SAG'
@@ -120,7 +120,7 @@ def make_procedures():
     no_stent = Procedure(
         id= 13,
         name='Cystoscopy without Stent Placement',
-        surgeon='Gail',
+        surgeon='Gail Grubbs',
         service_line='Urology',
         duration=30,
         location='SAG'
@@ -129,7 +129,7 @@ def make_procedures():
     tka = Procedure(
         id= 14,
         name='Total Knee Arthroplasty',
-        surgeon='White',
+        surgeon='Bryan White',
         service_line='Orthopedics',
         duration=90,
         location='SAG'
@@ -138,7 +138,7 @@ def make_procedures():
     hip = Procedure(
         id= 15,
         name='Total IM Hip Nailing',
-        surgeon='White',
+        surgeon='Bryan White',
         service_line='Orthopedics',
         duration=30,
         location='Main'
@@ -147,7 +147,7 @@ def make_procedures():
     acdf = Procedure(
         id= 16,
         name='Anterior Cervical Discectomy and Fusion',
-        surgeon='Hsu',
+        surgeon='Wesley Hsu',
         service_line='Neuro',
         duration=90,
         location='Main'
@@ -156,7 +156,7 @@ def make_procedures():
     carotid_neuro = Procedure(
         id= 17,
         name='Carotid Endarterectomy',
-        surgeon='Wilson',
+        surgeon='John Wilson',
         service_line='Neuro',
         duration=120,
         location='Main'
@@ -165,7 +165,7 @@ def make_procedures():
     tumor = Procedure(
         id= 18,
         name='Intradural Tumor Resection',
-        surgeon='Hsu',
+        surgeon='Wesley Hsu',
         service_line='Neuro',
         duration=60,
         location='Main'
@@ -174,7 +174,7 @@ def make_procedures():
     brain = Procedure(
         id= 19,
         name='Brain Aneurysm Clipping',
-        surgeon='Wilson',
+        surgeon='John Wilson',
         service_line='Neuro',
         duration=60,
         location='Main'
@@ -183,7 +183,7 @@ def make_procedures():
     carotid_vas = Procedure(
         id= 20,
         name='Carotid Endarterectomy',
-        surgeon='Castroviejo',
+        surgeon='Charles Castroviejo',
         service_line='Vascular',
         duration=120,
         location='Main'
