@@ -100,8 +100,7 @@ class Patients(Resource):
             )
             db.session.add(new_patient)
             db.session.commit()
-        except:
-            
+        except ValueError: 
             return make_response({'error': ' 400 Unable to process request, Missing Information'}, 400)
         return make_response(new_patient.to_dict(), 201)
 
@@ -163,10 +162,10 @@ class Procedures(Resource):
                 duration = data['duration'],
                 location = data['location']
             )
-        except:
+            db.session.add(new_procedure)
+            db.session.commit()
+        except ValueError:
             return make_response({'error' : 'Uanble to Add Procedure'}, 400)
-        db.session.add(new_procedure)
-        db.session.commit()
         return make_response(new_procedure.to_dict(), 201)
 
     

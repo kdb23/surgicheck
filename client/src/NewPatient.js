@@ -10,6 +10,7 @@ function NewPatient({addPatient}) {
     const [addAddress, setAddAddress] = useState('')
     const [addPhone, setAddPhone] = useState('')
     const [addPrimary, setAddPrimary] = useState('')
+    const [error, setError] = useState('')
 
     const handleName = e => setAddName(e.target.value)
     const handleDOB = e => setAddDOB(e.target.value)
@@ -32,6 +33,9 @@ function NewPatient({addPatient}) {
 
     const handleSubmit = (e) => {
         e.preventDefault()
+        if (!addName || !addDOB || !addMRN) {
+            setError('Patient must have name, dob, and mrn')
+        } else {
         fetch('/patients', {
             method: "POST",
             headers: {"Content-Type": "application/json"},
@@ -39,12 +43,8 @@ function NewPatient({addPatient}) {
         })
         .then(response => {
             if (!response.ok) {
-                throw new Error('Unable to add patient');
-                alert('Patient')
-                // error state - throw error //
-                
+                throw new Error('Unable to add patient'); 
             }
-            console.log(!response.ok)
                 return response.json();
             })
         .then(newPatient => {
@@ -52,7 +52,12 @@ function NewPatient({addPatient}) {
             alert('Patient has been added');
             history.push('/home/patients');
         })
-    }
+        .catch(error => {
+            setError(error.message);
+        });
+
+        }
+    };
 
 
     return(
@@ -60,6 +65,7 @@ function NewPatient({addPatient}) {
         <div>
             <h2 className='text-center'>Add New Patient</h2>
             <p className='text-center'>All fields with * must be filled before patient can be added</p>
+            {error && <div className='alert alert-danger'>{error}</div>}
             <Form onSubmit={handleSubmit}>
                 <Form.Group>
                 <Form.Label>Patient Name *:</Form.Label>
