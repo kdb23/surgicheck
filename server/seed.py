@@ -12,7 +12,7 @@ def make_procedures():
     amputation = Procedure(
         id=1,
         name='Amputation',
-        surgeon='Matthew Castroviejo',
+        surgeon='Matthew Edwards',
         service_line='Vascular',
         duration= 60,
         location='Main',
@@ -21,7 +21,7 @@ def make_procedures():
     fempop = Procedure(
         id=2,
         name='Femoropopliteal Bypass',
-        surgeon='Matthew Castroviejo',
+        surgeon='Matthew Edwards',
         service_line='Vascular',
         duration=240,
         location='Main'
@@ -30,7 +30,7 @@ def make_procedures():
     wedge = Procedure(
         id=3,
         name='VATS Wedge Resection',
-        surgeon='Daniel Harken',
+        surgeon='Nicholas Karis',
         service_line='Thoracic',
         duration=200,
         location='Main'
@@ -39,7 +39,7 @@ def make_procedures():
     lobe = Procedure(
         id= 4,
         name='VATS Lobectomy',
-        surgeon='Daniel Harken',
+        surgeon='Nicholas Karis',
         service_line='Thoracic',
         duration=180,
         location='Main'
@@ -66,7 +66,7 @@ def make_procedures():
     tah = Procedure(
         id= 7,
         name='Total Abdominal Hysterectomy',
-        surgeon='Kyle Masterson',
+        surgeon='Katlynn Waugh',
         service_line='GYN',
         duration=90,
         location='Main'
@@ -183,7 +183,7 @@ def make_procedures():
     carotid_vas = Procedure(
         id= 20,
         name='Carotid Endarterectomy',
-        surgeon='Charles Castroviejo',
+        surgeon='Matthew Goldman',
         service_line='Vascular',
         duration=120,
         location='Main'
