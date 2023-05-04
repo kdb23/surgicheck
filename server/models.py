@@ -58,6 +58,24 @@ class Procedure(db.Model, SerializerMixin):
         if not service:
             raise ValueError("Error: service not in the approved service line")
         return value
+    
+    @validates('name')
+    def validate_name(self, key, value):
+        if not value:
+            raise ValueError('Name, Surgeon, and Service Line is Required to Create a Procedure')
+        return value
+    
+    @validates('surgeon')
+    def validate_surgeon(self, key, value):
+        if not value:
+            raise ValueError('Name, Surgeon, and Service Line is Required to Create a Procedure')
+        return value
+    
+    @validates('service_line')
+    def validate_service(self, key, value):
+        if not value:
+            raise ValueError('Name, Surgeon, and Service Line is Required to Create a Procedure')
+        return value
 
 
 class Patient(db.Model, SerializerMixin):
@@ -77,6 +95,25 @@ class Patient(db.Model, SerializerMixin):
 
     checklists = db.relationship('Checklist', backref = 'patient', cascade = 'all, delete-orphan')
     procedures = association_proxy('checklists', 'procedure')
+
+
+    @validates('name')
+    def validate_name(self, key, value):
+        if not value:
+            raise ValueError('Patient Name, DOB, and MRN is Required to Create a Patient')
+        return value
+    
+    @validates('dob')
+    def validate_dob(self, key, value):
+        if not value:
+            raise ValueError('Patient Name, DOB, and MRN is Required to Create a Patient')
+        return value
+    
+    @validates('mrn')
+    def validate_mrn(self, key, value):
+        if not value:
+            raise ValueError('Patient Name, DOB, and MRN is Required to Create a Patient')
+        return value
 
 
 class Checklist(db.Model, SerializerMixin):
