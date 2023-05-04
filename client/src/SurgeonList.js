@@ -1,32 +1,17 @@
-import React, {useState} from 'react'
-import {Button, Container} from 'react-bootstrap'
+import React from 'react'
+import {Row, Col} from 'react-bootstrap'
 
-function SurgeonList({procedures}) {
-
-    const [isVisible, setIsVisible] = useState(false)
-
-    const handleClose = () => {
-        setIsVisible(!isVisible);
-    }
-
-    const surgeryList = procedures.map((surgeryObj => {
-        return <div key={surgeryObj.id}>
-                    <p>{surgeryObj.name}</p>
-                    <p>{surgeryObj.surgeon}</p>
-                    <p>{surgeryObj.service_line}</p>
-                    <p>{surgeryObj.duration}</p>
-                    <p>{surgeryObj.location}</p>
-                </div>
-    }))
-
+function SurgeonList({name, surgeon, service_line, duration, location, patients}) {
 
     return(
-        <div>
-            <Button onClick={handleClose}>Surgeon List</Button>
-            {isVisible && (
-                <Container>{surgeryList}</Container>
-            )}
-        </div>
+        <Row className='my-2 border'>
+            <Col>{name}</Col>
+            <Col>{surgeon}</Col>
+            <Col>{patients}</Col>
+            <Col>{service_line}</Col>
+            <Col>{duration}</Col>
+            <Col>{location}</Col>
+        </Row>
     )
 }
 
