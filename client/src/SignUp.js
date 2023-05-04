@@ -5,18 +5,13 @@ import {useHistory} from 'react-router-dom'
 
 
 function SignUp({handleCloseModal}) {
-        
 
     const {setUser} = useContext(UserContext);
-
 
     const [error, setError] = useState('')
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
   
-
-   
-
     const history = useHistory()
 
     function handleSignup(e) {
