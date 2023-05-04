@@ -1,8 +1,8 @@
-"""post vihn database
+"""take three
 
-Revision ID: fa89d1fd0d60
+Revision ID: 36afe017d2ab
 Revises: 
-Create Date: 2023-05-03 12:56:49.963237
+Create Date: 2023-05-04 12:36:34.914170
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'fa89d1fd0d60'
+revision = '36afe017d2ab'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -23,7 +23,6 @@ def upgrade():
     sa.Column('name', sa.String(), nullable=False),
     sa.Column('dob', sa.String(), nullable=False),
     sa.Column('mrn', sa.String(), nullable=False),
-    sa.Column('image', sa.String(), nullable=True),
     sa.Column('address', sa.String(), nullable=True),
     sa.Column('phone', sa.Integer(), nullable=True),
     sa.Column('primary', sa.String(), nullable=True),

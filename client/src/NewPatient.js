@@ -40,8 +40,12 @@ function NewPatient({addPatient}) {
         .then(response => {
             if (!response.ok) {
                 throw new Error('Unable to add patient');
+                alert('Patient')
+                // error state - throw error //
+                
             }
-            return response.json();
+            console.log(!response.ok)
+                return response.json();
             })
         .then(newPatient => {
             addPatient(newPatient);

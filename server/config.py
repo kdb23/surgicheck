@@ -6,6 +6,8 @@ from flask_cors import CORS
 from sqlalchemy import MetaData
 from flask_bcrypt import Bcrypt
 
+
+
 app = Flask(__name__)
 app.secret_key = b'\xc4\x17d\x98\xae\xbd>\xe1\xb6\x07\xf1\\\xa2\xd0\xd9\x13'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///models.db'

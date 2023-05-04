@@ -88,6 +88,8 @@ class Patients(Resource):
     def post(self):
         data = request.get_json()
         try:
+            # import ipdb
+            # ipdb.set_trace()
             new_patient = Patient(
                 name = data['name'],
                 dob = data['dob'],
@@ -96,10 +98,11 @@ class Patients(Resource):
                 phone = data['phone'],
                 primary = data['primary']
             )
+            db.session.add(new_patient)
+            db.session.commit()
         except:
+            
             return make_response({'error': ' 400 Unable to process request, Missing Information'}, 400)
-        db.session.add(new_patient)
-        db.session.commit()
         return make_response(new_patient.to_dict(), 201)
 
 
@@ -139,7 +142,6 @@ class Procedures(Resource):
         procedures = Procedure.query.all()
         surgery_list = []
         for procedure in procedures:
-            patients = [patient.to_dict() for patient in procedure.patients]
             s_dict = {
                 'id': procedure.id,
                 'name' : procedure.name,
@@ -147,7 +149,6 @@ class Procedures(Resource):
                 'service_line' : procedure.service_line,
                 'duration' : procedure.duration,
                 'location' : procedure.location,
-                'patients' : patients
             }
             surgery_list.append(s_dict)
         return make_response(surgery_list, 200)
