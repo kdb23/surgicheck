@@ -1,7 +1,7 @@
 import React, {useState, useContext} from 'react';
 import {useHistory} from 'react-router-dom';
 import {UserContext} from './context/user';
-import {Form, Button, Container, Badge} from 'react-bootstrap'
+import {Form, Button, Container, Badge, Modal} from 'react-bootstrap'
 import SignUp from './SignUp';
 
 
@@ -10,14 +10,14 @@ function Login() {
     const {setUser} = useContext(UserContext);
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [isVisiable, setisVisiable] = useState(false);
+    // const [isVisiable, setisVisiable] = useState(false);
+    const [showModal, setShowModal] = useState(false)
     
-
     const history = useHistory();
 
-    const handleClose = () => {
-        setisVisiable(!isVisiable);
-    }
+    // const handleClose = () => {setisVisiable(!isVisiable);}
+    const handleShowModal = () => setShowModal(true);
+    const handleCloseModal = () => setShowModal(false);
     
 
     function handleLogin(e) {
@@ -38,7 +38,6 @@ function Login() {
         });
         
     }
-
 
     return(
       
@@ -64,11 +63,19 @@ function Login() {
                     />
                 </div>
             <Button variant='secondary' type='submit'>Login</Button>
-            <Button variant='secondary' onClick={handleClose}>Sign Up</Button>
+            <Button variant='secondary' onClick={handleShowModal}>Sign Up</Button>
             </Form>
-            {isVisiable && (
+            <Modal show={showModal} onHide={handleCloseModal}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Sign Up for Access</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <SignUp  handleCloseModal={handleCloseModal} />
+                </Modal.Body>
+            </Modal>
+            {/* {isVisiable && (
                 <SignUp />
-            )}
+            )} */}
             
             </div>
         </Container>

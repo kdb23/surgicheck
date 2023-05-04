@@ -1,9 +1,10 @@
 import React, {useState, useContext} from 'react';
 import {UserContext} from './context/user';
 import {Form, Button} from 'react-bootstrap'
+import {useHistory} from 'react-router-dom'
 
 
-function SignUp() {
+function SignUp({handleCloseModal}) {
         
 
     const {setUser} = useContext(UserContext);
@@ -12,8 +13,11 @@ function SignUp() {
     const [error, setError] = useState('')
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
+  
 
+   
 
+    const history = useHistory()
 
     function handleSignup(e) {
         e.preventDefault();
@@ -21,13 +25,12 @@ function SignUp() {
         fetch("/users/list")
             .then(response => response.json())
             .then(users => {
+                console.log(username)
                 const usernames = users.map(user => user.username);
                 if (usernames.includes(username)){
                     window.alert("Username is already taken");
-                    return;
                 } else if (password.length < 8) {
                     window.alert('Password must be at least 8 characters');
-                    return;
                 }
                 fetch("/users", {
                     method: "POST",
@@ -38,12 +41,10 @@ function SignUp() {
                     }),
                 })
                 .then((response) => response.json())
-                .then((data) => {
-                    if(data.user) {
+                .then((data) => { 
                         setUser(data);
-                    } else {
-                        setError(data.message);
-                    }
+                        handleCloseModal()
+                        history.push('/home')
                 })
                 .catch((error) => {
                     setError(error.message);
@@ -59,7 +60,6 @@ function SignUp() {
         
         <div>
             <Form onSubmit={handleSignup}>
-                <h2> Sign Up for Access</h2>
                 <label htmlFor='username'>Username:</label>
                 <input
                     type='username'
