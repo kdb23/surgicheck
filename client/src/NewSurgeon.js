@@ -30,7 +30,7 @@ function NewSurgeon({addProcedure}) {
     }
     const handleSubmit = (e) => {
         e.preventDefault()
-        fetch('/surgeons', {
+        fetch('/procedures', {
             method: "POST",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify(procedureObj),

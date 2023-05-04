@@ -1,7 +1,7 @@
 import React, {useState, useContext} from 'react';
 import {useHistory} from 'react-router-dom';
 import {UserContext} from './context/user';
-import {Form, Button} from 'react-bootstrap'
+import {Form, Button, Container, Badge} from 'react-bootstrap'
 import SignUp from './SignUp';
 
 
@@ -42,9 +42,10 @@ function Login() {
 
     return(
       
-            <div>
+        <Container>
+            <div className='d-flex align-items-center justify-content-center' style={{height : '100vh'}}>
             <Form onSubmit={handleLogin}>
-            <h1>Login to Access</h1>
+            <h1><Badge bg = 'light' text='dark'>Login to Access</Badge></h1>
              <label htmlFor='username'>Username</label>
                  <input
                      type='username'
@@ -63,13 +64,14 @@ function Login() {
                     />
                 </div>
             <Button variant='secondary' type='submit'>Login</Button>
-            </Form>
             <Button variant='secondary' onClick={handleClose}>Sign Up</Button>
+            </Form>
             {isVisiable && (
                 <SignUp />
             )}
             
             </div>
+        </Container>
 
     );
 }
