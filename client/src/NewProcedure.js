@@ -109,8 +109,8 @@ function NewProcedure({addProcedure}) {
                 <Form.Group>
                 <Form.Select onChange={handleLocation}>
                     <option>Select Location</option>
-                    <option value='option1'>Main</option>
-                    <option value='option2'>SAG</option>
+                    <option value='Main'>Main</option>
+                    <option value='SAG'>SAG</option>
                 </Form.Select>
                 </Form.Group>
                 <Button onClick={handleSubmit}>Submit</Button>

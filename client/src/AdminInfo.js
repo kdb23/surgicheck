@@ -1,6 +1,6 @@
 import React from 'react';
 import NewSurgeon from './NewSurgeon';
-import SurgeonList from './SurgeonList';
+import SurgeonListContainer from './SurgeonListContainer';
 
 function AdminInfo({addProcedure, procedures}) {
     return(
@@ -8,7 +8,7 @@ function AdminInfo({addProcedure, procedures}) {
         <div>
             <h1>Admin Login Info Page</h1>
             <NewSurgeon addProcedure={addProcedure} />
-            <SurgeonList procedures={procedures} />
+            <SurgeonListContainer procedures={procedures} />
         </div>
     )
 }
