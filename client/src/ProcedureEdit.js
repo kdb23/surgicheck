@@ -3,7 +3,7 @@ import {useParams, useHistory} from 'react-router-dom';
 import {Container, Col, Button} from 'react-bootstrap';
 
 
-function ProcedureEdit({handleProcedureDelete}) {
+function ProcedureEdit({handleProcedureDelete, procedures, setProcedures}) {
 
     const [procedureInfo, setProcedureInfo] = useState([]);
 
@@ -29,23 +29,22 @@ function ProcedureEdit({handleProcedureDelete}) {
         history.goBack();
     }
 
- 
-    const handleDelete = async (id)  => {
-        if (window.confirm("Are you sure you want to delete this Procedure ?"))
-        try {
-            const response = await fetch(`/procedures/${id}`, {
-                method: "DELETE"
-            });
-            if (response.status === 204) {
-                handleProcedureDelete(id)
-                history.goBack()
-            } else {
-                return ('error, unable to delete to procedure')
-            } 
-            }  catch (error){
-                console.error(error)
-            } 
-        }
+    const handleDelete = (e) => {
+        handleProcedureDelete(id);
+        fetch(`/procedures/${id}`, {
+          method: "DELETE"
+        })
+        .then(() => {
+          fetch('/procedures')
+          .then(response => response.json())
+          .then(procedures => {
+            setProcedures(procedures);
+          });
+        })
+        .catch(error => console.log(error));
+        history.goBack();
+      }
+
 
 
     return(

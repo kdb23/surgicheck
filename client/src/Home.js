@@ -80,7 +80,7 @@ function Home() {
                 <AdminInfo addProcedure={addProcedureState} procedures={procedures} handleSurgeonSearch={handleSurgeonSearch} />
             </Route>
             <Route exact path="/home/admin/procedure/:id">
-                <ProcedureEdit handleProcedureDelete={handleProcedureDelete} />
+                <ProcedureEdit handleProcedureDelete={handleProcedureDelete} procedures={procedures} setProcedures={setProcedures} />
             </Route>
             <Route exact path="/home/patients">
                 <PatientContainer patients={patients} handlePatientSearch={handlePatientSearch} />
