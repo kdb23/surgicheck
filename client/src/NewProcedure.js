@@ -84,7 +84,7 @@ function NewProcedure({addProcedure}) {
                 />
                 </Form.Group>
                 <Form.Group>
-                <Form.Select>
+                <Form.Select onChange={handleService}>
                     <option>Select a Service Lilne</option>
                     <option value='Vascular'>Vascular</option>
                     <option value='Thoracic'>Thoracic</option>
@@ -93,9 +93,8 @@ function NewProcedure({addProcedure}) {
                     <option value='ENT'>ENT</option>
                     <option value='General'>General</option>
                     <option value='Urology'>Urology</option>
-                    <option value='Orthopedic'>Orthopedics</option>
+                    <option value='Orthopedics'>Orthopedics</option>
                     <option value='Neuro'>Neuro</option>
-                    onChange={handleService}
                 </Form.Select>
                 </Form.Group>
                 <Form.Group>

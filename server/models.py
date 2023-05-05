@@ -55,7 +55,7 @@ class Procedure(db.Model, SerializerMixin):
     @validates('service-line')
     def validate_service(self, key, value):
         service = ['Vascular', 'Thoracic', 'Plastics', 'GYN', 'ENT', 'General', 'Urology', 'Orthopedics', 'Neuro', 'Trauma']
-        if not service:
+        if value not in service:
             raise ValueError("Error: service not in the approved service line")
         return value
     
