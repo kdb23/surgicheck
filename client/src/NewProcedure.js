@@ -3,7 +3,7 @@ import {Container, Form, Button} from 'react-bootstrap';
 import { useParams, useHistory } from 'react-router-dom';
 
 
-function NewProcedure({addProcedure}) {
+function NewProcedure({patients, setPatients}) {
 
     const {id} = useParams();
 
@@ -35,29 +35,37 @@ function NewProcedure({addProcedure}) {
         location: addLocation
     }
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        fetch(`/patients/${id}/procedures`, {
-            method: "POST",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify(procedureObj),
-        })
-            .then((r) => {
-                if(r.ok) {
-                    alert("Procedure addition successful")
-                    history.push('/home/patients')
-                    addProcedure(procedureObj)
-                    fetch('/patients')
-                        .then((r) => r.json())
-                        .then((patientList) => setPatientList(patientList))
-                } else {
-                    r.json().then(data => {
-                        alert(data.error)
-                    })
-                }
+    const addProcedure = (procedureObj) => {
+        return fetch(`/patients/${id}/procedures`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(procedureObj),
+        }).then((r) => {
+          if (r.ok) {
+            return fetch('/patients')
+              .then((r) => r.json())
+              .then((patients) => setPatients(patients));
+          } else {
+            r.json().then((data) => {
+              alert(data.error);
+            });
+          }
+        });
+      };
+    
+      
+      const handleSubmit = (e) => {
+        e.preventDefault();
+        addProcedure(procedureObj)
+            .then(() => {
+            alert("Procedure addition successful");
+            history.push('/home/patients');
             })
-        
-    }
+            .catch((error) => {
+            alert(error.message);
+            });
+      };
+
 
     return(
 
