@@ -3,7 +3,7 @@ import {Container, Form, Button} from 'react-bootstrap';
 import { useParams, useHistory } from 'react-router-dom';
 
 
-function NewProcedure({addProcedure}) {
+function NewProcedure({patients, setPatients}) {
 
     const {id} = useParams();
 
@@ -35,29 +35,37 @@ function NewProcedure({addProcedure}) {
         location: addLocation
     }
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        fetch(`/patients/${id}/procedures`, {
-            method: "POST",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify(procedureObj),
+    const addProcedure = (procedureObj) => {
+        return fetch(`/patients/${id}/procedures`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(procedureObj),
+        }).then((r) => {
+          if (r.ok) {
+            return fetch('/patients')
+              .then((r) => r.json())
+              .then((patients) => setPatients(patients));
+          } else {
+            r.json().then((data) => {
+              alert(data.error);
+            });
+          }
+        });
+      };
+
+
+      const handleSubmit = (e) => {
+        e.preventDefault();
+        addProcedure(procedureObj)
+            .then(() => {
+            alert("Procedure addition successful");
+            history.push('/home/patients');
         })
-            .then((r) => {
-                if(r.ok) {
-                    alert("Procedure addition successful")
-                    history.push('/home/patients')
-                    addProcedure(procedureObj)
-                    fetch('/patients')
-                        .then((r) => r.json())
-                        .then((patientList) => setPatientList(patientList))
-                } else {
-                    r.json().then(data => {
-                        alert(data.error)
-                    })
-                }
-            })
-        
-    }
+        .catch((error) => {
+            alert(error.message);
+            });
+      };
+    
 
     return(
 
@@ -84,7 +92,7 @@ function NewProcedure({addProcedure}) {
                 />
                 </Form.Group>
                 <Form.Group>
-                <Form.Select>
+                <Form.Select onChange={handleService}>
                     <option>Select a Service Lilne</option>
                     <option value='Vascular'>Vascular</option>
                     <option value='Thoracic'>Thoracic</option>
@@ -93,9 +101,8 @@ function NewProcedure({addProcedure}) {
                     <option value='ENT'>ENT</option>
                     <option value='General'>General</option>
                     <option value='Urology'>Urology</option>
-                    <option value='Orthopedic'>Orthopedics</option>
+                    <option value='Orthopedics'>Orthopedics</option>
                     <option value='Neuro'>Neuro</option>
-                    onChange={handleService}
                 </Form.Select>
                 </Form.Group>
                 <Form.Group>

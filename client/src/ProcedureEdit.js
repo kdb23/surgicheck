@@ -29,22 +29,43 @@ function ProcedureEdit() {
         history.goBack();
     }
 
+    const handleDelete = (e) => {
+        handleProcedureDelete(id);
+        fetch(`/procedures/${id}`, {
+          method: "DELETE"
+        })
+        .then(() => {
+          fetch('/procedures')
+          .then(response => response.json())
+          .then(procedures => {
+            setProcedures(procedures);
+          });
+        })
+        .catch(error => console.log(error));
+        history.goBack();
+      }
+
     return(
         <Container>
             <div className='d-flex justify-content-end'>
                 <Button variant='secondary' onClick={handleBack}>Back</Button>
             </div>
             <Col>
-            <h1>Procedure Name</h1>
+            <h1 className='text-center'>{procedureInfo.name}</h1>
         {procedureInfo && (
             <div>
-                <p>Procedure Name:{procedureInfo.name}</p>
-                <p>Attending Surgeon:{procedureInfo.surgeon}</p>
-                <p>Service Line:{procedureInfo.service_line}</p>
-                <p>Duration:{procedureInfo.duration}</p>
-                <p>Location:{procedureInfo.location}</p> 
+                <h5><b>Procedure Name:</b> {procedureInfo.name}</h5>
+                <h5><b>Attending Surgeon:</b> {procedureInfo.surgeon}</h5>
+                <h5><b>Service Line:</b> {procedureInfo.service_line}</h5>
+                <h5><b>Duration:</b> {procedureInfo.duration} minutes</h5>
+                <h5><b>Location:</b> {procedureInfo.location}</h5> 
         </div>
         )}
+            </Col>
+            <Col>
+            <div className='d-flex justify-content-end'>
+                <Button variant='secondary' onClick={handleDelete}>Delete</Button>
+            </div>
             </Col>
         </Container>
     )

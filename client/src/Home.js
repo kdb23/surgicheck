@@ -54,6 +54,12 @@ function Home() {
       }))
     }
 
+    const handleProcedureDelete = (id) => {
+      setProcedures(procedures.filter(procedure => {
+        return procedure.id !== id
+      }))
+    }
+
     const handlePatientSearch = newString => setSearchTerm(newString.toLowerCase())
 
     const handleSurgeonSearch = newString => setSearchDoctor(newString.toLowerCase())
@@ -74,7 +80,7 @@ function Home() {
                 <AdminInfo addProcedure={addProcedureState} procedures={procedures} handleSurgeonSearch={handleSurgeonSearch} />
             </Route>
             <Route exact path="/home/admin/procedure/:id">
-                <ProcedureEdit />
+                <ProcedureEdit handleProcedureDelete={handleProcedureDelete} procedures={procedures} setProcedures={setProcedures} />
             </Route>
             <Route exact path="/home/patients">
                 <PatientContainer patients={patients} handlePatientSearch={handlePatientSearch} />
@@ -83,7 +89,7 @@ function Home() {
                 <NewPatient addPatient={addPatientState}/>
             </Route>
             <Route exact path="/home/patient/:id">
-                <PatientEdit handlePatientPatch={handlePatientPatch} handlePatientDelete={handlePatientDelete} addProcedure={addProcedureState} />
+                <PatientEdit handlePatientPatch={handlePatientPatch} handlePatientDelete={handlePatientDelete} addProcedure={addProcedureState} patients={patients} setPatients={setPatients} />
             </Route>
         </Switch>
         </>
