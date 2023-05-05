@@ -52,20 +52,20 @@ function NewProcedure({patients, setPatients}) {
           }
         });
       };
-
-
+    
+      
       const handleSubmit = (e) => {
         e.preventDefault();
         addProcedure(procedureObj)
             .then(() => {
             alert("Procedure addition successful");
             history.push('/home/patients');
-        })
-        .catch((error) => {
+            })
+            .catch((error) => {
             alert(error.message);
             });
       };
-    
+
 
     return(
 

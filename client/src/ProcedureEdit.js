@@ -3,7 +3,7 @@ import {useParams, useHistory} from 'react-router-dom';
 import {Container, Col, Button} from 'react-bootstrap';
 
 
-function ProcedureEdit() {
+function ProcedureEdit({handleProcedureDelete, procedures, setProcedures}) {
 
     const [procedureInfo, setProcedureInfo] = useState([]);
 
@@ -44,6 +44,8 @@ function ProcedureEdit() {
         .catch(error => console.log(error));
         history.goBack();
       }
+
+
 
     return(
         <Container>
