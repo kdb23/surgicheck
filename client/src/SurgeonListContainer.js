@@ -24,6 +24,7 @@ function SurgeonListContainer({procedures, handleSurgeonSearch}) {
     const surgeryList = filteredSurgeons.map((surgeryObj) => {
         return <SurgeonList
                 key = {surgeryObj.id}
+                id = {surgeryObj.id}
                 name = {surgeryObj.name}
                 surgeon = {surgeryObj.surgeon}
                 service_line = {surgeryObj.service_line}

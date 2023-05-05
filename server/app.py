@@ -173,22 +173,22 @@ api.add_resource(Procedures, '/procedures')
 
 class ProceduresById(Resource):
     def get(self, id):
-        surgery = Procedure.query.filter_by(id = id).first()
-        if not surgery:
+        procedure = Procedure.query.filter_by(id = id).first()
+        if not procedure:
             return make_response({'error': '404 Procedure Not Found'}, 404)
-        return make_response(surgery.to_dict(), 200)
+        return make_response(procedure.to_dict(), 200)
     
     def patch(self, id):
         data = request.get_json()
-        surgery = Procedure.query.filter_by(id = id).first()
+        procedure = Procedure.query.filter_by(id = id).first()
         try:
             for new_info in data:
-                setattr(surgery, new_info, data[new_info])
+                setattr(procedure, new_info, data[new_info])
         except:
             return make_response({'error': 'Unable to Process Request'}, 400)
-        db.session.add(surgery)
+        db.session.add(procedure)
         db.session.commit()
-        return make_response(surgery.to_dict(), 202)
+        return make_response(procedure.to_dict(), 202)
     
     
     def delete(self, id):

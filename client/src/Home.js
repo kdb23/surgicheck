@@ -5,6 +5,7 @@ import NewPatient from './NewPatient';
 import PatientEdit from './PatientEdit';
 import PatientContainer from './PatientContainer';
 import NavigationBar from './NavigationBar';
+import ProcedureEdit from './ProcedureEdit'
 import {Badge} from 'react-bootstrap';
 
 
@@ -15,7 +16,6 @@ function Home() {
     const [procedures, setProcedures] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [searchDoctor, setSearchDoctor] = useState('')
-  
 
     useEffect(() => {
         fetch('/patients')
@@ -72,6 +72,9 @@ function Home() {
             </Route>
             <Route exact path="/home/admin">
                 <AdminInfo addProcedure={addProcedureState} procedures={procedures} handleSurgeonSearch={handleSurgeonSearch} />
+            </Route>
+            <Route exact path="/home/admin/procedure/:id">
+                <ProcedureEdit />
             </Route>
             <Route exact path="/home/patients">
                 <PatientContainer patients={patients} handlePatientSearch={handlePatientSearch} />

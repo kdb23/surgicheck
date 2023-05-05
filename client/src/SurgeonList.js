@@ -1,13 +1,14 @@
 import React from 'react'
 import {Row, Col} from 'react-bootstrap'
+import {Link} from 'react-router-dom'
 
-function SurgeonList({name, surgeon, service_line}) {
+function SurgeonList({id, name, surgeon, service_line}) {
 
     return(
         <Row className='my-2 border'>
-            <Col>{service_line}</Col>
+            <Col><Link to={`/home/admin/procedure/${id}`}>{name}</Link></Col>
             <Col>{surgeon}</Col>
-            <Col>{name}</Col>
+            <Col>{service_line}</Col>
         </Row>
     )
 }
