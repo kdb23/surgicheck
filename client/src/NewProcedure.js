@@ -40,24 +40,26 @@ function NewProcedure({patients, setPatients, procedures, setProcedures}) {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(procedureObj),
-        }).then((r) => {
-          if (r.ok) {
-            Promise.all([
-              fetch('/patients').then((r) => r.json()),
-              fetch('/procedures').then((r) => r.json()),
-            ]).then(([patients, procedures]) => {
-              setPatients(patients);
-              setProcedures(procedures);
-            });
-          } else {
-            r.json().then((data) => {
-              alert(data.error);
-            });
+        })
+        .then((r) => {
+          if (!r.ok) {
+            throw new Error("Failed to add procedure to patient.");
           }
+          return Promise.all([
+            fetch('/patients').then((r) => r.json()),
+            fetch('/procedures').then((r) => r.json()),
+          ]);
+        })
+        .then(([patients, procedures]) => {
+          setPatients(patients);
+          setProcedures(procedures);
+        })
+        .catch((error) => {
+          console.error(error);
+          alert("Failed to add procedure to patient. Please try again later.");
         });
-      };
-    
-      
+    }; 
+       
       const handleSubmit = (e) => {
         e.preventDefault();
         addProcedure(procedureObj)
