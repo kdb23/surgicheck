@@ -3,7 +3,7 @@ import {useParams, useHistory} from 'react-router-dom';
 import {Container, Col, Button} from 'react-bootstrap';
 
 
-function ProcedureEdit({handleProcedureDelete, procedures, setProcedures}) {
+function ProcedureEdit({handleProcedureDelete, procedures, setProcedures, patients, setPatients}) {
 
     const [procedureInfo, setProcedureInfo] = useState([]);
 
@@ -34,18 +34,36 @@ function ProcedureEdit({handleProcedureDelete, procedures, setProcedures}) {
         fetch(`/procedures/${id}`, {
           method: "DELETE"
         })
-        .then(() => {
-          fetch('/procedures')
-          .then(response => response.json())
-          .then(procedures => {
-            setProcedures(procedures);
-          });
+        .then((r) => {
+            if (!r.ok) {
+                throw new Error("Failed to delete procedure.");
+            }
+            return Promise.all([
+                fetch('/procedures').then((r) => r.json()),
+                fetch('/patients').then((r) => r.json()),
+            ]);
         })
-        .catch(error => console.log(error));
-        history.goBack();
-      }
+        .then(([procedures, patients]) => {
+            setProcedures(procedures);
+            setPatients(patients);
+        })
+        .catch((error) => {
+            console.error(error);
+            alert('Failed to delete procedure. Please try again later');
+        });
+    };
+    //       fetch('/procedures')
+    //       //fetch patients to delete if associated with this procedure
+    //       .then(response => response.json())
+    //       .then(procedures => {
+    //         setProcedures(procedures);
+    //       });
+    //     })
+    //     .catch(error => console.log(error));
+    //     history.goBack();
+    //   }
 
-
+      //need to add edit/patch so that when added if information changes doesnt inadvertiantly delete patients - then have to re-add
 
     return(
         <Container>
