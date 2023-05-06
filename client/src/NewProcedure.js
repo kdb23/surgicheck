@@ -3,7 +3,7 @@ import {Container, Form, Button} from 'react-bootstrap';
 import { useParams, useHistory } from 'react-router-dom';
 
 
-function NewProcedure({patients, setPatients}) {
+function NewProcedure({patients, setPatients, procedures, setProcedures}) {
 
     const {id} = useParams();
 
@@ -42,9 +42,13 @@ function NewProcedure({patients, setPatients}) {
           body: JSON.stringify(procedureObj),
         }).then((r) => {
           if (r.ok) {
-            return fetch('/patients')
-              .then((r) => r.json())
-              .then((patients) => setPatients(patients));
+            Promise.all([
+              fetch('/patients').then((r) => r.json()),
+              fetch('/procedures').then((r) => r.json()),
+            ]).then(([patients, procedures]) => {
+              setPatients(patients);
+              setProcedures(procedures);
+            });
           } else {
             r.json().then((data) => {
               alert(data.error);

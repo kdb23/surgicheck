@@ -89,7 +89,7 @@ function Home() {
                 <NewPatient addPatient={addPatientState}/>
             </Route>
             <Route exact path="/home/patient/:id">
-                <PatientEdit handlePatientPatch={handlePatientPatch} handlePatientDelete={handlePatientDelete} addProcedure={addProcedureState} patients={patients} setPatients={setPatients} />
+                <PatientEdit handlePatientPatch={handlePatientPatch} handlePatientDelete={handlePatientDelete} addProcedure={addProcedureState} patients={patients} setPatients={setPatients} procedures={procedures} setProcedures={setProcedures} />
             </Route>
         </Switch>
         </>

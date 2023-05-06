@@ -5,7 +5,7 @@ import Table from 'react-bootstrap/Table'
 import NewProcedure from './NewProcedure';
 
 
-function PatientEdit({handlePatientPatch, handlePatientDelete, patients, setPatients}){
+function PatientEdit({handlePatientPatch, handlePatientDelete, patients, setPatients, procedures, setProcedures}){
 
     const history = useHistory();
     const [patientInfo, setPatientInfo] = useState([])
@@ -163,7 +163,7 @@ function PatientEdit({handlePatientPatch, handlePatientDelete, patients, setPati
             </ul>
         </div>
         )}
-        <NewProcedure patients={patients} setPatients={setPatients} />
+        <NewProcedure patients={patients} setPatients={setPatients} procedures={procedures} setProcedures={setProcedures} />
         </Col>
         <Col>
         <h2>Checklist</h2>
