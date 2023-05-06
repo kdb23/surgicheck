@@ -30,6 +30,7 @@ function ProcedureEdit({handleProcedureDelete, procedures, setProcedures, patien
     }
 
     const handleDelete = (e) => {
+        window.alert('Are you sure you want to delete this procedure ?');
         handleProcedureDelete(id);
         fetch(`/procedures/${id}`, {
           method: "DELETE"
@@ -46,6 +47,10 @@ function ProcedureEdit({handleProcedureDelete, procedures, setProcedures, patien
         .then(([procedures, patients]) => {
             setProcedures(procedures);
             setPatients(patients);
+        })
+        .then(() => {
+            alert('Procedure successfully deleted.')
+            history.goBack()
         })
         .catch((error) => {
             console.error(error);
