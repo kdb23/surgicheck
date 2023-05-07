@@ -187,6 +187,9 @@ function PatientEdit({handlePatientPatch, handlePatientDelete, patients, setPati
                                         }}
                                     />
                                     </td>
+                                    <td>
+                                        <p>File Upload</p>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>Anesthesia Consent:</td>
@@ -200,6 +203,9 @@ function PatientEdit({handlePatientPatch, handlePatientDelete, patients, setPati
                                             checklist.anesthesia_consent = e.target.checked;
                                         }}
                                     />
+                                    </td>
+                                    <td>
+                                        <p>File Upload</p>
                                     </td>
                                 </tr>
                                 <tr>
@@ -215,6 +221,9 @@ function PatientEdit({handlePatientPatch, handlePatientDelete, patients, setPati
                                         }}
                                     />
                                     </td>
+                                    <td>
+                                        <p>File Upload</p>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>Imaging:</td>
@@ -229,6 +238,9 @@ function PatientEdit({handlePatientPatch, handlePatientDelete, patients, setPati
                                         }}
                                     />
                                     </td>
+                                    <td>
+                                        <p>File Upload</p>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>Education:</td>
@@ -242,6 +254,9 @@ function PatientEdit({handlePatientPatch, handlePatientDelete, patients, setPati
                                             checklist.education = e.target.checked;
                                         }}
                                     />
+                                    </td>
+                                    <td>
+                                        <p>File Upload</p>
                                     </td>
                                 </tr>
                                 </tbody>
