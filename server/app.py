@@ -1,6 +1,6 @@
 from config import app, api
 from models import db, User, Procedure, Patient, Checklist
-from flask import make_response, session, request, jsonify, url_for, render_template, redirect
+from flask import make_response, session, request, jsonify, url_for, render_template, redirect, send_from_directory
 from flask_restful import Resource
 from datetime import datetime
 from werkzeug.utils import secure_filename
@@ -351,13 +351,11 @@ api.add_resource(PatientChecklists, '/patients/<int:id>/checklists')
 
 
 class Uploads(Resource):
-
     def get(self):
         uploads = Checklist.query.all()
         upload_list = []
         for upload in uploads:
             upload_data = {
-                # 'name' : upload.name,
                 'file_name' : upload.file_name,
                 'file_url' : upload.file_url,
                 'file_uploaded' : upload.file_uploaded
@@ -366,15 +364,31 @@ class Uploads(Resource):
         return {'uploads': upload_list}, 200
         
     def post(self):
+        if 'file' not in request.files:
+            return {'message': 'No file part in the request'}, 400
         file = request.files['file']
-        filename = secure_filename(file.filename)
-        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-        checklist = Checklist(name=request.form['name'], filename=filename, url=url_for('upload_file', filename=filename), uploaded_at=datetime.now())
-        db.session.add(checklist)
-        db.session.commit()
-        return redirect(url_for('checklist'))
+        if file.filename == '':
+            return {'message': 'No selected file'}, 400
+        file.save(file.filename)
+        return {'message': 'File uploaded successfully'}, 200
+        
+        # file = request.files['file']
+
+        # filename = secure_filename(file.filename)
+        # file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        # checklist = Checklist(name=request.form['name'], filename=filename, url=url_for('upload_file', filename=filename), uploaded_at=datetime.now())
+        # db.session.add(checklist)
+        # db.session.commit()
+        # return redirect(url_for('checklist'))
     
 api.add_resource(Uploads, '/uploads')
+
+class Serve_Upload(Resource):
+    def get(self, id, filename):
+        directory = os.path.join(app.root_path, 'uploads', str(id))
+        return send_from_directory(directory, filename)
+
+api.add_resource(Serve_Upload, '/uploads/<int:id>/<path:filename>')
 
 
 if __name__ == '__main__':

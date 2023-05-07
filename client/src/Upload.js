@@ -1,47 +1,45 @@
-import React, {useState, useRef} from 'react'
+import React, {useState} from 'react';
+import axios from 'axios'
 
 function Upload({id}) {
 
-    const [document, setDocument] = useState({imageURL: ''})
-    const uploadInput = useRef(null)
-    const fileName = useRef(null)
 
-    const handleDocumentUpload = (e) => {
+    const [file, setFile] = useState(null);
+    const [message, setMessage] = useState('');
+    
+    const handleFileChange = (event) => {
+        setFile(event.target.files[0]);
+    };
+    
+    const handleUpload = async (event) => {
+        event.preventDefault();
+        const formData = new FormData();
+        formData.append('file', file);
+        try {
+        const response = await axios.post('/uploads', formData);
+        setMessage(response.data.message);
+        } catch (error) {
+        setMessage('Error uploading file');
+        }
+    };
+
+    const handleViews = (e) => {
         e.preventDefault();
-        const data = new FormData();
-        console.log(data)
-        data.append('file', uploadInput.current.files[0]);
-        data.append('filename', fileName.current.value);
-        data.append('csrf_token', '{{ csrf_token() }}');
-
-        fetch('/uploads', {
-            method: "POST",
-            body: data,
-        })
-        .then((response) => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            response.json().then((body) => {
-                setDocument({imageURL: `/home/patient/${id}/${body.file}`})
-            })
-        })
-        .catch((error) => {
-            console.error('Error:', error);
+        axios.get(`/uploads/${id}`).then((response) => {
+          console.log(response.data);
         });
-    }
+      };
 
     return(
-        <form onSubmit={handleDocumentUpload}>
-            <div>
-                <input ref={uploadInput} type ='file' />
-            </div>
-            <div>
-                <input ref={fileName} type='text' placeholder="Name of File" />
-            </div>
-            <button>Upload</button>
-            <img src={document.imageURL} alt='img' />
-        </form>
+        <div>
+            <h1>Upload a file</h1>
+            <form onSubmit={handleUpload}>
+            <input type="file" onChange={handleFileChange} />
+            <button type="submit">Upload</button>
+            <button onClick={handleViews}>View Uploads</button>
+            </form>
+            <p>{message}</p>
+      </div>
     )
 }
 
