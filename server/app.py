@@ -1,12 +1,16 @@
 from config import app, api
 from models import db, User, Procedure, Patient, Checklist
-from flask import make_response, session, request, jsonify, url_for, render_template, redirect, send_from_directory
-from flask_restful import Resource
+from flask import make_response, session, request, jsonify, send_from_directory
+from flask_restful import Resource, reqparse
 from datetime import datetime
 from werkzeug.utils import secure_filename
+from werkzeug.datastructures import FileStorage
 import os
 
+
 UPLOAD_FOLDER = './uploads'
+if not os.path.exists(UPLOAD_FOLDER):
+    os.makedires(UPLOAD_FOLDER)
 ALLOWED_EXTENSIONS = set(['pdf', 'png', 'jpg', 'jpeg', 'gif'])
 
 class Login(Resource):
@@ -351,8 +355,8 @@ api.add_resource(PatientChecklists, '/patients/<int:id>/checklists')
 
 
 class Uploads(Resource):
-    def get(self):
-        uploads = Checklist.query.all()
+    def get(self, id):
+        uploads = Checklist.query.filter_by(id = id).all()
         upload_list = []
         for upload in uploads:
             upload_data = {
@@ -362,33 +366,31 @@ class Uploads(Resource):
             }
             upload_list.append(upload_data)
         return {'uploads': upload_list}, 200
-        
-    def post(self):
-        if 'file' not in request.files:
-            return {'message': 'No file part in the request'}, 400
-        file = request.files['file']
-        if file.filename == '':
-            return {'message': 'No selected file'}, 400
-        file.save(file.filename)
-        return {'message': 'File uploaded successfully'}, 200
-        
-        # file = request.files['file']
-
-        # filename = secure_filename(file.filename)
-        # file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-        # checklist = Checklist(name=request.form['name'], filename=filename, url=url_for('upload_file', filename=filename), uploaded_at=datetime.now())
-        # db.session.add(checklist)
-        # db.session.commit()
-        # return redirect(url_for('checklist'))
     
-api.add_resource(Uploads, '/uploads')
+    def post(self, id):
+        parser = reqparse.RequestParser()
+        parser.add_argument('file', type=FileStorage, location='files')
+        args = parser.parse_args()
 
-class Serve_Upload(Resource):
-    def get(self, id, filename):
-        directory = os.path.join(app.root_path, 'uploads', str(id))
-        return send_from_directory(directory, filename)
+        file = args['file']
+        if file is None:
+            return {'message': 'No file uploaded'}, 400
 
-api.add_resource(Serve_Upload, '/uploads/<int:id>/<path:filename>')
+        # Save file to disk
+        filename = secure_filename(file.filename)
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
+        # Save file info to database
+        checklist = Checklist.query.filter_by(id = id).first()
+        if checklist is None:
+            return {'message': 'Checklist not found'}, 404
+        checklist.file_name = filename
+        checklist.file_url = f'http://localhost:3000/{filename}'
+        db.session.commit()
+
+        return {'message': 'File uploaded successfully'}, 200
+    
+api.add_resource(Uploads, '/uploads/<int:id>')
 
 
 if __name__ == '__main__':
