@@ -106,6 +106,7 @@ function PatientEdit({handlePatientPatch, handlePatientDelete, patients, setPati
             .then(data => {
                 handleChecklistPatch(data);
                 setChecklistUpdated(true)
+                history.goBack()
         })
         .catch((error) => {
             console.error('Error updating checklist:', error);
