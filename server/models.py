@@ -129,6 +129,9 @@ class Checklist(db.Model, SerializerMixin):
     surgical_consent = db.Column(db.Boolean)
     imaging = db.Column(db.Boolean)
     education = db.Column(db.Boolean)
+    file_name = db.Column(db.String)
+    file_url = db.Column(db.String)
+    file_uploaded = db.Column(db.Boolean, default=False)
     updated_at = db.Column(db.DateTime, server_default=db.func.now())
     created_at = db.Column(db.DateTime, onupdate=db.func.now())
 

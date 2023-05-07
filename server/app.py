@@ -1,8 +1,13 @@
 from config import app, api
 from models import db, User, Procedure, Patient, Checklist
-from flask import make_response, session, request, jsonify
+from flask import make_response, session, request, jsonify, url_for, render_template, redirect
 from flask_restful import Resource
+from datetime import datetime
+from werkzeug.utils import secure_filename
+import os
 
+UPLOAD_FOLDER = './uploads'
+ALLOWED_EXTENSIONS = set(['pdf', 'png', 'jpg', 'jpeg', 'gif'])
 
 class Login(Resource):
     def post(self):
@@ -235,10 +240,11 @@ class PatientProcedures(Resource):
                 location = data['location'],
             )
             checklist = Checklist(patient = patient, procedure = procedure)
+            patient.procedures.append(procedure)
             db.session.add(procedure)
             db.session.add(checklist)
             db.session.commit()
-        except ValueError as error:
+        except ValueError:
             return make_response({'error' : 'Service not in the approved service line'}, 400)
         return make_response(procedure.to_dict(), 201)
     
@@ -342,6 +348,33 @@ class PatientChecklists(Resource):
         return make_response(checklist.to_dict(), 202)
     
 api.add_resource(PatientChecklists, '/patients/<int:id>/checklists')
+
+
+class Uploads(Resource):
+
+    def get(self):
+        uploads = Checklist.query.all()
+        upload_list = []
+        for upload in uploads:
+            upload_data = {
+                # 'name' : upload.name,
+                'file_name' : upload.file_name,
+                'file_url' : upload.file_url,
+                'file_uploaded' : upload.file_uploaded
+            }
+            upload_list.append(upload_data)
+        return {'uploads': upload_list}, 200
+        
+    def post(self):
+        file = request.files['file']
+        filename = secure_filename(file.filename)
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        checklist = Checklist(name=request.form['name'], filename=filename, url=url_for('upload_file', filename=filename), uploaded_at=datetime.now())
+        db.session.add(checklist)
+        db.session.commit()
+        return redirect(url_for('checklist'))
+    
+api.add_resource(Uploads, '/uploads')
 
 
 if __name__ == '__main__':

@@ -9,6 +9,7 @@ function Upload({id}) {
     const handleDocumentUpload = (e) => {
         e.preventDefault();
         const data = new FormData();
+        console.log(data)
         data.append('file', uploadInput.current.files[0]);
         data.append('filename', fileName.current.value);
         data.append('csrf_token', '{{ csrf_token() }}');
