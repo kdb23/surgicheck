@@ -103,6 +103,8 @@ function ProcedureEdit({handleProcedureDelete, procedures, setProcedures, patien
                 .then(([patients, procedures]) => {
                 setPatients(patients);
                 setProcedures(procedures);
+                alert('Procedure successfully Updated.')
+                history.goBack()
                 })
                 .catch((error) => {
                 console.error(error);
