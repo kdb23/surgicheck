@@ -47,6 +47,16 @@ function Home() {
       }))
     }
 
+    const handleProcedurePatch = (updatedProcedure) => {
+      setProcedures(procedures.map(procedure => {
+        if (procedure.id === updatedProcedure.id) {
+          return {...updatedProcedure};
+        } else {
+          return procedure
+        }
+      }))
+    }
+
 
     const handlePatientDelete = (id) => {
       setPatients(patients.filter(patient => {
@@ -80,7 +90,7 @@ function Home() {
                 <AdminInfo addProcedure={addProcedureState} procedures={procedures} handleSurgeonSearch={handleSurgeonSearch} />
             </Route>
             <Route exact path="/home/admin/procedure/:id">
-                <ProcedureEdit handleProcedureDelete={handleProcedureDelete} procedures={procedures} setProcedures={setProcedures} patients={patients} setPatients={setPatients} />
+                <ProcedureEdit handleProcedureDelete={handleProcedureDelete} procedures={procedures} setProcedures={setProcedures} patients={patients} setPatients={setPatients} handleProcedurePatch={handleProcedurePatch}/>
             </Route>
             <Route exact path="/home/patients">
                 <PatientContainer patients={patients} handlePatientSearch={handlePatientSearch} />

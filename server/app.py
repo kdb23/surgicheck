@@ -242,6 +242,20 @@ class PatientProcedures(Resource):
             return make_response({'error' : 'Service not in the approved service line'}, 400)
         return make_response(procedure.to_dict(), 201)
     
+    def patch(self, id):
+        data = request.get_json()
+        procedure = Procedure.query.filter_by(id = id).first()
+        if not procedure:
+            return make_response({'error' : '404 Procedure Not Found'}, 404)
+        try:
+            for new_info in data:
+                setattr(procedure, new_info, data[new_info])
+        except:
+            return make_response({'error': 'Unable to Process Request'}, 400)
+        db.session.add(procedure)
+        db.session.commit()
+        return make_response(procedure.to_dict(), 202)
+    
 api.add_resource(PatientProcedures, '/patients/<int:id>/procedures')
 
 class Checklists(Resource):

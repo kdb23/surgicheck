@@ -22,6 +22,7 @@ function NewProcedure({patients, setPatients, procedures, setProcedures}) {
     const handleService = e => setAddService(e.target.value)
     const handleDuration = e => setAddDuration(e.target.value)
     const handleLocation = e => setAddLocation(e.target.value)
+   
 
     const handleClose = () => {
         setIsVisible(!isVisible);
@@ -77,7 +78,6 @@ function NewProcedure({patients, setPatients, procedures, setProcedures}) {
 
         <>
         <Button onClick={handleClose}>Add A Procedure</Button>
-
         <Container>
         {isVisible && (
             <Form onSubmit={handleSubmit}>
@@ -130,7 +130,6 @@ function NewProcedure({patients, setPatients, procedures, setProcedures}) {
             </Form>
         )}
         </Container>
-
 
     </>
         
