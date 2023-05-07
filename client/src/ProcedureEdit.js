@@ -87,11 +87,28 @@ function ProcedureEdit({handleProcedureDelete, procedures, setProcedures, patien
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify(updatedProcedure),
             })
-              .then(r => r.json())
-              .then(data => {
-                handleProcedurePatch(data);
-              })
-      }
+            .then((r) => {
+                if (!r.ok) {
+                  throw new Error("Failed to edit procedure.");
+                }
+                return r.json();
+            })
+            .then((data) => {
+              handleProcedurePatch(data);
+                return Promise.all([
+                fetch('/patients').then((r) => r.json()),
+                fetch('/procedures').then((r) => r.json()),
+            ]);
+                })
+                .then(([patients, procedures]) => {
+                setPatients(patients);
+                setProcedures(procedures);
+                })
+                .catch((error) => {
+                console.error(error);
+                alert("Failed to add procedure to patient. Please try again later.");
+                });
+    }; 
  
     return(
         <>
