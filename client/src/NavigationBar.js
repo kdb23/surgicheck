@@ -19,7 +19,7 @@ function NavigationBar() {
             Add New Patient
           </Link>
           <Link to='/home/admin' className='nav-link'>
-            Admin Info
+            Procedural Information 
           </Link>
           <Link to='/logout' className='nav-link'><Logout /></Link>
         </Nav>

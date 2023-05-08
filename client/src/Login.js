@@ -62,21 +62,17 @@ function Login() {
                         onChange={(e) => setPassword(e.target.value)}
                     />
                 </div>
-            <Button variant='secondary' type='submit'>Login</Button>
-            <Button variant='secondary' onClick={handleShowModal}>Sign Up</Button>
+            <Button className='button' type='submit'>Login</Button>
+            <Button variant='primary' onClick={handleShowModal}>Sign Up</Button>
             </Form>
-            <Modal show={showModal} onHide={handleCloseModal}>
+            <Modal className='color-nav' variant='light' show={showModal} onHide={handleCloseModal}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Sign Up for Access</Modal.Title>
+                    <Modal.Title >Sign Up for Access</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <SignUp  handleCloseModal={handleCloseModal} />
                 </Modal.Body>
             </Modal>
-            {/* {isVisiable && (
-                <SignUp />
-            )} */}
-            
             </div>
         </Container>
 
