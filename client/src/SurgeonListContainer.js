@@ -4,7 +4,7 @@ import SurgeonList from './SurgeonList'
 
 function SurgeonListContainer({procedures, handleSurgeonSearch}) {
 
-    const [isVisible, setIsVisible] = useState(false)
+    // const [isVisible, setIsVisible] = useState(false)
     const [searchDoctor, setSearchDoctor] = useState('');
 
     const handleSearch = (e) => {
@@ -17,9 +17,9 @@ function SurgeonListContainer({procedures, handleSurgeonSearch}) {
     });
 
     
-    const handleClose = () => {
-        setIsVisible(!isVisible);
-    }
+    // const handleClose = () => {
+    //     setIsVisible(!isVisible);
+    // }
 
     const surgeryList = filteredSurgeons.map((surgeryObj) => {
         return <SurgeonList
@@ -37,8 +37,6 @@ function SurgeonListContainer({procedures, handleSurgeonSearch}) {
 
     return(
         <div>
-            <Button onClick={handleClose}>Surgeon List</Button>
-            {isVisible && (
                 <Container className='mt-5'>
                     <Row>
                         <Form.Control
@@ -50,8 +48,7 @@ function SurgeonListContainer({procedures, handleSurgeonSearch}) {
                         {surgeryList}
                     </Row>
                 </Container>
-            )}
-        </div>
+           </div>
     )
 }
 
