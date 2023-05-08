@@ -1,13 +1,14 @@
 from config import app, api
 from models import db, User, Procedure, Patient, Checklist
-from flask import make_response, session, request, jsonify, send_from_directory
+from flask import make_response, session, request, jsonify, send_file
 from flask_restful import Resource, reqparse
 from datetime import datetime
 from werkzeug.utils import secure_filename
 from werkzeug.datastructures import FileStorage
 import os
+import base64
 
-
+DEFAULT_PHOTO_URL = './static/default_doc.png'
 UPLOAD_FOLDER = './uploads'
 if not os.path.exists(UPLOAD_FOLDER):
     os.makedires(UPLOAD_FOLDER)
@@ -355,18 +356,40 @@ api.add_resource(PatientChecklists, '/patients/<int:id>/checklists')
 
 
 class Uploads(Resource):
+    # def get(self, id):
+    #     uploads = Checklist.query.filter_by(id = id).all()
+    #     upload_list = []
+    #     for upload in uploads:
+    #         upload_data = {
+    #             'file_name' : upload.file_name,
+    #             'file_uploaded' : upload.file_uploaded
+    #         }
+    #         with open(os.path.join(app.config['UPLOAD_FOLDER'], upload.file_name), 'rb') as f:
+    #             file_data = f.read()
+    #             upload_data['file_data'] = base64.b64encode(file_data).decode('utf-8')
+    #         upload_list.append(upload_data)
+    #     return {'uploads': upload_list}, 200
+    
+ 
     def get(self, id):
-        uploads = Checklist.query.filter_by(id = id).all()
+        uploads = Checklist.query.filter_by(id=id).all()
         upload_list = []
         for upload in uploads:
             upload_data = {
-                'file_name' : upload.file_name,
-                'file_url' : upload.file_url,
-                'file_uploaded' : upload.file_uploaded
+                'file_name': upload.file_name,
+                'file_uploaded': upload.file_uploaded
             }
+            if upload.file_url is not None:
+                with open(os.path.join(app.config['UPLOAD_FOLDER'], upload.file_name), 'rb') as f:
+                    file_data = base64.b64encode(f.read()).decode('utf-8')
+                upload_data['file_url'] = upload.file_url
+                upload_data['file_data'] = file_data
+            else:
+                upload_data['file_url'] = DEFAULT_PHOTO_URL
+                upload_data['file_data'] = None
             upload_list.append(upload_data)
         return {'uploads': upload_list}, 200
-    
+
     def post(self, id):
         parser = reqparse.RequestParser()
         parser.add_argument('file', type=FileStorage, location='files')
@@ -381,18 +404,21 @@ class Uploads(Resource):
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
         # Save file info to database
-        checklist = Checklist.query.filter_by(id = id).first()
+        checklist = Checklist.query.filter_by(id=id).first()
         if checklist is None:
             return {'message': 'Checklist not found'}, 404
+        
+
+        # Update Checklist object with file name and URL
         checklist.file_name = filename
-        checklist.file_url = f'http://localhost:3000/{filename}'
+        checklist.file_url = f'http://localhost:3000/uploads/{id}/{filename}'
         db.session.commit()
 
         return {'message': 'File uploaded successfully'}, 200
-    
+        
 api.add_resource(Uploads, '/uploads/<int:id>')
 
 
 if __name__ == '__main__':
-    app.run(port=5555)
+    app.run(port=5555, debug=True)
     

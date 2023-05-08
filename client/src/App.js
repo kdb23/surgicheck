@@ -1,7 +1,7 @@
 import React, {useEffect, useContext} from 'react';
 import {Route, Switch} from 'react-router-dom';
 import Login from './Login';
-import NavButton from './NavButton';
+//import NavButton from './NavButton';
 import Home from './Home';
 import {UserContext} from './context/user'
 
@@ -26,10 +26,10 @@ function App() {
         <Switch>
         <Route exact path="/" component={Login } />
         <Route path='/home' component={Home} />
-        <Route path='*'>
+        {/* <Route path='*'>
             <h1>404 Not Found</h1>
             <NavButton />
-          </Route>
+          </Route> */}
         </Switch>
       </main>
     </>

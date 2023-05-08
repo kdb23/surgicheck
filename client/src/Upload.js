@@ -5,30 +5,40 @@ function Upload({id}) {
 
 
     const [file, setFile] = useState(null);
-    const [message, setMessage] = useState('');
-    
-    const handleFileChange = (event) => {
-        setFile(event.target.files[0]);
+    const [filename, setFilename] = useState(null);
+    const [message, setMessage] = useState(null);
+  
+    const handleFileChange = (e) => {
+      setFile(e.target.files[0]);
+      setFilename(e.target.files[0].name);
     };
-    
-    const handleUpload = async (event) => {
-        event.preventDefault();
-        const formData = new FormData();
-        formData.append('file', file);
-        try {
-        const response = await axios.post(`/uploads/${id}`, formData);
-        setMessage(response.data.message);
-        } catch (error) {
-        setMessage('Error uploading file');
-        }
-    };
-
-    const handleViews = (e) => {
-        e.preventDefault();
-        axios.get(`/uploads/${id}`).then((response) => {
-          console.log(response.data);
+  
+    const handleUpload = (e) => {
+      e.preventDefault();
+      if (!file) {
+        setMessage('No file selected');
+        return;
+      }
+      const formData = new FormData();
+      formData.append('file', file);
+      axios
+        .post(`/uploads/${id}`, formData)
+        .then((response) => {
+          setMessage(response.data.message);
+          setFilename(response.data.filename);
+        })
+        .catch((error) => {
+          console.log(error);
+          setMessage('File upload failed');
         });
-      };
+    };
+  
+    const handleViews = (e) => {
+      e.preventDefault();
+      axios.get(`/uploads/${id}`).then((response) => {
+        console.log(response.data);
+      });
+    };
 
     return(
         <div>
@@ -36,6 +46,7 @@ function Upload({id}) {
             <form onSubmit={handleUpload}>
             <input type="file" onChange={handleFileChange} />
             <button type="submit">Upload</button>
+            <img src={`/uploads/${id}/${filename}`} style={{width: '64px'}} />
             <button onClick={handleViews}>View Uploads</button>
             </form>
             <p>{message}</p>
