@@ -169,6 +169,7 @@ function PatientEdit({handlePatientPatch, handlePatientDelete, patients, setPati
         </Col>
         <Col>
         <h2>Checklist</h2>
+        <Upload id={id} />
         {checklistInfo && (
             <div>
                 <ul>
@@ -189,9 +190,6 @@ function PatientEdit({handlePatientPatch, handlePatientDelete, patients, setPati
                                         }}
                                     />
                                     </td>
-                                    <td>
-                                        <Upload id={id} />
-                                    </td>
                                 </tr>
                                 <tr>
                                     <td>Anesthesia Consent:</td>
@@ -205,9 +203,6 @@ function PatientEdit({handlePatientPatch, handlePatientDelete, patients, setPati
                                             checklist.anesthesia_consent = e.target.checked;
                                         }}
                                     />
-                                    </td>
-                                    <td>
-                                        <Upload id={id} />
                                     </td>
                                 </tr>
                                 <tr>
@@ -223,9 +218,6 @@ function PatientEdit({handlePatientPatch, handlePatientDelete, patients, setPati
                                         }}
                                     />
                                     </td>
-                                    <td>
-                                        <Upload id={id} />
-                                    </td>
                                 </tr>
                                 <tr>
                                     <td>Imaging:</td>
@@ -240,9 +232,6 @@ function PatientEdit({handlePatientPatch, handlePatientDelete, patients, setPati
                                         }}
                                     />
                                     </td>
-                                    <td>
-                                        <Upload id={id} />
-                                    </td>
                                 </tr>
                                 <tr>
                                     <td>Education:</td>
@@ -256,9 +245,6 @@ function PatientEdit({handlePatientPatch, handlePatientDelete, patients, setPati
                                             checklist.education = e.target.checked;
                                         }}
                                     />
-                                    </td>
-                                    <td>
-                                        <Upload id={id} />
                                     </td>
                                 </tr>
                                 </tbody>

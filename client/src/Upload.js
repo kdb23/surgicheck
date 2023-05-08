@@ -22,7 +22,7 @@ function Upload({id}) {
       const formData = new FormData();
       formData.append('file', file);
       axios
-        .post(`/uploads/${id}`, formData)
+        .post('/uploads', formData)
         .then((response) => {
           setMessage(response.data.message);
           setFilename(response.data.filename);
@@ -42,11 +42,11 @@ function Upload({id}) {
 
     return(
         <div>
-            <h1>Upload a file</h1>
+            <h6>Upload a file</h6>
             <form onSubmit={handleUpload}>
             <input type="file" onChange={handleFileChange} />
             <button type="submit">Upload</button>
-            <img src={`/uploads/${id}/${filename}`} style={{width: '64px'}} />
+            <img src={`/uploads/${filename}`} style={{width: '64px'}} />
             <button onClick={handleViews}>View Uploads</button>
             </form>
             <p>{message}</p>

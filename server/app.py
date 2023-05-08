@@ -1,19 +1,21 @@
 from config import app, api
 from models import db, User, Procedure, Patient, Checklist
-from flask import make_response, session, request, jsonify, send_file
+from flask import make_response, session, request, jsonify
 from flask_restful import Resource, reqparse
-from datetime import datetime
 from werkzeug.utils import secure_filename
 from werkzeug.datastructures import FileStorage
 import os
 import base64
 
-DEFAULT_PHOTO_URL = './static/default_doc.png'
-UPLOAD_FOLDER = './uploads'
-if not os.path.exists(UPLOAD_FOLDER):
-    os.makedires(UPLOAD_FOLDER)
-ALLOWED_EXTENSIONS = set(['pdf', 'png', 'jpg', 'jpeg', 'gif'])
 
+UPLOAD_FOLDER = '/uploads'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 *1024
+
+ALLOWED_EXTENSIONS = set(['tx', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
+
+def allowed_file(filename):
+    return'.' in filename and filename.rsplit('.' , 1)[1].lower() in ALLOWED_EXTENSIONS
 class Login(Resource):
     def post(self):
         data= request.get_json()
@@ -355,68 +357,102 @@ class PatientChecklists(Resource):
 api.add_resource(PatientChecklists, '/patients/<int:id>/checklists')
 
 
-class Uploads(Resource):
+# class Uploads(Resource):
+#     def get(self, id):
+#         uploads = Checklist.query.filter_by(id = id).all()
+#         upload_list = []
+#         for upload in uploads:
+#             upload_data = {
+#                 'file_name' : upload.file_name,
+#                 'file_uploaded' : upload.file_uploaded
+#             }
+#             with open(os.path.join(app.config['UPLOAD_FOLDER'], upload.file_name), 'rb') as f:
+#                 file_data = f.read()
+#                 upload_data['file_data'] = base64.b64encode(file_data).decode('utf-8')
+#             upload_list.append(upload_data)
+#         return {'uploads': upload_list}, 200
+    
+ 
     # def get(self, id):
-    #     uploads = Checklist.query.filter_by(id = id).all()
+    #     uploads = Checklist.query.filter_by(id=id).all()
     #     upload_list = []
     #     for upload in uploads:
     #         upload_data = {
-    #             'file_name' : upload.file_name,
-    #             'file_uploaded' : upload.file_uploaded
+    #             'file_name': upload.file_name,
+    #             'file_uploaded': upload.file_uploaded
     #         }
-    #         with open(os.path.join(app.config['UPLOAD_FOLDER'], upload.file_name), 'rb') as f:
-    #             file_data = f.read()
-    #             upload_data['file_data'] = base64.b64encode(file_data).decode('utf-8')
+    #         if upload.file_url is not None:
+    #             with open(os.path.join(app.config['UPLOAD_FOLDER'], upload.file_name), 'rb') as f:
+    #                 file_data = base64.b64encode(f.read()).decode('utf-8')
+    #             upload_data['file_url'] = upload.file_url
+    #             upload_data['file_data'] = file_data
+    #         else:
+    #             upload_data['file_url'] = DEFAULT_PHOTO_URL
+    #             upload_data['file_data'] = None
     #         upload_list.append(upload_data)
     #     return {'uploads': upload_list}, 200
+
+#     def post(self, id):
+#         parser = reqparse.RequestParser()
+#         parser.add_argument('file', type=FileStorage, location='files')
+#         args = parser.parse_args()
+
+#         file = args['file']
+#         if file is None:
+#             return {'message': 'No file uploaded'}, 400
+
+#         # Save file to disk
+#         filename = secure_filename(file.filename)
+#         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
+#         # Save file info to database
+#         checklist = Checklist.query.filter_by(id=id).first()
+#         if checklist is None:
+#             return {'message': 'Checklist not found'}, 404
+        
+
+#         # Update Checklist object with file name and URL
+#         checklist.file_name = filename
+#         checklist.file_url = f'http://localhost:3000/uploads/{filename}'
+#         db.session.commit()
+
+#         return {'message': 'File uploaded successfully'}, 200
+        
+# api.add_resource(Uploads, '/uploads')
+
+@app.route('/upload', methods=['POST'])
+def upload_file():
+    if 'files[]' not in request.files:
+        resp=jsonify({'message' : 'No file part in the request'})
+        resp.status_code=400
+        return resp
     
- 
-    def get(self, id):
-        uploads = Checklist.query.filter_by(id=id).all()
-        upload_list = []
-        for upload in uploads:
-            upload_data = {
-                'file_name': upload.file_name,
-                'file_uploaded': upload.file_uploaded
-            }
-            if upload.file_url is not None:
-                with open(os.path.join(app.config['UPLOAD_FOLDER'], upload.file_name), 'rb') as f:
-                    file_data = base64.b64encode(f.read()).decode('utf-8')
-                upload_data['file_url'] = upload.file_url
-                upload_data['file_data'] = file_data
-            else:
-                upload_data['file_url'] = DEFAULT_PHOTO_URL
-                upload_data['file_data'] = None
-            upload_list.append(upload_data)
-        return {'uploads': upload_list}, 200
+    files = request.files.getlist('files[]')
 
-    def post(self, id):
-        parser = reqparse.RequestParser()
-        parser.add_argument('file', type=FileStorage, location='files')
-        args = parser.parse_args()
+    errors = {}
+    success = False
 
-        file = args['file']
-        if file is None:
-            return {'message': 'No file uploaded'}, 400
+    for file in files:
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            success = True
+        else:
+            errors[file.filename] = 'File type is not allowed'
 
-        # Save file to disk
-        filename = secure_filename(file.filename)
-        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-
-        # Save file info to database
-        checklist = Checklist.query.filter_by(id=id).first()
-        if checklist is None:
-            return {'message': 'Checklist not found'}, 404
-        
-
-        # Update Checklist object with file name and URL
-        checklist.file_name = filename
-        checklist.file_url = f'http://localhost:3000/uploads/{id}/{filename}'
-        db.session.commit()
-
-        return {'message': 'File uploaded successfully'}, 200
-        
-api.add_resource(Uploads, '/uploads/<int:id>')
+    if success and errors:
+        errors['message'] = 'File(s) successfully uploaded'
+        resp = jsonify(errors)
+        resp.status_code = 500
+        return resp
+    if success:
+        resp = jsonify({'message' : ' Files successfully uploaded'})
+        resp.status_code = 201
+        return resp
+    else:
+        resp = jsonify(errors)
+        resp.status_code = 500
+        return resp
 
 
 if __name__ == '__main__':
