@@ -1,10 +1,10 @@
 import React, {useState, useEffect} from 'react';
 import {useHistory, useParams } from 'react-router-dom';
-import {Button, Form, Container, Row, Col} from 'react-bootstrap';
+import {Button, Form, Container, Row, Col, Modal} from 'react-bootstrap';
 import Table from 'react-bootstrap/Table'
 import NewProcedure from './NewProcedure';
 import Photo from './Photo';
-import ProcedureEdit from './ProcedureEdit';
+import PatientEditModal from './PatientEditModal';
 
 
 function PatientEdit({handlePatientPatch, handlePatientDelete, patients, setPatients, procedures, setProcedures}){
@@ -13,13 +13,6 @@ function PatientEdit({handlePatientPatch, handlePatientDelete, patients, setPati
     const [patientInfo, setPatientInfo] = useState([])
     const [proceduresList, setProceduresList] = useState([])
     const [checklistInfo, setChecklistInfo] = useState([])
-    const [patientName, setPatientName] = useState('')
-    const [patientDOB, setPatientDOB] = useState('')
-    const [patientMRN, setPatientMRN] = useState('')
-    const [patientAddress, setPatientAddress] = useState('')
-    const [patientPhone, setPatientPhone] = useState('')
-    const [patientPrimary, setPatientPrimary] = useState('')
-    const [isVisible, setIsVisible] = useState(false)
     const [listHistory, setListHistory] = useState(false)
     const [listAnesthesia, setListAnesthesia] = useState(false)
     const [listSurgical, setListSurgical] = useState(false)
@@ -27,6 +20,7 @@ function PatientEdit({handlePatientPatch, handlePatientDelete, patients, setPati
     const [listEducation, setListEducation] = useState(false)
     const [checklistUpdated, setChecklistUpdated] = useState(false)
     const [showProcedure, setShowProcedure] = useState(false)
+    const [showModal, setShowModal] = useState(false)
 
     const {id} = useParams();
 
@@ -52,36 +46,11 @@ function PatientEdit({handlePatientPatch, handlePatientDelete, patients, setPati
         history.goBack();
     }
 
-    const handleClose = () => {
-        setIsVisible(!isVisible);
-    }
+    const handleOpenModal = () => setShowModal(true);
+    const handleCloseModal = () => setShowModal(false);
 
     const handleProcedureDisplay = (procedure) => {
         setShowProcedure(showProcedure && showProcedure.id === procedure.id ? null : procedure);
-    }
-
-    const handlePatch = (e) => {
-        e.preventDefault()
-        let  newObj = {
-            name : patientName,
-            dob: patientDOB,
-            mrn : patientMRN,
-            address: patientAddress,
-            phone : patientPhone,
-            primary : patientPrimary
-        }
-
-        fetch(`/patients/${id}`, {
-            method: "PATCH",
-            headers: {"Content-Type" : "application/json"},
-            body: JSON.stringify(newObj)
-        })
-            .then(r => r.json())
-            .then(data => {
-                setPatientInfo(data);
-                handlePatientPatch(data);
-        });
-
     }
 
     const handleChecklistPatch = (updatedChecklist) => {
@@ -161,76 +130,18 @@ function PatientEdit({handlePatientPatch, handlePatientDelete, patients, setPati
                 <p>PHONE:{patientInfo.phone}</p> 
                 <p>PCP: Dr.{patientInfo.primary}</p>
         <Button variant='danger' onClick={() => handleDelete(patientInfo.id)}>Delete Patient</Button>
-        <Button variant='primary' onClick={handleClose}>Edit Patient</Button>
+        <Button variant='primary' onClick={handleOpenModal}>Edit Patient</Button>
         </div>
         )}
         </Col>
-        <Container>
-        {isVisible && (
-            <Form>
-                <Form.Group>
-                    <Form.Label>Patient Name:</Form.Label>
-                <Form.Control
-                    type="text"
-                    id='name'
-                    name= "name"
-                    placeholder = "Patient Name"
-                    onChange={(e) => setPatientName(e.target.value)}
-                /> 
-                </Form.Group>
-                <Form.Group>
-                <Form.Label>Patient DOB:</Form.Label>
-                <Form.Control
-                    type= "text"
-                    id='dob'
-                    name ="dob"
-                    placeholder= "Y/M/D"
-                    onChange={(e) => setPatientDOB(e.target.value)}
-                />
-                </Form.Group>
-                <Form.Group>
-                <Form.Label>Patient MRN:</Form.Label>
-                <Form.Control
-                    type= "text"
-                    id="mrn"
-                    name ="mrn"
-                    placeholder= "Patient MRN"
-                    onChange={(e) => setPatientMRN(e.target.value)}
-                />
-                </Form.Group>
-                <Form.Group>
-                <Form.Label>Patient Address:</Form.Label>
-                <Form.Control
-                    type= "text"
-                    id='address'
-                    name ="address"
-                    placeholder= "Address"
-                    onChange={(e) => setPatientAddress(e.target.value)}
-                />
-                </Form.Group>
-                <Form.Group>
-                <Form.Label>Patient Phone Number:</Form.Label>
-                <Form.Control 
-                    type= "text"
-                    id='phone'
-                    name ="phone"
-                    placeholder= "Phone"
-                    onChange={(e) => setPatientPhone(e.target.value)}
-                />
-                </Form.Group>
-                <Form.Group>
-                <Form.Label>Patient PCP:</Form.Label>
-                <Form.Control
-                    type= "num"
-                    id="primary"
-                    name ="primary"
-                    placeholder= "Patient PCP"
-                    onChange={(e) => setPatientPrimary(e.target.value)}
-                />
-                </Form.Group>
-                <Button variant='primary' onClick={handlePatch}>Edit Patient Information</Button> 
-            </Form>
-        )}
+        <Container> <Modal className='color-nav' variant='light' show={showModal} onHide={handleCloseModal}>
+                <Modal.Header closeButton>
+                    <Modal.Title >Edit Patient Information</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                <PatientEditModal handlePatientPatch={handlePatientPatch} patients={patients} setPatients={setPatients} procedures={procedures} setProcedures={setProcedures} patientInfo={patientInfo} setPatientInfo={setPatientInfo} handleCloseModal={handleCloseModal} />
+                </Modal.Body>
+            </Modal>
         </Container>
         </Row>
         <Row style={{ padding: '10px'}}>
@@ -256,13 +167,14 @@ function PatientEdit({handlePatientPatch, handlePatientDelete, patients, setPati
         </div>
         )}
         {showProcedure && (
-               <div>
+            <div>
                <h5><b>Procedure Name:</b> {showProcedure.name}</h5>
                <h5><b>Attending Surgeon:</b> {showProcedure.surgeon}</h5>
                <h5><b>Service Line:</b> {showProcedure.service_line}</h5>
                <h5><b>Duration:</b> {showProcedure.duration} minutes</h5>
                <h5><b>Location:</b> {showProcedure.location}</h5> 
-       </div>
+               <Button className='button'>Edit Procedure Information for Patient</Button>
+            </div> 
         )}
         <NewProcedure patients={patients} setPatients={setPatients} procedures={procedures} setProcedures={setProcedures} />
         </Col>
