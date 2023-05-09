@@ -27,6 +27,7 @@ class UserResource(Resource):
         data = request.get_json()
         username = data['username']
         password = data['password']
+        
 
         if len(password) < 8:
             return make_response({'error' : 'Password must be at least 8 characters long'}, 400)
@@ -38,6 +39,7 @@ class UserResource(Resource):
         user.password_hash = password
         db.session.add(user)
         db.session.commit()
+        session['user_id'] = user.id
 
         return user.to_dict(), 201
 

@@ -6,11 +6,9 @@ import {Button} from 'react-bootstrap'
 function Logout() {
     const {user, setUser} = useContext(UserContext);
     function handleLogout() {
-        fetch('/logout', {method: "DELETE"}).then((r)=>{
-            if(r.ok) {
-                setUser(null);
-                window.location.href = '/';
-            }
+        fetch('/logout', {method: "DELETE"}).then(()=>{
+            setUser(null);
+            window.location.href = '/';
         });
     }
     return (

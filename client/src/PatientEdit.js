@@ -19,11 +19,11 @@ function PatientEdit({handlePatientPatch, handlePatientDelete, patients, setPati
     const [patientPhone, setPatientPhone] = useState('')
     const [patientPrimary, setPatientPrimary] = useState('')
     const [isVisible, setIsVisible] = useState(false)
-    const [listHistory, setListHistory] = useState('')
-    const [listAnesthesia, setListAnesthesia] = useState('')
-    const [listSurgical, setListSurgical] = useState('')
-    const [listImage, setListImage] = useState('')
-    const [listEducation, setListEducation] = useState('')
+    const [listHistory, setListHistory] = useState(false)
+    const [listAnesthesia, setListAnesthesia] = useState(false)
+    const [listSurgical, setListSurgical] = useState(false)
+    const [listImage, setListImage] = useState(false)
+    const [listEducation, setListEducation] = useState(false)
     const [checklistUpdated, setChecklistUpdated] = useState(false)
 
     const {id} = useParams();
