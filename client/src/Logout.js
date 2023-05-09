@@ -9,19 +9,14 @@ function Logout() {
         fetch('/logout', {method: "DELETE"}).then((r)=>{
             if(r.ok) {
                 setUser(null);
+                window.location.href = '/';
             }
         });
     }
     return (
         <header>
             <div>
-                {user ? (
-                    <Button onClick={handleLogout}>Logout</Button>
-                ) : (
-                    <>
-                        <Link to='/'>Logout</Link>
-                    </>
-                )}
+                <Button onClick={handleLogout}>Logout</Button>
             </div>
         </header>
     );

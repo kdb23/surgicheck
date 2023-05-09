@@ -11,6 +11,7 @@ class Login(Resource):
         password = data['password']
 
         user = User.query.filter(User.username == username).first()
+        session['user_id'] = user.id
         if user and user.authenticate(password):
             return user.to_dict(), 200
         return {'error': '401 Unauthroized'}, 401
@@ -50,7 +51,7 @@ class CheckSession(Resource):
         if session.get('user_id'):
             user = User.query.filter(User.id == session['user_id']).first()
             return user.to_dict(), 200
-        return {}, 204
+        return make_response({'error' : 'Please Sign Up to Login'}, 401)
 
 
 api.add_resource(Login, '/login', endpoint = 'login')
@@ -68,6 +69,10 @@ api.add_resource(Home, '/')
 
 class Patients(Resource):
     def get(self):
+        user = session.get('user_id')
+        if not user:
+            return make_response({'error' : 'please log in'}, 401)
+    
         patients = Patient.query.all()
         patient_list = []
         for patient in patients:
@@ -86,6 +91,10 @@ class Patients(Resource):
         return make_response(patient_list, 200)
     
     def post(self):
+        user = session.get('user_id')
+        if not user:
+            return make_response({'error' : 'please log in'}, 401)
+        
         data = request.get_json()
         try:
             # import ipdb
@@ -109,12 +118,19 @@ api.add_resource(Patients, '/patients')
 
 class PatientById(Resource):
     def get(self, id):
+        user = session.get('user_id')
+        if not user:
+            return make_response({'error' : 'please log in'}, 401)
         patient = Patient.query.filter_by(id = id).first()
         if not patient:
             return make_response({'error': '404 Patient Not Found'}, 404)
         return make_response(patient.to_dict(), 200)
     
     def patch(self, id):
+        user = session.get('user_id')
+        if not user:
+            return make_response({'error' : 'please log in'}, 401)
+        
         data = request.get_json()
         person = Patient.query.filter_by(id = id).first()
         try:
@@ -127,6 +143,10 @@ class PatientById(Resource):
         return make_response(person.to_dict(), 202)
     
     def delete(self, id):
+        user = session.get('user_id')
+        if not user:
+            return make_response({'error' : 'please log in'}, 401)
+        
         doomed = Patient.query.filter_by(id = id).first()
         if not doomed:
             return make_response({'error': '404 Unable to Process Request'}, 404)
@@ -138,6 +158,10 @@ api.add_resource(PatientById, '/patients/<int:id>')
 
 class Procedures(Resource):
     def get(self):
+        user = session.get('user_id')
+        if not user:
+            return make_response({'error' : 'please log in'}, 401)
+        
         procedures = Procedure.query.all()
         surgery_list = []
         for procedure in procedures:
@@ -153,6 +177,10 @@ class Procedures(Resource):
         return make_response(surgery_list, 200)
 
     def post (self):
+        user = session.get('user_id')
+        if not user:
+            return make_response({'error' : 'please log in'}, 401)
+
         data = request.get_json()
         try:
             new_procedure = Procedure (
@@ -173,12 +201,20 @@ api.add_resource(Procedures, '/procedures')
 
 class ProceduresById(Resource):
     def get(self, id):
+        user = session.get('user_id')
+        if not user:
+            return make_response({'error' : 'please log in'}, 401)
+        
         procedure = Procedure.query.filter_by(id = id).first()
         if not procedure:
             return make_response({'error': '404 Procedure Not Found'}, 404)
         return make_response(procedure.to_dict(), 200)
     
     def patch(self, id):
+        user = session.get('user_id')
+        if not user:
+            return make_response({'error' : 'please log in'}, 401)
+        
         data = request.get_json()
         procedure = Procedure.query.filter_by(id = id).first()
         try:
@@ -192,6 +228,10 @@ class ProceduresById(Resource):
     
     
     def delete(self, id):
+        user = session.get('user_id')
+        if not user:
+            return make_response({'error' : 'please log in'}, 401)
+        
         doomed = Procedure.query.filter_by(id = id).first()
         if not doomed:
             return make_response({'error': '404 Unable to Process Request'}, 404)
@@ -204,6 +244,10 @@ api.add_resource(ProceduresById, '/procedures/<int:id>')
 
 class PatientProcedures(Resource):
     def get(self, id):
+        user = session.get('user_id')
+        if not user:
+            return make_response({'error' : 'please log in'}, 401)
+        
         patient = Patient.query.filter_by(id = id).first()
         if not patient:
             return make_response({'error': "404 Patient Not Found"}, 404)
@@ -222,6 +266,10 @@ class PatientProcedures(Resource):
         return make_response(jsonify(procedure_list), 200)
     
     def post(self, id):
+        user = session.get('user_id')
+        if not user:
+            return make_response({'error' : 'please log in'}, 401)
+        
         data = request.get_json()
         patient = Patient.query.filter_by(id = id).first()
         if not patient:
@@ -243,6 +291,10 @@ class PatientProcedures(Resource):
         return make_response(procedure.to_dict(), 201)
     
     def patch(self, id):
+        user = session.get('user_id')
+        if not user:
+            return make_response({'error' : 'please log in'}, 401)
+        
         data = request.get_json()
         procedure = Procedure.query.filter_by(id = id).first()
         if not procedure:
@@ -260,6 +312,10 @@ api.add_resource(PatientProcedures, '/patients/<int:id>/procedures')
 
 class Checklists(Resource):
     def get(self):
+        user = session.get('user_id')
+        if not user:
+            return make_response({'error' : 'please log in'}, 401)
+        
         checklist = Checklist.query.all()
         check_list = []
         for c in checklist:
@@ -280,12 +336,20 @@ api.add_resource(Checklists, '/checklists')
 
 class ChecklistsById(Resource):
     def get(self, id):
+        user = session.get('user_id')
+        if not user:
+            return make_response({'error' : 'please log in'}, 401)
+        
         checklist = Checklist.query.filter_by(id = id).first()
         if not checklist:
             return make_response({'error': '404 Checklist Not Found'}, 404)
         return make_response(checklist.to_dict(), 200)
     
     def patch(self, id):
+        user = session.get('user_id')
+        if not user:
+            return make_response({'error' : 'please log in'}, 401)
+    
         data = request.get_json()
         checklist = Checklist.query.filter_by(id = id).first()
         try:
@@ -299,6 +363,10 @@ class ChecklistsById(Resource):
     
     
     def delete(self, id):
+        user = session.get('user_id')
+        if not user:
+            return make_response({'error' : 'please log in'}, 401)
+        
         doomed = Checklist.query.filter_by(id = id).first()
         if not doomed:
             return make_response({'error': '404 Unable to Process Request'}, 404)
@@ -310,6 +378,10 @@ api.add_resource(ChecklistsById, '/checklists/<int:id>')
 
 class PatientChecklists(Resource):
     def get(self, id):
+        user = session.get('user_id')
+        if not user:
+            return make_response({'error' : 'please log in'}, 401)
+        
         patient = Patient.query.filter_by(id = id).first()
         if not patient:
             return make_response({'error': '404 Patient Not Found'}, 404)
@@ -330,6 +402,10 @@ class PatientChecklists(Resource):
         return make_response(jsonify(check_list), 200)
     
     def patch(self, id):
+        user = session.get('user_id')
+        if not user:
+            return make_response({'error' : 'please log in'}, 401)
+        
         data = request.get_json()
         checklist = Checklist.query.filter_by(id = id).first()
         try:

@@ -1,6 +1,6 @@
 import React from 'react';
 import {useHistory} from 'react-router-dom';
-
+import {Button} from 'react-bootstrap'
 
 function NavButton() {
     const history = useHistory();
@@ -11,9 +11,9 @@ function NavButton() {
 
     return(
         <div>
-        <button onClick = {handleClick}>
-            Whoops - Wrong Direction...Back I Go!
-        </button>
+        <Button onClick = {handleClick}>
+            Wrong Direction...Click to go back!
+        </Button>
         </div>
     )
 }

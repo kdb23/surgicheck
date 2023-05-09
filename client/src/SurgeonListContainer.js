@@ -1,10 +1,9 @@
 import React, {useState} from 'react'
-import {Button, Container, Form, Row} from 'react-bootstrap'
+import {Container, Form, Row} from 'react-bootstrap'
 import SurgeonList from './SurgeonList'
 
 function SurgeonListContainer({procedures, handleSurgeonSearch}) {
 
-    // const [isVisible, setIsVisible] = useState(false)
     const [searchDoctor, setSearchDoctor] = useState('');
 
     const handleSearch = (e) => {
@@ -15,11 +14,6 @@ function SurgeonListContainer({procedures, handleSurgeonSearch}) {
     const filteredSurgeons = procedures.filter(surgeryObj => {
         return surgeryObj.surgeon.toLowerCase().includes(searchDoctor) || surgeryObj.service_line.toLowerCase().includes(searchDoctor);
     });
-
-    
-    // const handleClose = () => {
-    //     setIsVisible(!isVisible);
-    // }
 
     const surgeryList = filteredSurgeons.map((surgeryObj) => {
         return <SurgeonList

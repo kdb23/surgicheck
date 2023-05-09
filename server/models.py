@@ -52,7 +52,7 @@ class Procedure(db.Model, SerializerMixin):
     checklists = db.relationship('Checklist', backref = 'procedure', cascade='all, delete-orphan')
     patients = association_proxy('checklists', 'patient')
 
-    @validates('service-line')
+    @validates('service_line')
     def validate_service(self, key, value):
         service = ['Vascular', 'Thoracic', 'Plastics', 'GYN', 'ENT', 'General', 'Urology', 'Orthopedics', 'Neuro', 'Trauma']
         if value not in service:

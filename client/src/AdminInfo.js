@@ -1,8 +1,6 @@
 import React from 'react';
 import NewSurgeon from './NewSurgeon';
 import SurgeonListContainer from './SurgeonListContainer';
-import {Container} from 'react-bootstrap'
-
 
 function AdminInfo({addProcedure, procedures}) {
 

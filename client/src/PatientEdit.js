@@ -3,6 +3,7 @@ import {useHistory, useParams } from 'react-router-dom';
 import {Button, Form, Container, Row, Col} from 'react-bootstrap';
 import Table from 'react-bootstrap/Table'
 import NewProcedure from './NewProcedure';
+import Photo from './Photo';
 
 
 function PatientEdit({handlePatientPatch, handlePatientDelete, patients, setPatients, procedures, setProcedures}){
@@ -137,6 +138,9 @@ function PatientEdit({handlePatientPatch, handlePatientDelete, patients, setPati
             <h1 className='text-center'>{patientInfo.name}</h1>
         <div className='d-flex justify-content-end'>
         <Button variant='secondary' onClick={handleBack}>Back</Button>
+        </div>
+        <div>
+        <Photo />
         </div>
         <Col>
         {patientInfo && (
