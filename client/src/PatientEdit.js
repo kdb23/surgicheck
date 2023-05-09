@@ -229,12 +229,17 @@ function PatientEdit({handlePatientPatch, handlePatientDelete, patients, setPati
         </Row>
         <Row style={{ padding: '10px'}}>
         <Col>
-        <h2>Procedures</h2>
+        <h2>----Procedures----</h2>
         {proceduresList.length > 0 && (
-        <div>
+        <div className='form-check'>
             <ul>
                 {proceduresList.map((procedure) => {
-                    return <div key = {procedure.id}>{procedure.name}</div>
+                    return <div key = {procedure.id}>
+                        {procedure.name} - Dr. {procedure.surgeon} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <label className='form-check-label'>
+                         <input type='checkbox' className="form-check-input" />
+                         </label>
+                    </div>
                 })}
             </ul>
         </div>
@@ -242,7 +247,7 @@ function PatientEdit({handlePatientPatch, handlePatientDelete, patients, setPati
         <NewProcedure patients={patients} setPatients={setPatients} procedures={procedures} setProcedures={setProcedures} />
         </Col>
         <Col>
-        <h2>Checklist</h2>
+        <h2 className='text-center'>----Checklist----</h2>
         {checklistInfo && (
             <div>
                 <ul>
