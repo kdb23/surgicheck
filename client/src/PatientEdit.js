@@ -4,6 +4,7 @@ import {Button, Form, Container, Row, Col} from 'react-bootstrap';
 import Table from 'react-bootstrap/Table'
 import NewProcedure from './NewProcedure';
 import Photo from './Photo';
+import ProcedureEdit from './ProcedureEdit';
 
 
 function PatientEdit({handlePatientPatch, handlePatientDelete, patients, setPatients, procedures, setProcedures}){
@@ -25,6 +26,7 @@ function PatientEdit({handlePatientPatch, handlePatientDelete, patients, setPati
     const [listImage, setListImage] = useState(false)
     const [listEducation, setListEducation] = useState(false)
     const [checklistUpdated, setChecklistUpdated] = useState(false)
+    const [showProcedure, setShowProcedure] = useState(false)
 
     const {id} = useParams();
 
@@ -52,6 +54,10 @@ function PatientEdit({handlePatientPatch, handlePatientDelete, patients, setPati
 
     const handleClose = () => {
         setIsVisible(!isVisible);
+    }
+
+    const handleProcedureDisplay = (procedure) => {
+        setShowProcedure(showProcedure && showProcedure.id === procedure.id ? null : procedure);
     }
 
     const handlePatch = (e) => {
@@ -237,12 +243,26 @@ function PatientEdit({handlePatientPatch, handlePatientDelete, patients, setPati
                     return <div key = {procedure.id}>
                         {procedure.name} - Dr. {procedure.surgeon} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         <label className='form-check-label'>
-                         <input type='checkbox' className="form-check-input" />
+                        <input
+                            type='checkbox'
+                            className='form-check-input'
+                            checked={showProcedure && showProcedure.id === procedure.id}
+                            onChange={() => handleProcedureDisplay(procedure)}
+                        />
                          </label>
                     </div>
                 })}
             </ul>
         </div>
+        )}
+        {showProcedure && (
+               <div>
+               <h5><b>Procedure Name:</b> {showProcedure.name}</h5>
+               <h5><b>Attending Surgeon:</b> {showProcedure.surgeon}</h5>
+               <h5><b>Service Line:</b> {showProcedure.service_line}</h5>
+               <h5><b>Duration:</b> {showProcedure.duration} minutes</h5>
+               <h5><b>Location:</b> {showProcedure.location}</h5> 
+       </div>
         )}
         <NewProcedure patients={patients} setPatients={setPatients} procedures={procedures} setProcedures={setProcedures} />
         </Col>
