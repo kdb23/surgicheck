@@ -418,8 +418,11 @@ class PatientChecklists(Resource):
         db.session.add(checklist)
         db.session.commit()
         return make_response(checklist.to_dict(), 202)
+
     
 api.add_resource(PatientChecklists, '/patients/<int:id>/checklists')
+
+
 
 
 if __name__ == '__main__':
