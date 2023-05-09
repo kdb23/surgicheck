@@ -159,6 +159,73 @@ function PatientEdit({handlePatientPatch, handlePatientDelete, patients, setPati
         </div>
         )}
         </Col>
+        <Container>
+        {isVisible && (
+            <Form>
+                <Form.Group>
+                    <Form.Label>Patient Name:</Form.Label>
+                <Form.Control
+                    type="text"
+                    id='name'
+                    name= "name"
+                    placeholder = "Patient Name"
+                    onChange={(e) => setPatientName(e.target.value)}
+                /> 
+                </Form.Group>
+                <Form.Group>
+                <Form.Label>Patient DOB:</Form.Label>
+                <Form.Control
+                    type= "text"
+                    id='dob'
+                    name ="dob"
+                    placeholder= "Y/M/D"
+                    onChange={(e) => setPatientDOB(e.target.value)}
+                />
+                </Form.Group>
+                <Form.Group>
+                <Form.Label>Patient MRN:</Form.Label>
+                <Form.Control
+                    type= "text"
+                    id="mrn"
+                    name ="mrn"
+                    placeholder= "Patient MRN"
+                    onChange={(e) => setPatientMRN(e.target.value)}
+                />
+                </Form.Group>
+                <Form.Group>
+                <Form.Label>Patient Address:</Form.Label>
+                <Form.Control
+                    type= "text"
+                    id='address'
+                    name ="address"
+                    placeholder= "Address"
+                    onChange={(e) => setPatientAddress(e.target.value)}
+                />
+                </Form.Group>
+                <Form.Group>
+                <Form.Label>Patient Phone Number:</Form.Label>
+                <Form.Control 
+                    type= "text"
+                    id='phone'
+                    name ="phone"
+                    placeholder= "Phone"
+                    onChange={(e) => setPatientPhone(e.target.value)}
+                />
+                </Form.Group>
+                <Form.Group>
+                <Form.Label>Patient PCP:</Form.Label>
+                <Form.Control
+                    type= "num"
+                    id="primary"
+                    name ="primary"
+                    placeholder= "Patient PCP"
+                    onChange={(e) => setPatientPrimary(e.target.value)}
+                />
+                </Form.Group>
+                <Button variant='primary' onClick={handlePatch}>Edit Patient Information</Button> 
+            </Form>
+        )}
+        </Container>
         </Row>
         <Row style={{ padding: '10px'}}>
         <Col>
@@ -167,7 +234,7 @@ function PatientEdit({handlePatientPatch, handlePatientDelete, patients, setPati
         <div>
             <ul>
                 {proceduresList.map((procedure) => {
-                    return <li key = {procedure.id}>{procedure.name}</li>
+                    return <div key = {procedure.id}>{procedure.name}</div>
                 })}
             </ul>
         </div>
@@ -263,73 +330,6 @@ function PatientEdit({handlePatientPatch, handlePatientDelete, patients, setPati
         )}
         </Col>
         </Row>
-        <Container>
-        {isVisible && (
-            <Form>
-                <Form.Group>
-                    <Form.Label>Patient Name:</Form.Label>
-                <Form.Control
-                    type="text"
-                    id='name'
-                    name= "name"
-                    placeholder = "Patient Name"
-                    onChange={(e) => setPatientName(e.target.value)}
-                /> 
-                </Form.Group>
-                <Form.Group>
-                <Form.Label>Patient DOB:</Form.Label>
-                <Form.Control
-                    type= "text"
-                    id='dob'
-                    name ="dob"
-                    placeholder= "Y/M/D"
-                    onChange={(e) => setPatientDOB(e.target.value)}
-                />
-                </Form.Group>
-                <Form.Group>
-                <Form.Label>Patient MRN:</Form.Label>
-                <Form.Control
-                    type= "text"
-                    id="mrn"
-                    name ="mrn"
-                    placeholder= "Patient MRN"
-                    onChange={(e) => setPatientMRN(e.target.value)}
-                />
-                </Form.Group>
-                <Form.Group>
-                <Form.Label>Patient Address:</Form.Label>
-                <Form.Control
-                    type= "text"
-                    id='address'
-                    name ="address"
-                    placeholder= "Address"
-                    onChange={(e) => setPatientAddress(e.target.value)}
-                />
-                </Form.Group>
-                <Form.Group>
-                <Form.Label>Patient Phone Number:</Form.Label>
-                <Form.Control 
-                    type= "text"
-                    id='phone'
-                    name ="phone"
-                    placeholder= "Phone"
-                    onChange={(e) => setPatientPhone(e.target.value)}
-                />
-                </Form.Group>
-                <Form.Group>
-                <Form.Label>Patient PCP:</Form.Label>
-                <Form.Control
-                    type= "num"
-                    id="primary"
-                    name ="primary"
-                    placeholder= "Patient PCP"
-                    onChange={(e) => setPatientPrimary(e.target.value)}
-                />
-                </Form.Group>
-                <Button variant='primary' onClick={handlePatch}>Edit Patient Information</Button> 
-            </Form>
-        )}
-        </Container>
             </Row> 
         </Container>
         </>
