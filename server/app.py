@@ -410,9 +410,21 @@ class PatientChecklists(Resource):
         
         data = request.get_json()
         checklist = Checklist.query.filter_by(id = id).first()
+        if not checklist:
+            return make_response({'error' : '404 Checklist Not Found'}, 404)
         try:
             for new_info in data:
                 setattr(checklist, new_info, data[new_info])
+            if 'history' not in data:
+                checklist.history = False
+            if 'anesthesia_consent' not in data:
+                checklist.anesthesia_consent = False
+            if 'surgical_consent' not in data:
+                checklist.surgical_consent = False
+            if 'imaging' not in data:
+                checklist.imaging = False
+            if 'education' not in data:
+                checklist.education = False
         except:
             return make_response({'error': 'Unable to Process Request'}, 400)
         db.session.add(checklist)
