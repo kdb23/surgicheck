@@ -39,7 +39,7 @@ function SignUp({handleCloseModal}) {
                 .then((data) => { 
                         setUser(data);
                         handleCloseModal()
-                        // history.push('/home')
+                        history.push('/home')
                 })
                 .catch((error) => {
                     setError(error.message);
