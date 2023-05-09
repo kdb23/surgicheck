@@ -138,10 +138,13 @@ function PatientEdit({handlePatientPatch, handlePatientDelete, patients, setPati
             <h1 className='text-center'>{patientInfo.name}</h1>
         <div className='d-flex justify-content-end'>
         <Button variant='secondary' onClick={handleBack}>Back</Button>
-        </div>
-        <div>
-        <Photo />
-        </div>
+        </div>  
+        <Row>   
+        <Col>
+            <div className="row">
+                    <Photo />
+            </div>
+        </Col>
         <Col>
         {patientInfo && (
             <div>
@@ -156,6 +159,8 @@ function PatientEdit({handlePatientPatch, handlePatientDelete, patients, setPati
         </div>
         )}
         </Col>
+        </Row>
+        <Row>
         <Col>
         <h2>Procedures</h2>
         {proceduresList.length > 0 && (
@@ -257,6 +262,7 @@ function PatientEdit({handlePatientPatch, handlePatientDelete, patients, setPati
             </div>
         )}
         </Col>
+        </Row>
         <Container>
         {isVisible && (
             <Form>
@@ -324,7 +330,7 @@ function PatientEdit({handlePatientPatch, handlePatientDelete, patients, setPati
             </Form>
         )}
         </Container>
-            </Row>
+            </Row> 
         </Container>
         </>
     )
