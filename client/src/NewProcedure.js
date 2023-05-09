@@ -77,7 +77,7 @@ function NewProcedure({patients, setPatients, procedures, setProcedures}) {
     return(
 
         <>
-        <Button onClick={handleClose}>Add A Procedure</Button>
+        <Button onClick={handleClose}>Add Patient Procedure</Button>
         <Container>
         {isVisible && (
             <Form onSubmit={handleSubmit}>

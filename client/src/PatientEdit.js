@@ -134,7 +134,7 @@ function PatientEdit({handlePatientPatch, handlePatientDelete, patients, setPati
     return(
         <>
         <Container>
-            <Row>
+            <Row style={{ padding: '10px'}}>
             <h1 className='text-center'>{patientInfo.name}</h1>
         <div className='d-flex justify-content-end'>
         <Button variant='secondary' onClick={handleBack}>Back</Button>
@@ -154,13 +154,13 @@ function PatientEdit({handlePatientPatch, handlePatientDelete, patients, setPati
                 <p>ADDRESS:{patientInfo.address}</p>
                 <p>PHONE:{patientInfo.phone}</p> 
                 <p>PCP: Dr.{patientInfo.primary}</p>
-        <Button variant='primary' onClick={() => handleDelete(patientInfo.id)}>Delete</Button>
+        <Button variant='danger' onClick={() => handleDelete(patientInfo.id)}>Delete Patient</Button>
         <Button variant='primary' onClick={handleClose}>Edit Patient</Button>
         </div>
         )}
         </Col>
         </Row>
-        <Row>
+        <Row style={{ padding: '10px'}}>
         <Col>
         <h2>Procedures</h2>
         {proceduresList.length > 0 && (
