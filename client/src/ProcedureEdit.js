@@ -145,6 +145,7 @@ function ProcedureEdit({handleProcedureDelete, procedures, setProcedures, patien
                  type='text'
                  name='name'
                  placeholder='Procedure Name'
+                 value={addProcedureName}
                  onChange={handleProcedureName}
              />
              </Form.Group>
@@ -153,6 +154,7 @@ function ProcedureEdit({handleProcedureDelete, procedures, setProcedures, patien
                    type= "text"
                    name ="name"
                    placeholder= "Surgeon Name"
+                   value={addProcedureSurgeon}
                    onChange={handleProcedureSurgeon}
                />
                </Form.Group>
@@ -175,6 +177,7 @@ function ProcedureEdit({handleProcedureDelete, procedures, setProcedures, patien
                    type= "num"
                    name ="duration"
                    placeholder= "Procedure Duration"
+                   value={addProcedureDuration}
                    onChange={handleProcedureDuration}
                />
                </Form.Group>

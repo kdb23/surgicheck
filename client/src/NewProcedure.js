@@ -86,6 +86,7 @@ function NewProcedure({patients, setPatients, procedures, setProcedures}) {
                     type="text"
                     name= "name"
                     placeholder = "Procedure Name"
+                    value={addName}
                     onChange={handleName}
                 />
                 </Form.Group>
@@ -94,6 +95,7 @@ function NewProcedure({patients, setPatients, procedures, setProcedures}) {
                     type= "text"
                     name ="name"
                     placeholder= "Surgeon Name"
+                    value={addSurgeon}
                     onChange={handleSurgeon}
                 />
                 </Form.Group>
@@ -116,6 +118,7 @@ function NewProcedure({patients, setPatients, procedures, setProcedures}) {
                     type= "num"
                     name ="duration"
                     placeholder= "Procedure Duration"
+                    value={addDuration}
                     onChange={handleDuration}
                 />
                 </Form.Group>
