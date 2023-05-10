@@ -53,6 +53,12 @@ function PatientEdit({handlePatientPatch, handlePatientDelete, patients, setPati
         setShowProcedure(showProcedure && showProcedure.id === procedure.id ? null : procedure);
     }
 
+    const handleProcedureEdit = (id) => {
+        const link = `/home/admin/procedure/${id}`;
+        history.push(link)
+    }
+
+
     const handleChecklistPatch = (updatedChecklist) => {
         setChecklistInfo(checklistInfo.map(checklist => {
           if (checklist.id === updatedChecklist.id) {
@@ -168,12 +174,14 @@ function PatientEdit({handlePatientPatch, handlePatientDelete, patients, setPati
         )}
         {showProcedure && (
             <div>
-               <h5><b>Procedure Name:</b> {showProcedure.name}</h5>
-               <h5><b>Attending Surgeon:</b> {showProcedure.surgeon}</h5>
-               <h5><b>Service Line:</b> {showProcedure.service_line}</h5>
-               <h5><b>Duration:</b> {showProcedure.duration} minutes</h5>
-               <h5><b>Location:</b> {showProcedure.location}</h5> 
-               <Button className='button'>Edit Procedure Information for Patient</Button>
+               <div><b>Procedure Name:</b> {showProcedure.name}</div>
+               <div><b>Attending Surgeon:</b> {showProcedure.surgeon}</div>
+               <div><b>Service Line:</b> {showProcedure.service_line}</div>
+               <div><b>Duration:</b> {showProcedure.duration} minutes</div>
+               <div><b>Location:</b> {showProcedure.location}</div> 
+               <div>
+               <Button className='button' onClick={handleProcedureEdit(showProcedure.id)}>Edit Procedure Information for Patient</Button>
+               </div>
             </div> 
         )}
         <NewProcedure patients={patients} setPatients={setPatients} procedures={procedures} setProcedures={setProcedures} />
