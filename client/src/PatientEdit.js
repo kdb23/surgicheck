@@ -53,12 +53,6 @@ function PatientEdit({handlePatientPatch, handlePatientDelete, patients, setPati
         setShowProcedure(showProcedure && showProcedure.id === procedure.id ? null : procedure);
     }
 
-    const handleProcedureEdit = (id) => {
-        const link = `/home/admin/procedure/${id}`;
-        history.push(link)
-    }
-
-
     const handleChecklistPatch = (updatedChecklist) => {
         setChecklistInfo(checklistInfo.map(checklist => {
           if (checklist.id === updatedChecklist.id) {
@@ -180,7 +174,6 @@ function PatientEdit({handlePatientPatch, handlePatientDelete, patients, setPati
                <div><b>Duration:</b> {showProcedure.duration} minutes</div>
                <div><b>Location:</b> {showProcedure.location}</div> 
                <div>
-               <Button className='button' onClick={handleProcedureEdit(showProcedure.id)}>Edit Procedure Information for Patient</Button>
                </div>
             </div> 
         )}

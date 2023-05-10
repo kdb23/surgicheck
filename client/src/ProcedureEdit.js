@@ -1,27 +1,18 @@
 import React, {useEffect, useState} from 'react';
 import {useParams, useHistory} from 'react-router-dom';
-import {Container, Col, Button, Form} from 'react-bootstrap';
+import {Container, Col, Button, Modal} from 'react-bootstrap';
+import ProcedureEditModal from './ProcedureEditModal';
 
 
 function ProcedureEdit({handleProcedureDelete, procedures, setProcedures, patients, setPatients, handleProcedurePatch}) {
 
     const [procedureInfo, setProcedureInfo] = useState([]);
     const [isHidden, setIsHidden] = useState(false)
-    const [addProcedureName, setProcedureName] = useState('')
-    const [addProcedureSurgeon, setProcedureSurgeon] = useState('')
-    const [addProcedureService, setProcedureService] = useState('')
-    const [addProcedureDuration, setProcedureDuration] = useState('')
-    const [addProcedureLocation, setProcedureLocation] = useState('')
+
 
     const {id} = useParams();
 
     const history = useHistory();
-
-    const handleProcedureName = e => setProcedureName(e.target.value)
-    const handleProcedureSurgeon = e => setProcedureSurgeon(e.target.value)
-    const handleProcedureService = e => setProcedureService(e.target.value)
-    const handleProcedureDuration = e => setProcedureDuration(e.target.value)
-    const handleProcedureLocation = e => setProcedureLocation(e.target.value)
 
     useEffect(() => {
         console.log('id:',id)
@@ -39,10 +30,8 @@ function ProcedureEdit({handleProcedureDelete, procedures, setProcedures, patien
     const handleBack = () => {
         history.goBack();
     }
-
-    const handlePatchHide = () => {
-        setIsHidden(!isHidden);
-    }
+    const handleOpenProcedure = () => setIsHidden(true);
+    const handleCloseProcedure = () => setIsHidden(false)
 
     const handleDelete = (e) => {
         window.alert('Are you sure you want to delete this procedure ?');
@@ -72,45 +61,7 @@ function ProcedureEdit({handleProcedureDelete, procedures, setProcedures, patien
             alert('Failed to delete procedure. Please try again later');
         });
     };
-
-    const handleProcedureUpdate = (e) => {
-        e.preventDefault();
-        let updatedProcedure = {
-            name: addProcedureName,
-            surgeon: addProcedureSurgeon,
-            service_line: addProcedureService,
-            duration: addProcedureDuration,
-            location: addProcedureLocation
-        };
-        fetch(`/procedures/${id}`, {
-              method: "PATCH",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify(updatedProcedure),
-            })
-            .then((r) => {
-                if (!r.ok) {
-                  throw new Error("Failed to edit procedure.");
-                }
-                return r.json();
-            })
-            .then((data) => {
-              handleProcedurePatch(data);
-                return Promise.all([
-                fetch('/patients').then((r) => r.json()),
-                fetch('/procedures').then((r) => r.json()),
-            ]);
-                })
-                .then(([patients, procedures]) => {
-                setPatients(patients);
-                setProcedures(procedures);
-                alert('Procedure successfully Updated.')
-                history.goBack()
-                })
-                .catch((error) => {
-                console.error(error);
-                alert("Failed to add procedure to patient. Please try again later.");
-                });
-    }; 
+ 
  
     return(
         <>
@@ -132,66 +83,21 @@ function ProcedureEdit({handleProcedureDelete, procedures, setProcedures, patien
             </Col>
             <Col>
             <div className='d-flex justify-content-end'>
-                <Button variant='secondary' onClick={handlePatchHide}>Edit Procedure</Button>
+                <Button variant='secondary' onClick={handleOpenProcedure}>Edit Procedure</Button>
                 <Button variant='danger' onClick={handleDelete}>Delete</Button>
             </div>
             </Col>
         </Container>
-         <Container>
-         {isHidden && (
-           <Form onSubmit={handleProcedureUpdate}>
-             <Form.Group>
-               <Form.Control
-                 type='text'
-                 name='name'
-                 placeholder='Procedure Name'
-                 value={addProcedureName}
-                 onChange={handleProcedureName}
-             />
-             </Form.Group>
-             <Form.Group>
-             <Form.Control 
-                   type= "text"
-                   name ="name"
-                   placeholder= "Surgeon Name"
-                   value={addProcedureSurgeon}
-                   onChange={handleProcedureSurgeon}
-               />
-               </Form.Group>
-             <Form.Group>
-               <Form.Select onChange={handleProcedureService}>
-                   <option>Select a Service Line</option>
-                   <option value='Vascular'>Vascular</option>
-                   <option value='Thoracic'>Thoracic</option>
-                   <option value='Plastics'>Plastics</option>
-                   <option value='GYN'>GYN</option>
-                   <option value='ENT'>ENT</option>
-                   <option value='General'>General</option>
-                   <option value='Urology'>Urology</option>
-                   <option value='Orthopedics'>Orthopedics</option>
-                   <option value='Neuro'>Neuro</option>
-               </Form.Select>
-               </Form.Group>
-               <Form.Group>
-               <Form.Control 
-                   type= "num"
-                   name ="duration"
-                   placeholder= "Procedure Duration"
-                   value={addProcedureDuration}
-                   onChange={handleProcedureDuration}
-               />
-               </Form.Group>
-               <Form.Group>
-               <Form.Select onChange={handleProcedureLocation}>
-                   <option>Select Location</option>
-                   <option value='Main'>Main</option>
-                   <option value='SAG'>SAG</option>
-               </Form.Select>
-               </Form.Group>
-               <Button type='submit' onSubmit={handleProcedureUpdate}>Submit</Button>
-           </Form>
-         )}
-       </Container>
+        <Container>
+            <Modal className='color-nav' variant='light' show={isHidden} onHide={handleCloseProcedure}>
+                <Modal.Header closeButton>
+                    <Modal.Title >Edit Procedure Information</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                <ProcedureEditModal handleProcedurePatch={handleProcedurePatch} patients={patients} setPatients={setPatients} procedures={procedures} setProcedures={setProcedures} handleCloseProcedure={handleCloseProcedure} procedureInfo={procedureInfo} setProcedureInfo={setProcedureInfo} />
+                </Modal.Body>
+            </Modal>
+        </Container>
        </>
         
     )
