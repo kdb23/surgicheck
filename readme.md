@@ -1,5 +1,7 @@
 Phase 5 Project - SurgiCheck
 
+**Click Here To Watch A Demo** https://www.loom.com/share/950f70029cf54c27b023ba5229564694
+
 A user must login to preform any actions or see any information. A sign up is located on the login page for users without a login. Username must be unique in addition to passwords being atleast 8 characters long.
 
 Once logged in the user is able to add a patient and then is transported to the patient list page. A search bar is avaiable at the top of the page which enables the patient list to be searched through by patient name or mrn.
